@@ -2,7 +2,7 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Cache-Control', 's-maxage=3600')
 
-  const key = process.env.PRODUCT_HUNT_API_KEY
+  const token = process.env.PRODUCT_HUNT_TOKEN
   const secret = process.env.PRODUCT_HUNT_API_SECRET
   if (!key || key === 'your_producthunt_api_key_here') {
     return res.json({ projects: [], missing: true })
