@@ -18,6 +18,11 @@ export default async function handler(req, res) {
             node {
               id name tagline url votesCount
               thumbnail { url }
+              media {
+                url
+                videoUrl
+                type
+              }
             }
           }
         }
@@ -25,25 +30,8 @@ export default async function handler(req, res) {
     })
 
     const data = await response.json()
-    const posts = data?.data?.posts?.edges?.map(e => e.node) || []
-
-    const projects = posts
-      .filter(p => p.thumbnail?.url)
-      .map(p => ({
-        id: `ph-${p.id}`,
-        title: p.name,
-        description: p.tagline || '',
-        imageUrl: p.thumbnail.url,
-        sourceUrl: p.url,
-        source: 'producthunt',
-        tool: 'AI',
-        category: 'app',
-        likes: p.votesCount || 0,
-        author: '',
-      }))
-
-    res.json({ projects })
+    res.json({ raw: data?.data?.posts?.edges?.slice(0,2) })
   } catch (e) {
-    res.json({ projects: [], error: String(e) })
+    res.json({ error: String(e) })
   }
 }
