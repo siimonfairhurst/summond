@@ -24,7 +24,7 @@
     .pill:hover { color: #666; }
     .nav-right { display: flex; align-items: center; gap: 16px; margin-left: auto; }
     .proj-count { font-size: 11px; color: var(--faint); font-weight: 300; }
-    .submit-btn { background: var(--text); color: var(--bg); font-size: 10px; font-family: inherit; font-weight: 500; padding: 7px 16px; border: none; border-radius: 2px; cursor: pointer; letter-spacing: 0.06em; text-transform: uppercase; transition: opacity .15s; text-decoration: none; display: inline-block; }
+    .submit-btn { background: var(--text); color: var(--bg); font-size: 10px; font-family: inherit; font-weight: 500; padding: 7px 16px; border: none; border-radius: 2px; cursor: pointer; letter-spacing: 0.06em; text-transform: uppercase; transition: opacity .15s; }
     .submit-btn:hover { opacity: .75; }
 
     .hero { padding: 72px 28px 64px; border-bottom: 1px solid var(--border); }
@@ -47,6 +47,7 @@
     .card-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s cubic-bezier(.25,.46,.45,.94); }
     .card:hover .card-img { transform: scale(1.04); }
     .card-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .card-media iframe { width: 100%; height: 100%; border: none; display: block; }
     .card-footer { padding: 10px 12px 12px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f0eee9; gap: 8px; }
     .card-caption { font-size: 10px; color: #888; font-weight: 300; line-height: 1.4; flex: 1; }
     .card-badges { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
@@ -62,7 +63,8 @@
     .lb { position: fixed; inset: 0; background: rgba(246,245,242,0.97); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 28px; gap: 20px; }
     .lb.open { display: flex; }
     .lb-media-wrap { max-width: 900px; width: 100%; position: relative; border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
-    .lb-media-wrap img, .lb-media-wrap video { width: 100%; max-height: 62vh; object-fit: contain; display: block; background: #f0eee9; }
+    .lb-media-wrap img { width: 100%; max-height: 62vh; object-fit: contain; display: block; background: #f0eee9; }
+    .lb-media-wrap video { width: 100%; max-height: 62vh; object-fit: contain; display: block; background: #f0eee9; }
     .lb-media-wrap iframe { width: 100%; height: 62vh; display: block; border: none; }
     .lb-close { position: absolute; top: -40px; right: 0; background: none; border: 1px solid #ddd; color: #aaa; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-family: inherit; font-size: 11px; display: flex; align-items: center; justify-content: center; transition: all .15s; }
     .lb-close:hover { border-color: #999; color: #333; }
@@ -89,6 +91,7 @@
     .field-hint { font-size: 10px; color: var(--faint); margin-top: 6px; line-height: 1.5; }
     .media-preview-wrap { margin-top: 12px; display: none; border-radius: 4px; overflow: hidden; aspect-ratio: 16/9; background: #f0eee9; border: 1px solid var(--border2); }
     .media-preview-wrap iframe, .media-preview-wrap video, .media-preview-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; border: none; }
+    .media-preview-loading { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #bbb; font-family: inherit; }
     .media-error { margin-top: 8px; display: none; font-size: 10px; color: #e57373; }
     .submit-send { background: var(--text); color: var(--bg); font-size: 11px; font-family: inherit; font-weight: 500; padding: 13px 28px; border: none; border-radius: 3px; cursor: pointer; letter-spacing: 0.06em; text-transform: uppercase; transition: opacity .15s; width: 100%; margin-top: 8px; }
     .submit-send:hover { opacity: .75; }
@@ -96,7 +99,6 @@
     .submit-success { display: none; text-align: center; padding: 48px 0; }
     .submit-success h2 { font-size: 24px; font-style: italic; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 12px; }
     .submit-success p { font-size: 13px; color: #999; font-weight: 300; line-height: 1.7; }
-
     .loading { text-align: center; padding: 80px 0; color: var(--faint); font-size: 11px; letter-spacing: 0.06em; }
   </style>
 </head>
@@ -165,15 +167,18 @@
       <div class="field">
         <label>Media URL</label>
         <input type="url" id="f-media" placeholder="https://..." oninput="previewMedia(this.value)">
-        <div class="field-hint">Direct link to your image, GIF or video. 16:9 ratio preferred. Works with Imgur, Giphy, Loom, YouTube, or any direct .mp4/.gif/.jpg URL.</div>
+        <div class="field-hint">
+          Paste any URL — X/Twitter posts, direct images, GIFs, Loom or YouTube videos all work.
+          If hosting your own: <a href="https://catbox.moe" target="_blank" style="color:var(--text)">catbox.moe</a> is free and instant (works in UK).
+        </div>
         <div class="media-preview-wrap" id="media-preview"></div>
-        <div class="media-error" id="media-error">Could not load this URL — check it's a direct link to an image or video.</div>
+        <div class="media-error" id="media-error">Could not load preview — but you can still submit if the URL is correct.</div>
       </div>
 
       <div class="field">
         <label>Original post URL</label>
         <input type="url" id="f-post" placeholder="https://x.com/yourhandle/status/...">
-        <div class="field-hint">Link to your X post, Dribbble shot, Behance project etc. This is what clicking the card links to.</div>
+        <div class="field-hint">Link to your X post, Dribbble shot, Behance project etc. Clicking the card takes people here.</div>
       </div>
 
       <div class="field">
@@ -248,23 +253,19 @@ function detectPlatform(url) {
 
 function makeCardMedia(p) {
   const url = p.mediaUrl || p.imageUrl || ''
-  const isVideo = p.mediaType === 'video' ||
-    url.match(/\.(mp4|webm|mov)(\?.*)?$/i) ||
-    url.includes('loom.com') ||
-    url.includes('youtube.com') ||
-    url.includes('youtu.be')
+  if (!url) return '<div class="card-media"></div>'
 
   if (url.includes('youtube.com') || url.includes('youtu.be')) {
     const videoId = url.match(/(?:v=|youtu\.be\/)([^&?\s]+)/)?.[1]
-    if (videoId) return `<div class="card-media"><iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0" frameborder="0" allowfullscreen allow="autoplay"></iframe></div>`
+    if (videoId) return `<div class="card-media"><iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0" frameborder="0" allow="autoplay"></iframe></div>`
   }
 
   if (url.includes('loom.com')) {
     const loomId = url.match(/\/share\/([a-zA-Z0-9]+)/)?.[1]
-    if (loomId) return `<div class="card-media"><iframe src="https://www.loom.com/embed/${loomId}?autoplay=1&muted=1&hideEmbedTopBar=true" frameborder="0" allowfullscreen allow="autoplay"></iframe></div>`
+    if (loomId) return `<div class="card-media"><iframe src="https://www.loom.com/embed/${loomId}?autoplay=1&muted=1&hideEmbedTopBar=true" frameborder="0" allow="autoplay"></iframe></div>`
   }
 
-  if (isVideo) {
+  if (p.mediaType === 'video' || url.match(/\.(mp4|webm|mov)(\?.*)?$/i)) {
     return `<div class="card-media"><video class="card-video" src="${url}" autoplay muted loop playsinline></video></div>`
   }
 
@@ -314,24 +315,18 @@ function openLb(p) {
 
   if (url.includes('youtube.com') || url.includes('youtu.be')) {
     const videoId = url.match(/(?:v=|youtu\.be\/)([^&?\s]+)/)?.[1]
-    if (videoId) {
-      wrap.innerHTML += `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1" frameborder="0" allowfullscreen allow="autoplay"></iframe>`
-    }
+    if (videoId) wrap.innerHTML += `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1" frameborder="0" allowfullscreen allow="autoplay"></iframe>`
   } else if (url.includes('loom.com')) {
     const loomId = url.match(/\/share\/([a-zA-Z0-9]+)/)?.[1]
-    if (loomId) {
-      wrap.innerHTML += `<iframe src="https://www.loom.com/embed/${loomId}?autoplay=1&muted=1" frameborder="0" allowfullscreen allow="autoplay"></iframe>`
-    }
+    if (loomId) wrap.innerHTML += `<iframe src="https://www.loom.com/embed/${loomId}?autoplay=1&muted=1" frameborder="0" allowfullscreen allow="autoplay"></iframe>`
   } else if (p.mediaType === 'video' || url.match(/\.(mp4|webm|mov)(\?.*)?$/i)) {
     const vid = document.createElement('video')
-    vid.src = url
-    vid.autoplay = true; vid.muted = true; vid.loop = true
-    vid.playsInline = true; vid.controls = true
+    vid.src = url; vid.autoplay = true; vid.muted = true
+    vid.loop = true; vid.playsInline = true; vid.controls = true
     wrap.appendChild(vid)
   } else {
     const img = document.createElement('img')
-    img.src = url
-    img.alt = p.caption || ''
+    img.src = url; img.alt = p.caption || ''
     wrap.appendChild(img)
   }
 
@@ -358,48 +353,78 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeLb();
 function openSubmit() { document.getElementById('submit-page').classList.add('open') }
 function closeSubmit() { document.getElementById('submit-page').classList.remove('open') }
 
-function previewMedia(url) {
+let resolvedMediaUrl = null
+
+async function previewMedia(url) {
   const preview = document.getElementById('media-preview')
   const error = document.getElementById('media-error')
   preview.style.display = 'none'
   error.style.display = 'none'
   preview.innerHTML = ''
+  resolvedMediaUrl = null
 
   if (!url || url.length < 10) return
 
-  const isVideo = url.match(/\.(mp4|webm|mov|ogg)(\?.*)?$/i) ||
-                  url.includes('loom.com') ||
-                  url.includes('youtube.com') ||
-                  url.includes('youtu.be')
+  // X/Twitter — use Microlink to extract OG thumbnail
+  if (url.includes('x.com') || url.includes('twitter.com')) {
+    preview.style.display = 'block'
+    preview.innerHTML = '<div class="media-preview-loading">Fetching preview...</div>'
+    try {
+      const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`)
+      const data = await res.json()
+      const imgUrl = data?.data?.image?.url || data?.data?.screenshot?.url
+      if (imgUrl) {
+        resolvedMediaUrl = imgUrl
+        const img = document.createElement('img')
+        img.src = imgUrl
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block'
+        img.onerror = () => { preview.style.display = 'none'; error.style.display = 'block' }
+        preview.innerHTML = ''
+        preview.appendChild(img)
+      } else {
+        preview.style.display = 'none'
+        error.style.display = 'block'
+      }
+    } catch(e) {
+      preview.style.display = 'none'
+      error.style.display = 'block'
+    }
+    return
+  }
 
-  preview.style.display = 'block'
-
+  // YouTube
   if (url.includes('youtube.com') || url.includes('youtu.be')) {
     const videoId = url.match(/(?:v=|youtu\.be\/)([^&?\s]+)/)?.[1]
     if (videoId) {
-      preview.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1" frameborder="0" allowfullscreen allow="autoplay"></iframe>`
+      preview.style.display = 'block'
+      preview.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1" frameborder="0" allowfullscreen allow="autoplay" style="width:100%;height:100%;border:none;display:block"></iframe>`
     }
     return
   }
 
+  // Loom
   if (url.includes('loom.com')) {
     const loomId = url.match(/\/share\/([a-zA-Z0-9]+)/)?.[1]
     if (loomId) {
-      preview.innerHTML = `<iframe src="https://www.loom.com/embed/${loomId}?autoplay=1&muted=1&hideEmbedTopBar=true" frameborder="0" allowfullscreen allow="autoplay"></iframe>`
+      preview.style.display = 'block'
+      preview.innerHTML = `<iframe src="https://www.loom.com/embed/${loomId}?autoplay=1&muted=1&hideEmbedTopBar=true" frameborder="0" allowfullscreen allow="autoplay" style="width:100%;height:100%;border:none;display:block"></iframe>`
     }
     return
   }
 
-  if (isVideo) {
+  // Direct video
+  if (url.match(/\.(mp4|webm|mov|ogg)(\?.*)?$/i)) {
+    preview.style.display = 'block'
     const vid = document.createElement('video')
-    vid.src = url
-    vid.autoplay = true; vid.muted = true; vid.loop = true; vid.playsInline = true
+    vid.src = url; vid.autoplay = true; vid.muted = true; vid.loop = true; vid.playsInline = true
     vid.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block'
     vid.onerror = () => { preview.style.display = 'none'; error.style.display = 'block' }
     preview.appendChild(vid)
     return
   }
 
+  // Image
+  preview.style.display = 'block'
   const img = document.createElement('img')
   img.src = url
   img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block'
@@ -409,15 +434,18 @@ function previewMedia(url) {
 
 async function submitForm() {
   const caption = document.getElementById('f-caption').value.trim()
-  const media = document.getElementById('f-media').value.trim()
+  const mediaInput = document.getElementById('f-media').value.trim()
   const post = document.getElementById('f-post').value.trim()
   const tool = document.getElementById('f-tool').value
   const creator = document.getElementById('f-creator').value.trim()
 
-  if (!caption || !media || !post || !tool) {
+  if (!caption || !mediaInput || !post || !tool) {
     alert('Please fill in all required fields.')
     return
   }
+
+  // Use resolved URL (e.g. OG image from X post) if available
+  const media = resolvedMediaUrl || mediaInput
 
   const btn = document.getElementById('submit-send')
   btn.disabled = true
