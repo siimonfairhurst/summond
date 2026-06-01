@@ -4,7 +4,7 @@ export default async function handler(req, res) {
 
   const token = process.env.PRODUCT_HUNT_TOKEN
   const secret = process.env.PRODUCT_HUNT_API_SECRET
-  if (!key || key === 'your_producthunt_api_key_here') {
+  if (!token || token === 'your_token_here') {
     return res.json({ projects: [], missing: true })
   }
 
