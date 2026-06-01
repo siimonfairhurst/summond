@@ -18,7 +18,7 @@ export default async function handler(req, res) {
             node {
               id name tagline url votesCount
               thumbnail { url }
-              media { url type }
+              media { url type videoUrl }
             }
           }
         }
@@ -31,12 +31,15 @@ export default async function handler(req, res) {
     const projects = posts
       .filter(p => p.thumbnail?.url)
       .map(p => {
+        const video = p.media?.find(m => m.type === 'video' && m.videoUrl)
         const screenshot = p.media?.find(m => m.type === 'image')?.url
         return {
           id: `ph-${p.id}`,
           title: p.name,
           description: p.tagline || '',
           imageUrl: screenshot || p.thumbnail.url,
+          videoUrl: video?.videoUrl || null,
+          mediaType: video ? 'video' : 'image',
           sourceUrl: p.url,
           source: 'producthunt',
           tool: 'AI',
