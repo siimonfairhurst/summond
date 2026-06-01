@@ -35,4 +35,41 @@ export default async function handler(req, res) {
       body: JSON.stringify({ query: `{
         posts(first: 50) {
           edges {
-            nod
+            node {
+              id name tagline url votesCount
+              thumbnail { url }
+              topics { edges { node { name } } }
+              maker { name profileImage }
+            }
+          }
+        }
+      }` })
+    }).then(r => r.json())
+
+    const posts = data?.data?.posts?.edges?.map(e => e.node) || []
+
+    const projects = posts
+      .filter(p => p.thumbnail?.url)
+      .map(p => {
+        const topicNames = p.topics?.edges?.map(e => e.node.name) || []
+        const fullText = `${p.name} ${p.tagline} ${topicNames.join(' ')}`
+        return {
+          id: `ph-${p.id}`,
+          title: p.name,
+          description: p.tagline || '',
+          imageUrl: p.thumbnail.url,
+          sourceUrl: p.url,
+          source: 'producthunt',
+          tool: detectTool(fullText),
+          category: detectCategory(fullText),
+          likes: p.votesCount || 0,
+          author: p.maker?.name || '',
+        }
+      })
+      .sort((a, b) => b.likes - a.likes)
+
+    res.json({ projects })
+  } catch (e) {
+    res.json({ projects: [], error: String(e) })
+  }
+}
