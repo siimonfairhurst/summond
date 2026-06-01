@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Summond.design — everything being built with AI, right now</title>
+  <meta name="description" content="An endless feed of apps, tools, games and interfaces conjured into existence with Claude, Cursor, Bolt and Lovable.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;0,600;1,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #f6f5f2; --card: #fff; --border: #e8e6e1; --border2: #eceae6; --text: #1a1a1a; --muted: #bbb; --faint: #ccc; }
+    html, body { background: var(--bg); color: var(--text); font-family: 'Hanken Grotesk', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    ::selection { background: #1a1a1a; color: #f6f5f2; }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+
+    /* NAV */
+    header { background: var(--bg); border-bottom: 1px solid var(--border); padding: 14px 28px; display: flex; align-items: center; position: sticky; top: 0; z-index: 10; flex-wrap: wrap; gap: 8px; }
+    .wordmark { font-style: italic; font-weight: 600; font-size: 18px; color: var(--text); letter-spacing: -0.03em; margin-right: 32px; flex-shrink: 0; }
+    nav { display: flex; flex: 1; flex-wrap: wrap; }
+    .pill { background: transparent; border: none; color: var(--muted); font-family: inherit; font-size: 12px; font-weight: 400; padding: 5px 14px; cursor: pointer; letter-spacing: 0.01em; transition: color .15s; }
+    .pill:first-child { padding-left: 0; }
+    .pill.on { color: var(--text); }
+    .pill:hover { color: #666; }
+    .proj-count { margin-left: auto; font-size: 11px; color: var(--faint); font-weight: 300; }
+
+    /* HERO */
+    .hero { padding: 72px 28px 64px; border-bottom: 1px solid var(--border); }
+    .hero-label { font-size: 11px; color: var(--muted); font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px; }
+    .hero-title { font-size: clamp(28px, 4vw, 42px); font-style: italic; font-weight: 600; color: var(--text); line-height: 1.12; letter-spacing: -0.03em; max-width: 620px; margin-bottom: 20px; }
+    .hero-title em { font-style: normal; color: var(--muted); }
+    .hero-body { font-size: 14px; color: #999; font-weight: 300; line-height: 1.75; max-width: 460px; margin-bottom: 28px; }
+    .hero-stats { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .hero-stat { font-size: 11px; color: var(--muted); font-weight: 300; }
+    .hero-stat strong { color: var(--text); font-weight: 500; }
+    .divider { width: 1px; height: 12px; background: #ddd; }
+
+    /* SETUP NOTE */
+    .setup-note { margin: 20px 28px 0; padding: 10px 14px; background: #fff; border: 1px solid var(--border); border-radius: 4px; font-size: 11px; color: var(--muted); font-weight: 300; display: none; }
+    .setup-note strong { color: #999; font-weight: 500; }
+
+    /* GRID */
+    .grid-wrap { padding: 28px; }
+    .grid-label { font-size: 11px; color: var(--muted); font-weight: 300; font-style: italic; margin-bottom: 20px; }
+    .grid { columns: 3 220px; column-gap: 16px; }
+
+    /* CARD */
+    .card { break-inside: avoid; margin-bottom: 16px; cursor: pointer; background: #fff; border-radius: 4px; overflow: hidden; border: 1px solid var(--border2); transition: border-color .2s; }
+    .card:hover { border-color: #ccc; }
+    .card-img-wrap { overflow: hidden; }
+    .card-img { width: 100%; height: auto; display: block; transition: transform .5s cubic-bezier(.25,.46,.45,.94); }
+    .card:hover .card-img { transform: scale(1.04); }
+    .card-footer { padding: 11px 13px 13px; display: flex; align-items: baseline; justify-content: space-between; border-top: 1px solid #f0eee9; }
+    .card-name { font-size: 11px; color: var(--text); font-weight: 400; }
+    .card-credit { font-size: 10px; color: var(--faint); font-weight: 300; margin-left: 8px; flex-shrink: 0; }
+    .card-placeholder { width: 100%; padding-bottom: 65%; background: #f0eee9; position: relative; }
+    .card-placeholder span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #ddd; font-weight: 600; }
+
+    /* LIGHTBOX */
+    .lb { position: fixed; inset: 0; background: rgba(246,245,242,0.97); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 28px; gap: 20px; }
+    .lb.open { display: flex; }
+    .lb-img-wrap { max-width: 900px; width: 100%; position: relative; border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+    .lb-img-wrap img { width: 100%; max-height: 62vh; object-fit: contain; display: block; background: #f0eee9; }
+    .lb-close { position: absolute; top: -40px; right: 0; background: none; border: 1px solid #ddd; color: #aaa; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-family: inherit; font-size: 11px; display: flex; align-items: center; justify-content: center; transition: all .15s; }
+    .lb-close:hover { border-color: #999; color: #333; }
+    .lb-meta { max-width: 900px; width: 100%; display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .lb-title { font-size: 16px; font-weight: 600; font-style: italic; color: var(--text); letter-spacing: -0.02em; }
+    .lb-desc { font-size: 11px; color: #aaa; font-weight: 300; margin-top: 4px; line-height: 1.6; max-width: 400px; }
+    .lb-tags { display: flex; align-items: center; gap: 16px; margin-top: 8px; }
+    .lb-tag { font-size: 10px; color: var(--muted); font-weight: 300; letter-spacing: 0.04em; text-transform: uppercase; }
+    .lb-visit { background: var(--text); color: var(--bg); font-size: 10px; font-family: inherit; font-weight: 500; padding: 10px 22px; border: none; cursor: pointer; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 2px; text-decoration: none; display: inline-block; transition: opacity .15s; flex-shrink: 0; }
+    .lb-visit:hover { opacity: .7; }
+
+    /* LOADING */
+    .loading { text-align: center; padding: 80px 0; color: var(--faint); font-size: 11px; letter-spacing: 0.06em; }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="wordmark">Summond</span>
+  <nav>
+    <button class="pill on" onclick="filter('all',this)">Everything</button>
+    <button class="pill" onclick="filter('app',this)">Apps</button>
+    <button class="pill" onclick="filter('tool',this)">Tools</button>
+    <button class="pill" onclick="filter('website',this)">Websites</button>
+    <button class="pill" onclick="filter('design',this)">Design</button>
+    <button class="pill" onclick="filter('game',this)">Games</button>
+  </nav>
+  <span class="proj-count" id="proj-count"></span>
+</header>
+
+<section class="hero">
+  <div class="hero-label">Updated daily</div>
+  <h1 class="hero-title">Everything being built<br>with AI. <em>Right now.</em></h1>
+  <p class="hero-body">An endless feed of apps, tools, games and interfaces conjured into existence with Claude, Cursor, Bolt and Lovable. Pulled automatically from the places designers and builders share their work.</p>
+  <div class="hero-stats">
+    <span class="hero-stat"><strong>Product Hunt</strong> &amp; Dribbble</span>
+    <span class="divider"></span>
+    <span class="hero-stat">Sorted by <strong>most popular</strong></span>
+    <span class="divider"></span>
+    <span class="hero-stat">Zero curation. <strong>All signal.</strong></span>
+  </div>
+</section>
+
+<div class="setup-note" id="setup-note">
+  <strong>Add API keys</strong> to see live data. See README.md — takes 10 minutes, costs nothing. Showing demo cards below.
+</div>
+
+<div class="grid-wrap">
+  <div class="grid-label" id="grid-label"></div>
+  <div class="loading" id="loading">Loading projects...</div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<div class="lb" id="lb">
+  <div class="lb-img-wrap">
+    <button class="lb-close" onclick="closeLb()">✕</button>
+    <img id="lb-img" src="" alt="">
+  </div>
+  <div class="lb-meta">
+    <div>
+      <div class="lb-title" id="lb-title"></div>
+      <div class="lb-desc" id="lb-desc"></div>
+      <div class="lb-tags">
+        <span class="lb-tag" id="lb-src"></span>
+        <span class="lb-tag" id="lb-tool"></span>
+      </div>
+    </div>
+    <a class="lb-visit" id="lb-link" href="#" target="_blank" rel="noopener noreferrer">View project →</a>
+  </div>
+</div>
+
+<script>
+const SOURCE_LABEL = { producthunt: 'Product Hunt', dribbble: 'Dribbble' }
+
+const DEMO = [
+  'AI invoice SaaS','Neon tetris remake','Brand identity generator',
+  'Habit tracker app','Music visualiser','Pixel art editor',
+  'E-commerce storefront','Chess with AI opponent','Generative art studio',
+  'Budget tracker','URL shortener','Terminal portfolio',
+  'Gradient mesh tool','Meeting notes AI','Pomodoro + mixer',
+  'Space invaders port','Type specimen generator','Recipe scaler',
+  '3D product configurator','Kanban board','Flashcard app',
+  'Weather dashboard','Code diff visualiser','Interactive CV'
+].map((title, i) => ({
+  id: `demo-${i}`, title,
+  description: 'Summoned into existence with AI.',
+  imageUrl: `https://picsum.photos/seed/smnd${i}/600/${320 + (i % 7) * 40}`,
+  sourceUrl: '#',
+  source: ['producthunt','dribbble'][i % 2],
+  tool: ['Claude','Cursor','Bolt.new','Lovable','v0'][i % 5],
+  category: ['app','tool','design','website','game'][i % 5],
+  likes: Math.floor(Math.random() * 900) + 100,
+}))
+
+let allProjects = [], currentCat = 'all'
+
+function render(projects) {
+  const grid = document.getElementById('grid')
+  const label = document.getElementById('grid-label')
+  const count = document.getElementById('proj-count')
+  grid.innerHTML = ''
+  label.textContent = `${projects.length} selected projects`
+  count.textContent = `${projects.length} projects`
+
+  projects.forEach(p => {
+    const card = document.createElement('div')
+    card.className = 'card'
+    card.innerHTML = `
+      <div class="card-img-wrap">
+        <img class="card-img" src="${p.imageUrl}" alt="${p.title}" loading="lazy"
+          onerror="this.parentNode.innerHTML='<div class=card-placeholder><span>${p.title.slice(0,2).toUpperCase()}</span></div>'">
+      </div>
+      <div class="card-footer">
+        <span class="card-name">${p.title}</span>
+        <span class="card-credit">${p.tool} · ${SOURCE_LABEL[p.source] || p.source}</span>
+      </div>`
+    card.onclick = () => openLb(p)
+    grid.appendChild(card)
+  })
+}
+
+function filter(cat, btn) {
+  currentCat = cat
+  document.querySelectorAll('.pill').forEach(b => b.classList.remove('on'))
+  btn.classList.add('on')
+  const filtered = cat === 'all' ? allProjects : allProjects.filter(p => p.category === cat)
+  render(filtered)
+}
+
+function openLb(p) {
+  document.getElementById('lb-img').src = p.imageUrl
+  document.getElementById('lb-title').textContent = p.title
+  document.getElementById('lb-desc').textContent = p.description
+  document.getElementById('lb-src').textContent = SOURCE_LABEL[p.source] || p.source
+  document.getElementById('lb-tool').textContent = p.tool
+  document.getElementById('lb-link').href = p.sourceUrl !== '#' ? p.sourceUrl : '#'
+  document.getElementById('lb').classList.add('open')
+}
+
+function closeLb() { document.getElementById('lb').classList.remove('open') }
+document.getElementById('lb').addEventListener('click', e => { if (e.target === e.currentTarget) closeLb() })
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb() })
+
+async function init() {
+  try {
+    const res = await fetch('/api/feed')
+    const data = await res.json()
+    document.getElementById('loading').style.display = 'none'
+
+    if (!data.projects?.length) {
+      allProjects = DEMO
+      document.getElementById('setup-note').style.display = 'block'
+    } else {
+      allProjects = data.projects
+      const missing = Object.values(data.missing || {}).some(Boolean)
+      if (missing) document.getElementById('setup-note').style.display = 'block'
+    }
+    render(allProjects)
+  } catch(e) {
+    document.getElementById('loading').style.display = 'none'
+    allProjects = DEMO
+    document.getElementById('setup-note').style.display = 'block'
+    render(allProjects)
+  }
+}
+
+init()
+</script>
+</body>
+</html>
