@@ -68,8 +68,8 @@ export default async function handler(req, res) {
       })
       .sort((a, b) => b.likes - a.likes)
 
-    res.json({ projects })
+    res.json({ projects, postCount: posts.length })
   } catch (e) {
-    res.json({ projects: [], error: String(e) })
+    res.json({ projects: [], error: String(e), stack: e.stack })
   }
 }
