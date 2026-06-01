@@ -3,7 +3,6 @@ export default async function handler(req, res) {
   res.setHeader('Cache-Control', 's-maxage=3600')
 
   const token = process.env.PRODUCT_HUNT_TOKEN
-  const secret = process.env.PRODUCT_HUNT_API_SECRET
   if (!token || token === 'your_token_here') {
     return res.json({ projects: [], missing: true })
   }
@@ -46,20 +45,14 @@ export default async function handler(req, res) {
   `
 
   try {
-    const tokenRes = await fetch('https://api.producthunt.com/v2/oauth/token', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ client_id: key, client_secret: secret, grant_type: 'client_credentials' })
-    })
-    const tokenData = await tokenRes.json()
-    const token = tokenData.access_token
-    if (!token) return res.json({ projects: [], error: 'PH auth failed' })
-
     const topics = ['artificial-intelligence', 'developer-tools', 'no-code', 'productivity']
     const results = await Promise.all(topics.map(topic =>
       fetch('https://api.producthunt.com/v2/api/graphql', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({ query: QUERY, variables: { topic } })
       }).then(r => r.json()).then(d => d?.data?.posts?.edges?.map(e => e.node) || [])
     ))
@@ -73,8 +66,8 @@ export default async function handler(req, res) {
     }).filter(p => p.thumbnail?.url)
 
     const projects = unique.map(p => {
-      const topics = p.topics?.edges?.map(e => e.node.name) || []
-      const fullText = `${p.name} ${p.tagline} ${topics.join(' ')}`
+      const topicNames = p.topics?.edges?.map(e => e.node.name) || []
+      const fullText = `${p.name} ${p.tagline} ${topicNames.join(' ')}`
       const screenshot = p.media?.find(m => m.type === 'image')?.url
       return {
         id: `ph-${p.id}`,
