@@ -3,411 +3,201 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Summond.design — everything being built with AI, right now</title>
-  <meta name="description" content="A curated wall of apps, tools, games and interfaces conjured into existence with Claude, Cursor, Bolt and Lovable.">
+  <title>Summond.design</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { background: #fff; color: #000; font-family: 'Hanken Grotesk', sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-    ::selection { background: #000; color: #fff; }
-    ::-webkit-scrollbar { width: 3px; }
-    ::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{background:#fff;color:#000;font-family:'Hanken Grotesk',sans-serif;font-size:14px;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .3s,color .3s}
+    ::selection{background:#000;color:#fff}
+    ::-webkit-scrollbar{width:3px}
+    ::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px}
+
+    body.dark{background:#0a0a0a;color:#fff}
+    body.dark .hero-title{color:#fff}
+    body.dark .hero-sub{color:#fff}
+    body.dark .hero-desc{color:#888}
+    body.dark .hero-btn{background:#fff;color:#000}
+    body.dark .sticky-bar{background:#1a1a1a;border-color:rgba(255,255,255,0.1);box-shadow:0 4px 20px rgba(0,0,0,0.4)}
+    body.dark .sb-name{color:#fff}
+    body.dark .sb-desc{color:#666}
+    body.dark .sticky-bar .hero-btn{background:#fff;color:#000}
+    body.dark .card{border-color:rgba(255,255,255,0.1);background:#111}
+    body.dark .card:hover{border-color:rgba(255,255,255,0.3)}
+    body.dark .pill{background:#1a1a1a;box-shadow:2px 2px 4px rgba(0,0,0,0.4)}
+    body.dark .pill-claude{color:#f0a050}
+    body.dark .pill-cursor{color:#ddd}
+    body.dark .pill-bolt{color:#6699ff}
+    body.dark .pill-lovable{color:#e060d0}
+    body.dark .pill-v0{color:#ddd}
+    body.dark .pill-other{color:#aaa}
+    body.dark .pill-platform{color:#ddd}
+    body.dark .lb{background:rgba(10,10,10,0.96)}
+    body.dark .lb-box{background:#111;border-color:rgba(255,255,255,0.1)}
+    body.dark .lb-creator{color:#fff}
+    body.dark .lb-caption{color:#888}
+    body.dark .lb-close{background:rgba(30,30,30,0.95);border-color:rgba(255,255,255,0.1);color:#fff}
+    body.dark .lb-btn{background:#fff;color:#000}
+
+    /* TOGGLE */
+    .mode-toggle{position:fixed;bottom:32px;right:32px;z-index:200;width:64px;height:34px;border-radius:100px;background:#f0f0f0;cursor:pointer;border:none;padding:4px;display:flex;align-items:center;box-shadow:2px 2px 4px rgba(0,0,0,0.16);transition:background .3s}
+    body.dark .mode-toggle{background:#333}
+
+    /* knob slides right in dark mode */
+    .toggle-knob{width:26px;height:26px;border-radius:50%;background:#000;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .3s}
+    body.dark .toggle-knob{transform:translateX(30px);background:#fff}
+
+    /* sun icon inside knob — white in light, hidden in dark */
+    .knob-sun{display:flex;align-items:center;justify-content:center;position:absolute}
+    .knob-moon{display:flex;align-items:center;justify-content:center;position:absolute;opacity:0;transition:opacity .2s}
+    body.dark .knob-sun{opacity:0}
+    body.dark .knob-moon{opacity:1}
 
     /* HERO */
-    .hero { padding: 0 0 64px; text-align: center; }
-    .hero-title { font-weight: 700; letter-spacing: -0.03em; line-height: 0.88; color: #000; text-transform: uppercase; display: block; width: 100vw; white-space: nowrap; overflow: hidden; margin-bottom: 64px; }
-    .hero-sub { font-size: 14px; font-weight: 500; color: #000; margin-bottom: 12px; }
-    .hero-desc { font-size: 14px; color: #666; max-width: 400px; margin: 0 auto 12px; line-height: 1.6; font-weight: 400; }
-    .hero-btn { display: inline-block; background: #000; color: #fff; font-family: 'Hanken Grotesk', sans-serif; font-size: 14px; font-weight: 500; padding: 4px 12px; border-radius: 100px; border: none; cursor: pointer; transition: opacity .15s; }
-    .hero-btn:hover { opacity: .75; }
+    .hero{padding:0 0 64px;text-align:center}
+    .hero-title{font-weight:700;letter-spacing:-0.03em;line-height:0.88;color:#000;text-transform:uppercase;display:block;width:100vw;white-space:nowrap;overflow:hidden;margin-bottom:64px;transition:color .3s}
+    .hero-sub{font-size:14px;font-weight:500;color:#000;margin-bottom:12px;transition:color .3s}
+    .hero-desc{font-size:14px;color:#666;max-width:400px;margin:0 auto 12px;line-height:1.6;transition:color .3s}
+    .hero-btn{display:inline-block;background:#000;color:#fff;font-family:'Hanken Grotesk',sans-serif;font-size:14px;font-weight:500;padding:4px 12px;border-radius:100px;border:none;cursor:pointer;transition:background .3s,color .3s,opacity .15s}
+    .hero-btn:hover{opacity:.75}
 
-    /* STICKY FOOTER */
-    .sticky-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #fff; border: 1px solid rgba(0,0,0,0.12); border-radius: 100px; padding: 8px 8px 8px 18px; display: flex; align-items: center; gap: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); z-index: 50; white-space: nowrap; opacity: 0; transition: opacity .25s; pointer-events: none; }
-    .sticky-bar.show { opacity: 1; pointer-events: all; }
-    .sb-name { font-size: 14px; font-weight: 800; letter-spacing: -0.02em; text-transform: uppercase; }
-    .sb-desc { font-size: 14px; color: #888; }
+    .sticky-bar{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid rgba(0,0,0,0.12);border-radius:100px;padding:8px 8px 8px 18px;display:flex;align-items:center;gap:14px;box-shadow:0 4px 20px rgba(0,0,0,0.1);z-index:50;white-space:nowrap;opacity:0;transition:opacity .25s,background .3s;pointer-events:none}
+    .sticky-bar.show{opacity:1;pointer-events:all}
+    .sb-name{font-size:14px;font-weight:800;letter-spacing:-0.02em;text-transform:uppercase;transition:color .3s}
+    .sb-desc{font-size:14px;color:#888;transition:color .3s}
 
-    /* GRID */
-    .grid-wrap { padding: 0 16px 120px; }
-    .masonry { columns: 3 180px; column-gap: 10px; }
+    .grid-wrap{padding:0 16px 120px}
+    .masonry{columns:3 180px;column-gap:10px}
+    .card{break-inside:avoid;margin-bottom:10px;cursor:pointer;border-radius:16px;overflow:hidden;border:1px solid rgba(0,0,0,0.16);background:#f5f5f5;display:block;transition:border-color .2s,background .3s;position:relative}
+    .card:hover{border-color:rgba(0,0,0,0.4)}
+    .card img{width:100%;height:auto;display:block;transition:transform .4s cubic-bezier(.25,.46,.45,.94)}
+    .card:hover img{transform:scale(1.03)}
 
-    /* CARD */
-    .card { break-inside: avoid; margin-bottom: 10px; cursor: pointer; border-radius: 16px; overflow: hidden; border: 1px solid rgba(0,0,0,0.16); background: #f5f5f5; display: block; transition: border-color .2s; }
-    .card:hover { border-color: rgba(0,0,0,0.5); }
-    .card img { width: 100%; height: auto; display: block; transition: transform .4s cubic-bezier(.25,.46,.45,.94); }
-    .card:hover img { transform: scale(1.03); }
-    .card video { width: 100%; height: auto; display: block; }
-    .card iframe { width: 100%; aspect-ratio: 16/9; display: block; border: none; }
+    .card-pills{position:absolute;bottom:10px;left:10px;right:10px;display:flex;align-items:flex-end;justify-content:space-between;gap:6px;opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s;pointer-events:none}
+    .card:hover .card-pills{opacity:1;transform:translateY(0)}
+    .pill{display:inline-flex;align-items:center;gap:6px;background:#fff;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:500;white-space:nowrap;box-shadow:2px 2px 4px rgba(0,0,0,0.16);border:none;line-height:1;transition:background .3s,color .3s}
+    .pill-claude{color:#d4853a}.pill-cursor{color:#000}.pill-bolt{color:#0044cc}.pill-lovable{color:#c020a0}.pill-v0{color:#000}.pill-other{color:#555}.pill-platform{color:#000}
+    .tool-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+    .td-claude{background:#d4853a}.td-cursor{background:#555}.td-bolt{background:#0044cc}.td-lovable{background:#c020a0}.td-v0{background:#333}.td-other{background:#aaa}
+    .pill-icon{width:16px;height:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 
-    /* TAGS */
-    .tag { font-size: 12px; padding: 2px 4px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.16); color: #555; font-weight: 400; background: #fff; }
-    .tag-claude { border-color: rgba(212,169,106,0.6); color: #9a6820; }
-    .tag-cursor { border-color: rgba(129,140,248,0.6); color: #4550a8; }
-    .tag-bolt { border-color: rgba(251,191,36,0.6); color: #906800; }
-    .tag-lovable { border-color: rgba(244,114,182,0.6); color: #a02060; }
-    .tag-x { border-color: rgba(0,0,0,0.25); color: #000; }
-    .tag-dribbble { border-color: rgba(234,76,137,0.4); color: #d0367a; }
-    .tag-behance { border-color: rgba(23,105,255,0.4); color: #1050d0; }
-    .tag-youtube { border-color: rgba(255,0,0,0.3); color: #cc0000; }
-    .tag-loom { border-color: rgba(108,60,255,0.3); color: #6c3cff; }
-
-    /* LIGHTBOX */
-    .lb { position: fixed; inset: 0; background: rgba(255,255,255,0.94); backdrop-filter: blur(16px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 24px; }
-    .lb.open { display: flex; }
-    .lb-box { background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 16px; overflow: hidden; max-width: 780px; width: 100%; box-shadow: 0 12px 60px rgba(0,0,0,0.1); }
-    .lb-media { width: 100%; aspect-ratio: 16/9; background: #f5f5f5; overflow: hidden; position: relative; }
-    .lb-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .lb-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .lb-media iframe { width: 100%; height: 100%; display: block; border: none; }
-    .lb-close { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.95); border: 1px solid rgba(0,0,0,0.12); cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; font-family: inherit; color: #000; z-index: 1; }
-    .lb-body { padding: 14px 18px 18px; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
-    .lb-left { flex: 1; min-width: 0; }
-    .lb-creator { font-size: 14px; font-weight: 600; color: #000; margin-bottom: 4px; }
-    .lb-caption { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 10px; }
-    .lb-tag-row { display: flex; gap: 4px; flex-wrap: wrap; }
-    .lb-btn { background: #000; color: #fff; font-family: 'Hanken Grotesk', sans-serif; font-size: 14px; font-weight: 500; padding: 4px 12px; border-radius: 100px; border: none; cursor: pointer; white-space: nowrap; flex-shrink: 0; align-self: center; transition: opacity .15s; text-decoration: none; display: inline-block; }
-    .lb-btn:hover { opacity: .75; }
-
-    /* SUBMIT PAGE */
-    .submit-page { display: none; position: fixed; inset: 0; background: #fff; z-index: 300; overflow-y: auto; }
-    .submit-page.open { display: block; }
-    .submit-inner { max-width: 560px; margin: 0 auto; padding: 60px 28px; }
-    .submit-back { background: none; border: none; color: #bbb; font-family: inherit; font-size: 11px; cursor: pointer; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 48px; display: flex; align-items: center; gap: 6px; padding: 0; transition: color .15s; }
-    .submit-back:hover { color: #000; }
-    .submit-title { font-size: clamp(24px, 4vw, 36px); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 12px; text-transform: uppercase; }
-    .submit-sub { font-size: 14px; color: #999; font-weight: 300; line-height: 1.7; margin-bottom: 48px; }
-    .field { margin-bottom: 28px; }
-    .field label { display: block; font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: #888; margin-bottom: 8px; }
-    .field input, .field select { width: 100%; background: #fff; border: 1px solid rgba(0,0,0,0.16); border-radius: 3px; padding: 11px 14px; font-family: inherit; font-size: 14px; color: #000; outline: none; transition: border-color .15s; appearance: none; -webkit-appearance: none; }
-    .field input:focus, .field select:focus { border-color: #000; }
-    .field input::placeholder { color: #ccc; }
-    .field-hint { font-size: 11px; color: #bbb; margin-top: 6px; line-height: 1.5; }
-    .field-hint a { color: #000; }
-    .media-preview-wrap { margin-top: 12px; display: none; border-radius: 8px; overflow: hidden; aspect-ratio: 16/9; background: #f5f5f5; border: 1px solid rgba(0,0,0,0.1); }
-    .media-preview-wrap iframe, .media-preview-wrap video, .media-preview-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; border: none; }
-    .media-preview-loading { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #bbb; }
-    .media-error { margin-top: 8px; display: none; font-size: 11px; color: #e57373; }
-    .submit-send { background: #000; color: #fff; font-size: 14px; font-family: inherit; font-weight: 500; padding: 12px 28px; border: none; border-radius: 100px; cursor: pointer; letter-spacing: 0.02em; transition: opacity .15s; width: 100%; margin-top: 8px; }
-    .submit-send:hover { opacity: .75; }
-    .submit-send:disabled { opacity: .4; cursor: not-allowed; }
-    .submit-success { display: none; text-align: center; padding: 48px 0; }
-    .submit-success h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.03em; text-transform: uppercase; margin-bottom: 12px; }
-    .submit-success p { font-size: 14px; color: #999; line-height: 1.7; }
-
-    .loading { text-align: center; padding: 80px 0; color: #ccc; font-size: 12px; letter-spacing: 0.06em; }
+    .lb{position:fixed;inset:0;background:rgba(255,255,255,0.94);backdrop-filter:blur(16px);z-index:100;display:none;align-items:center;justify-content:center;padding:24px}
+    .lb.open{display:flex}
+    .lb-box{background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:16px;overflow:hidden;max-width:780px;width:100%;box-shadow:0 12px 60px rgba(0,0,0,0.1);transition:background .3s,border-color .3s}
+    .lb-media{width:100%;aspect-ratio:16/9;background:#f5f5f5;overflow:hidden;position:relative}
+    .lb-media img{width:100%;height:100%;object-fit:cover;display:block}
+    .lb-close{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.95);border:1px solid rgba(0,0,0,0.12);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;font-family:inherit;color:#000;z-index:1;transition:background .3s,color .3s,border-color .3s}
+    .lb-body{padding:14px 18px 18px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+    .lb-left{flex:1;min-width:0}
+    .lb-creator{font-size:14px;font-weight:600;color:#000;margin-bottom:4px;transition:color .3s}
+    .lb-caption{font-size:14px;color:#666;line-height:1.6;margin-bottom:10px;transition:color .3s}
+    .lb-tag-row{display:flex;gap:6px;flex-wrap:wrap}
+    .lb-btn{background:#000;color:#fff;font-family:'Hanken Grotesk',sans-serif;font-size:14px;font-weight:500;padding:4px 12px;border-radius:100px;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;align-self:center;transition:background .3s,color .3s,opacity .15s;text-decoration:none;display:inline-block}
+    .lb-btn:hover{opacity:.75}
+    .loading{text-align:center;padding:80px 0;color:#ccc;font-size:12px;letter-spacing:0.06em}
   </style>
 </head>
 <body>
 
-<header style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">
-  <h1>Summond — AI-built project inspiration wall</h1>
-</header>
-
-<!-- HERO -->
 <div class="hero" id="hero">
   <span class="hero-title" id="heroTitle">SUMMOND</span>
   <div class="hero-sub">The best work being built with AI</div>
   <div class="hero-desc">A curated wall of apps, tools, games and interfaces conjured into existence with Claude, Cursor, Bolt and Lovable. Submitted by the designers and developers building them.</div>
-  <button class="hero-btn" onclick="openSubmit()">Submit</button>
+  <button class="hero-btn">Submit</button>
 </div>
 
-<!-- GRID -->
 <div class="grid-wrap">
-  <div class="loading" id="loading">Loading projects...</div>
+  <div class="loading" id="loading">Loading...</div>
   <div class="masonry" id="masonry"></div>
 </div>
 
-<!-- STICKY FOOTER -->
 <div class="sticky-bar" id="stickyBar">
   <span class="sb-name">Summond</span>
   <span class="sb-desc">The best work being built with AI</span>
-  <button class="hero-btn" onclick="openSubmit()">Submit</button>
+  <button class="hero-btn">Submit</button>
 </div>
 
-<!-- LIGHTBOX -->
+<!-- TOGGLE: icon lives inside the knob, swaps with mode -->
+<button class="mode-toggle" onclick="toggleMode()" aria-label="Toggle dark mode">
+  <div class="toggle-knob">
+    <!-- Sun: white icon, shown in light mode -->
+    <span class="knob-sun">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4"/>
+        <line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/>
+        <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
+        <line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
+      </svg>
+    </span>
+    <!-- Moon: black icon, shown in dark mode -->
+    <span class="knob-moon">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </span>
+  </div>
+</button>
+
 <div class="lb" id="lb" onclick="if(event.target===this)closeLb()">
   <div class="lb-box">
-    <div class="lb-media" id="lbMedia">
-      <button class="lb-close" onclick="closeLb()">✕</button>
-    </div>
+    <div class="lb-media" id="lbMedia"><button class="lb-close" onclick="closeLb()">✕</button></div>
     <div class="lb-body">
       <div class="lb-left">
         <div class="lb-creator" id="lbCreator"></div>
         <div class="lb-caption" id="lbCaption"></div>
         <div class="lb-tag-row" id="lbTags"></div>
       </div>
-      <a class="lb-btn" id="lbLink" href="#" target="_blank" rel="noopener noreferrer">Link to post</a>
-    </div>
-  </div>
-</div>
-
-<!-- SUBMIT PAGE -->
-<div class="submit-page" id="submitPage">
-  <div class="submit-inner">
-    <button class="submit-back" onclick="closeSubmit()">← Back</button>
-    <div id="submitFormWrap">
-      <h2 class="submit-title">Submit</h2>
-      <p class="submit-sub">Share something you built with AI. If it's good, it'll be on the wall within 24 hours.</p>
-
-      <div class="field">
-        <label>Caption</label>
-        <input type="text" id="fCaption" placeholder="Built a full SaaS in 3 hours with Claude." maxlength="100">
-        <div class="field-hint">One punchy line. What did you build and how?</div>
-      </div>
-
-      <div class="field">
-        <label>Media URL</label>
-        <input type="url" id="fMedia" placeholder="https://..." oninput="previewMedia(this.value)">
-        <div class="field-hint">
-          Paste any URL — X/Twitter posts, images, GIFs, Loom or YouTube all work.<br>
-          Need free hosting? Try <a href="https://catbox.moe" target="_blank">catbox.moe</a> (images/GIFs) or <a href="https://streamable.com" target="_blank">streamable.com</a> (video).
-        </div>
-        <div class="media-preview-wrap" id="mediaPreview"></div>
-        <div class="media-error" id="mediaError">Could not load preview — check it's a direct URL. You can still submit.</div>
-      </div>
-
-      <div class="field">
-        <label>Original post URL</label>
-        <input type="url" id="fPost" placeholder="https://x.com/yourhandle/status/...">
-        <div class="field-hint">Link to your X post, Dribbble shot, Behance project etc. Clicking the card takes people here.</div>
-      </div>
-
-      <div class="field">
-        <label>Tool used</label>
-        <select id="fTool">
-          <option value="">Select a tool</option>
-          <option value="Claude">Claude</option>
-          <option value="Cursor">Cursor</option>
-          <option value="Bolt.new">Bolt.new</option>
-          <option value="Lovable">Lovable</option>
-          <option value="v0">v0</option>
-          <option value="Replit">Replit</option>
-          <option value="Windsurf">Windsurf</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label>Your X handle</label>
-        <input type="text" id="fCreator" placeholder="@yourhandle">
-        <div class="field-hint">So we can credit you.</div>
-      </div>
-
-      <button class="submit-send" id="submitSend" onclick="submitForm()">Submit for review</button>
-    </div>
-
-    <div class="submit-success" id="submitSuccess">
-      <h2>Submitted.</h2>
-      <p>Thanks — we'll review it within 24 hours.<br>If it makes the wall we'll tag you on X.</p>
+      <a class="lb-btn" id="lbLink" href="#" target="_blank">Link to post</a>
     </div>
   </div>
 </div>
 
 <script>
-const TOOL_CLS = { Claude:'tag-claude', Cursor:'tag-cursor', 'Bolt.new':'tag-bolt', Lovable:'tag-lovable', v0:'tag-cursor', Other:'tag' }
-const PLAT_CLS = { x:'tag-x', dribbble:'tag-dribbble', behance:'tag-behance', producthunt:'tag-bolt', youtube:'tag-youtube', loom:'tag-loom' }
-const PLAT_LBL = { x:'X', dribbble:'Dribbble', behance:'Behance', producthunt:'PH', youtube:'YouTube', loom:'Loom', web:'' }
-const TOOL_COLORS = { Claude:'#d4a96a', Cursor:'#818cf8', 'Bolt.new':'#fbbf24', Lovable:'#f472b6', v0:'#a3e635', Replit:'#56b3f4', Windsurf:'#67e8f9', Other:'#aaa' }
-
-let allProjects = [], resolvedMediaUrl = null
-
-function detectPlatform(url) {
-  if (!url) return 'web'
-  if (url.includes('x.com') || url.includes('twitter.com')) return 'x'
-  if (url.includes('dribbble.com')) return 'dribbble'
-  if (url.includes('behance.net')) return 'behance'
-  if (url.includes('producthunt.com')) return 'producthunt'
-  if (url.includes('youtube.com') || url.includes('youtu.be')) return 'youtube'
-  if (url.includes('loom.com')) return 'loom'
-  return 'web'
+const TOOL_CONFIG={Claude:{cls:'pill-claude',dot:'td-claude',label:'Claude'},Cursor:{cls:'pill-cursor',dot:'td-cursor',label:'Cursor'},'Bolt.new':{cls:'pill-bolt',dot:'td-bolt',label:'Bolt'},Lovable:{cls:'pill-lovable',dot:'td-lovable',label:'Lovable'},v0:{cls:'pill-v0',dot:'td-v0',label:'v0'},Other:{cls:'pill-other',dot:'td-other',label:'AI'}}
+function detectPlatform(url){if(!url)return'web';if(url.includes('x.com')||url.includes('twitter.com'))return'x';if(url.includes('dribbble.com'))return'dribbble';if(url.includes('behance.net'))return'behance';return'web'}
+function toolPill(tool){const c=TOOL_CONFIG[tool]||TOOL_CONFIG.Other;return`<div class="pill ${c.cls}">${c.label}</div>`}
+const PLAT_ICONS={
+  x:`<svg width="16" height="16" viewBox="0 0 24 24" fill="#000"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.726-8.83L1.254 2.25H8.08l4.261 5.638 5.902-5.638zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
+  dribbble:`<svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ea4c89"/><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm6.605 4.61a8.502 8.502 0 0 1 1.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.424 25.424 0 0 0-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.814 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.686 8.686 0 0 1 12 3.475zm-3.633.803a53.896 53.896 0 0 1 3.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 0 1 4.729-5.975zM3.453 12.01v-.26c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 0 1-2.19-5.705zM12 20.547a8.482 8.482 0 0 1-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.32 35.32 0 0 1 1.823 6.475 8.4 8.4 0 0 1-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 0 1-3.655 5.715z" fill="#fff"/></svg>`,
+  behance:`<svg width="16" height="16" viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#1769ff"/><path d="M6.5 7h3.8c1.8 0 3 .8 3 2.4 0 1-.5 1.7-1.3 2.1 1.2.3 1.9 1.2 1.9 2.5 0 1.9-1.4 3-3.5 3H6.5V7zm1.8 4h1.8c.9 0 1.4-.4 1.4-1.1 0-.8-.5-1.1-1.4-1.1H8.3V11zm0 4.1h2c1 0 1.6-.5 1.6-1.3 0-.9-.6-1.4-1.6-1.4H8.3V15.1zm7.7-6.6h4.5v1H16v-1zm.2 2.3c1.8 0 3 1.1 3 2.9 0 .2 0 .5-.1.7H16c.1.9.7 1.4 1.6 1.4.6 0 1.1-.3 1.3-.7h1.6c-.4 1.3-1.5 2.1-2.9 2.1-1.9 0-3.1-1.3-3.1-3.2 0-1.8 1.2-3.2 3-3.2zm0 1.3c-.8 0-1.4.5-1.5 1.3h3c-.1-.8-.7-1.3-1.5-1.3z" fill="#fff"/></svg>`,
+  producthunt:`<svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#da552f"/><path d="M13.604 8.4h-3.405V12h3.405a1.8 1.8 0 0 0 0-3.6zM10.2 6H13.604a4.2 4.2 0 0 1 0 8.4H10.2V18H7.8V6h2.4z" fill="#fff"/></svg>`,
+  youtube:`<svg width="16" height="16" viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z" fill="#ff0000"/></svg>`,
+  loom:`<svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#625DF5"/><path d="M18 12a6 6 0 1 1-3-5.196V12l-3-1.732A3 3 0 1 0 15 12h3z" fill="#fff"/></svg>`,
+  web:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
 }
-
-function makeMedia(p, forCard) {
-  const url = p.mediaUrl || p.imageUrl || ''
-  if (!url) return forCard ? '<div style="aspect-ratio:16/9;background:#f5f5f5"></div>' : ''
-
-  if (url.includes('youtube.com') || url.includes('youtu.be')) {
-    const id = url.match(/(?:v=|youtu\.be\/)([^&?\s]+)/)?.[1]
-    if (id) return `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0" frameborder="0" allow="autoplay" style="width:100%;${forCard?'aspect-ratio:16/9':'height:100%'};display:block;border:none"></iframe>`
-  }
-  if (url.includes('loom.com')) {
-    const id = url.match(/\/share\/([a-zA-Z0-9]+)/)?.[1]
-    if (id) return `<iframe src="https://www.loom.com/embed/${id}?autoplay=1&muted=1&hideEmbedTopBar=true" frameborder="0" allow="autoplay" style="width:100%;${forCard?'aspect-ratio:16/9':'height:100%'};display:block;border:none"></iframe>`
-  }
-  if (p.mediaType === 'video' || url.match(/\.(mp4|webm|mov)(\?.*)?$/i)) {
-    return `<video src="${url}" autoplay muted loop playsinline ${forCard ? '' : 'controls'} style="width:100%;height:${forCard?'auto':'100%'};display:block;object-fit:cover"></video>`
-  }
-  return `<img src="${url}" alt="" style="width:100%;height:${forCard?'auto':'100%'};display:block;object-fit:cover" onerror="this.style.opacity='0.2'">`
-}
-
-function render(projects) {
-  const grid = document.getElementById('masonry')
-  grid.innerHTML = ''
-  projects.forEach(p => {
-    const card = document.createElement('div')
-    card.className = 'card'
-    card.innerHTML = makeMedia(p, true)
-    card.onclick = () => openLb(p)
-    grid.appendChild(card)
+function platformPill(platform,creator){const svg=PLAT_ICONS[platform]||PLAT_ICONS.web;return`<div class="pill pill-platform"><span class="pill-icon">${svg}</span>${creator||platform}</div>`}
+function render(projects){
+  const grid=document.getElementById('masonry');grid.innerHTML=''
+  projects.forEach(p=>{
+    const platform=p.platform||detectPlatform(p.postUrl||'')
+    const card=document.createElement('div');card.className='card'
+    card.innerHTML=`<img src="${p.mediaUrl}" alt="" loading="lazy"><div class="card-pills">${toolPill(p.tool)}${platformPill(platform,p.creator)}</div>`
+    card.onclick=()=>openLb(p);grid.appendChild(card)
   })
 }
-
-function openLb(p) {
-  const wrap = document.getElementById('lbMedia')
-  wrap.innerHTML = `<button class="lb-close" onclick="closeLb()">✕</button>${makeMedia(p, false)}`
-  document.getElementById('lbCreator').textContent = p.creator || ''
-  document.getElementById('lbCaption').textContent = p.caption || p.description || ''
-  const platform = p.platform || detectPlatform(p.postUrl || p.sourceUrl)
-  const tc = TOOL_CLS[p.tool] || 'tag'
-  const pc = PLAT_CLS[platform] || ''
-  const pl = PLAT_LBL[platform] || ''
-  const toolColor = TOOL_COLORS[p.tool] || '#aaa'
-  document.getElementById('lbTags').innerHTML =
-    (p.tool ? `<span class="tag ${tc}" style="color:${toolColor};border-color:${toolColor}40">${p.tool}</span>` : '') +
-    (pl ? `<span class="tag ${pc}">${pl}</span>` : '')
-  document.getElementById('lbLink').href = p.postUrl || p.sourceUrl || '#'
+function openLb(p){
+  const wrap=document.getElementById('lbMedia');wrap.innerHTML=`<button class="lb-close" onclick="closeLb()">✕</button><img src="${p.mediaUrl}" alt="">`
+  document.getElementById('lbCreator').textContent=p.creator||''
+  document.getElementById('lbCaption').textContent=p.caption||''
+  const platform=p.platform||detectPlatform(p.postUrl||'')
+  document.getElementById('lbTags').innerHTML=toolPill(p.tool)+platformPill(platform,p.creator)
+  document.getElementById('lbLink').href=p.postUrl||'#'
   document.getElementById('lb').classList.add('open')
 }
+function closeLb(){document.getElementById('lb').classList.remove('open')}
+document.getElementById('lb').addEventListener('click',e=>{if(e.target===e.currentTarget)closeLb()})
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb()})
+function toggleMode(){document.body.classList.toggle('dark')}
 
-function closeLb() {
-  document.getElementById('lb').classList.remove('open')
-  const vid = document.querySelector('#lbMedia video')
-  if (vid) vid.pause()
-}
+const DEMO=['AI invoice SaaS','Brand identity generator','Habit tracker','Music visualiser','E-commerce store','Chess with AI','Generative art','Budget tracker','Kanban board','Pixel art editor','3D configurator','Weather dashboard'].map((title,i)=>({id:`d${i}`,caption:title+' — built with AI.',mediaUrl:`https://picsum.photos/seed/smnd${i}/800/${320+(i%7)*60}`,postUrl:'#',tool:['Claude','Cursor','Bolt.new','Lovable','v0'][i%5],platform:['x','dribbble','behance','x','x'][i%5],creator:`@creator${i}`}))
+document.getElementById('loading').style.display='none'
+render(DEMO)
 
-document.getElementById('lb').addEventListener('click', e => { if (e.target === e.currentTarget) closeLb() })
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeLb(); closeSubmit() } })
-
-function openSubmit() { document.getElementById('submitPage').classList.add('open') }
-function closeSubmit() { document.getElementById('submitPage').classList.remove('open') }
-
-async function previewMedia(url) {
-  const preview = document.getElementById('mediaPreview')
-  const error = document.getElementById('mediaError')
-  preview.style.display = 'none'
-  error.style.display = 'none'
-  preview.innerHTML = ''
-  resolvedMediaUrl = null
-  if (!url || url.length < 10) return
-
-  if (url.includes('x.com') || url.includes('twitter.com')) {
-    preview.style.display = 'block'
-    preview.innerHTML = '<div class="media-preview-loading">Fetching preview...</div>'
-    try {
-      const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`)
-      const data = await res.json()
-      const imgUrl = data?.data?.image?.url
-      if (imgUrl) {
-        resolvedMediaUrl = imgUrl
-        preview.innerHTML = `<img src="${imgUrl}" style="width:100%;height:100%;object-fit:cover;display:block">`
-      } else { preview.style.display = 'none'; error.style.display = 'block' }
-    } catch { preview.style.display = 'none'; error.style.display = 'block' }
-    return
-  }
-  if (url.includes('youtube.com') || url.includes('youtu.be')) {
-    const id = url.match(/(?:v=|youtu\.be\/)([^&?\s]+)/)?.[1]
-    if (id) { preview.style.display = 'block'; preview.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1" frameborder="0" allow="autoplay" style="width:100%;height:100%;border:none;display:block"></iframe>` }
-    return
-  }
-  if (url.includes('loom.com')) {
-    const id = url.match(/\/share\/([a-zA-Z0-9]+)/)?.[1]
-    if (id) { preview.style.display = 'block'; preview.innerHTML = `<iframe src="https://www.loom.com/embed/${id}?autoplay=1&muted=1&hideEmbedTopBar=true" frameborder="0" allow="autoplay" style="width:100%;height:100%;border:none;display:block"></iframe>` }
-    return
-  }
-  if (url.match(/\.(mp4|webm|mov)(\?.*)?$/i)) {
-    preview.style.display = 'block'
-    const v = document.createElement('video')
-    v.src = url; v.autoplay = true; v.muted = true; v.loop = true; v.playsInline = true
-    v.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block'
-    v.onerror = () => { preview.style.display = 'none'; error.style.display = 'block' }
-    preview.appendChild(v)
-    return
-  }
-  preview.style.display = 'block'
-  const img = document.createElement('img')
-  img.src = url
-  img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block'
-  img.onerror = () => { preview.style.display = 'none'; error.style.display = 'block' }
-  preview.appendChild(img)
-}
-
-async function submitForm() {
-  const caption = document.getElementById('fCaption').value.trim()
-  const mediaInput = document.getElementById('fMedia').value.trim()
-  const post = document.getElementById('fPost').value.trim()
-  const tool = document.getElementById('fTool').value
-  const creator = document.getElementById('fCreator').value.trim()
-  if (!caption || !mediaInput || !post || !tool) { alert('Please fill in all required fields.'); return }
-  const media = resolvedMediaUrl || mediaInput
-  const btn = document.getElementById('submitSend')
-  btn.disabled = true; btn.textContent = 'Submitting...'
-  try {
-    await fetch('/api/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ caption, mediaUrl: media, postUrl: post, tool, creator })
-    })
-    document.getElementById('submitFormWrap').style.display = 'none'
-    document.getElementById('submitSuccess').style.display = 'block'
-  } catch {
-    btn.disabled = false; btn.textContent = 'Submit for review'
-    alert('Something went wrong. Please try again.')
-  }
-}
-
-const DEMO = [
-  'AI invoice SaaS','Brand identity generator','Habit tracker app','Music visualiser',
-  'E-commerce storefront','Chess with AI opponent','Generative art studio','Budget tracker',
-  'Kanban board','Pixel art editor','3D configurator','Weather dashboard'
-].map((title, i) => ({
-  id:`demo-${i}`, caption: title + ' — built with AI.',
-  mediaUrl:`https://picsum.photos/seed/smnd${i}/800/${320+(i%7)*60}`,
-  postUrl:'#', source:'community',
-  tool:['Claude','Cursor','Bolt.new','Lovable','v0'][i%5],
-  platform:['x','dribbble','behance','x','x'][i%5],
-  creator:`@creator${i}`, mediaType:'image',
-}))
-
-async function init() {
-  try {
-    const res = await fetch('/api/feed')
-    const data = await res.json()
-    document.getElementById('loading').style.display = 'none'
-    allProjects = data.projects?.length ? data.projects : DEMO
-    render(allProjects)
-  } catch {
-    document.getElementById('loading').style.display = 'none'
-    allProjects = DEMO
-    render(allProjects)
-  }
-}
-
-// Responsive title
-function sizeTitle() {
-  const t = document.getElementById('heroTitle')
-  const vw = window.innerWidth
-  t.style.fontSize = '1px'
-  let lo = 1, hi = 600
-  while (hi - lo > 0.5) {
-    const mid = (lo + hi) / 2
-    t.style.fontSize = mid + 'px'
-    if (t.scrollWidth <= vw) lo = mid; else hi = mid
-  }
-  t.style.fontSize = lo + 'px'
-}
-window.addEventListener('resize', sizeTitle)
-document.fonts.ready.then(sizeTitle)
-setTimeout(sizeTitle, 100)
-
-// Sticky footer
-const hero = document.getElementById('hero')
-const bar = document.getElementById('stickyBar')
-new IntersectionObserver(entries => {
-  bar.classList.toggle('show', !entries[0].isIntersecting)
-}, { threshold: 0 }).observe(hero)
-
-init()
+function sizeTitle(){const t=document.getElementById('heroTitle'),vw=window.innerWidth;t.style.fontSize='1px';let lo=1,hi=600;while(hi-lo>0.5){const mid=(lo+hi)/2;t.style.fontSize=mid+'px';if(t.scrollWidth<=vw)lo=mid;else hi=mid}t.style.fontSize=lo+'px'}
+window.addEventListener('resize',sizeTitle);document.fonts.ready.then(sizeTitle);setTimeout(sizeTitle,100)
+const hero=document.getElementById('hero'),bar=document.getElementById('stickyBar')
+new IntersectionObserver(entries=>{bar.classList.toggle('show',!entries[0].isIntersecting)},{threshold:0}).observe(hero)
 </script>
 </body>
 </html>
