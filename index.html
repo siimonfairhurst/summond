@@ -93,14 +93,22 @@
     .lb-media img{width:100%;height:auto;max-height:70vh;object-fit:contain;display:block}
     .lb-media video{width:100%;height:auto;max-height:70vh;object-fit:contain;display:block}
     .lb-media iframe{width:100%;aspect-ratio:16/9;display:block;border:none}
-    .lb-body{padding:14px 18px 18px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
-    .lb-left{flex:1;min-width:0}
+    .lb-body{padding:14px 18px 52px;position:relative}
+    .lb-left{min-width:0}
     .lb-creator{font-size:14px;font-weight:600;color:#000;margin-bottom:4px;transition:color .3s}
     .lb-caption{font-size:14px;color:#666;line-height:1.6;margin-bottom:10px;transition:color .3s}
     .lb-tag-row{display:flex;gap:6px;flex-wrap:wrap}
-    .lb-btn{background:#000;color:#fff;font-family:'Hanken Grotesk',sans-serif;font-size:14px;font-weight:500;padding:4px 12px;border-radius:100px;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;align-self:center;transition:background .3s,color .3s,opacity .15s;text-decoration:none;display:inline-block}
+    .lb-btn{position:absolute;bottom:14px;right:18px;background:#000;color:#fff;font-family:'Hanken Grotesk',sans-serif;font-size:14px;font-weight:500;padding:4px 12px;border-radius:100px;border:none;cursor:pointer;white-space:nowrap;transition:background .3s,color .3s,opacity .15s;text-decoration:none;display:inline-block}
     .lb-btn:hover{opacity:.75}
     .loading{text-align:center;padding:80px 0;color:#ccc;font-size:12px;letter-spacing:0.06em}
+
+    /* FOOTER */
+    .footer{padding:96px 24px 48px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+    .footer p{font-size:12px;color:#767676;line-height:1.6;transition:color .3s}
+    .footer a{color:#767676;text-decoration:none;font-weight:500;transition:opacity .15s}
+    .footer a:hover{opacity:.6}
+    body.dark .footer p{color:#767676}
+    body.dark .footer a{color:#767676}
   </style>
 </head>
 <body>
@@ -117,6 +125,11 @@
   <div class="masonry" id="masonry"></div>
   <div id="sentinel" style="height:1px;display:none"></div>
 </div>
+
+<footer class="footer">
+  <p>All rights belong to original creators. Summond is a showcase of what's possible with vibe coding and AI tools.</p>
+  <p>Designed in Figma, built with Claude &nbsp;·&nbsp; <a href="https://simonfairhurst.co.uk" target="_blank" rel="noopener">Simon Fairhurst</a> &nbsp;·&nbsp; <span id="footerYear"></span></p>
+</footer>
 
 <div class="sticky-bar" id="stickyBar">
   <span class="sb-name">Summond</span>
@@ -149,7 +162,7 @@
 <div class="lb" id="lb" onclick="if(event.target===this)closeLb()">
   <div class="lb-wrap">
     <div class="lb-box">
-      <button class="lb-close" onclick="closeLb()">✕</button>
+      <button class="lb-close" onclick="closeLb()">&#x2715;</button>
       <div class="lb-media" id="lbMedia"></div>
       <div class="lb-body">
         <div class="lb-left">
@@ -268,6 +281,8 @@ function sizeTitle(){const t=document.getElementById('heroTitle'),vw=window.inne
 window.addEventListener('resize',sizeTitle);document.fonts.ready.then(sizeTitle);setTimeout(sizeTitle,100)
 const hero=document.getElementById('hero'),bar=document.getElementById('stickyBar')
 new IntersectionObserver(entries=>{bar.classList.toggle('show',!entries[0].isIntersecting)},{threshold:0}).observe(hero)
+
+document.getElementById('footerYear').textContent=new Date().getFullYear()
 </script>
 </body>
 </html>
