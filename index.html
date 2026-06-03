@@ -191,8 +191,19 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb()})
 function toggleMode(){document.body.classList.toggle('dark')}
 
 const DEMO=['AI invoice SaaS','Brand identity generator','Habit tracker','Music visualiser','E-commerce store','Chess with AI','Generative art','Budget tracker','Kanban board','Pixel art editor','3D configurator','Weather dashboard'].map((title,i)=>({id:`d${i}`,caption:title+' — built with AI.',mediaUrl:`https://picsum.photos/seed/smnd${i}/800/${320+(i%7)*60}`,postUrl:'#',tool:['Claude','Cursor','Bolt.new','Lovable','v0'][i%5],platform:['x','dribbble','behance','x','x'][i%5],creator:`@creator${i}`}))
-document.getElementById('loading').style.display='none'
-render(DEMO)
+
+async function init(){
+  try{
+    const res=await fetch('/api/feed')
+    const data=await res.json()
+    document.getElementById('loading').style.display='none'
+    render(data.projects?.length?data.projects:DEMO)
+  }catch{
+    document.getElementById('loading').style.display='none'
+    render(DEMO)
+  }
+}
+init()
 
 function sizeTitle(){const t=document.getElementById('heroTitle'),vw=window.innerWidth;t.style.fontSize='1px';let lo=1,hi=600;while(hi-lo>0.5){const mid=(lo+hi)/2;t.style.fontSize=mid+'px';if(t.scrollWidth<=vw)lo=mid;else hi=mid}t.style.fontSize=lo+'px'}
 window.addEventListener('resize',sizeTitle);document.fonts.ready.then(sizeTitle);setTimeout(sizeTitle,100)
