@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Summond.design</title>
+  <link rel="preload" href="/api/feed" as="fetch" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -109,6 +110,7 @@
 <div class="grid-wrap">
   <div class="loading" id="loading">Loading...</div>
   <div class="masonry" id="masonry"></div>
+  <div id="sentinel" style="height:1px;display:none"></div>
 </div>
 
 <div class="sticky-bar" id="stickyBar">
@@ -192,15 +194,45 @@ function toggleMode(){document.body.classList.toggle('dark')}
 
 const DEMO=['AI invoice SaaS','Brand identity generator','Habit tracker','Music visualiser','E-commerce store','Chess with AI','Generative art','Budget tracker','Kanban board','Pixel art editor','3D configurator','Weather dashboard'].map((title,i)=>({id:`d${i}`,caption:title+' — built with AI.',mediaUrl:`https://picsum.photos/seed/smnd${i}/800/${320+(i%7)*60}`,postUrl:'#',tool:['Claude','Cursor','Bolt.new','Lovable','v0'][i%5],platform:['x','dribbble','behance','x','x'][i%5],creator:`@creator${i}`}))
 
+let allProjects=[], batchSize=12, rendered=0
+
+function renderBatch(){
+  const grid=document.getElementById('masonry')
+  const batch=allProjects.slice(rendered, rendered+batchSize)
+  batch.forEach(p=>{
+    const platform=p.platform||detectPlatform(p.postUrl||'')
+    const card=document.createElement('div');card.className='card'
+    card.innerHTML=`<img src="${p.mediaUrl}" alt="" loading="lazy"><div class="card-pills">${toolPill(p.tool)}${platformPill(platform,p.creator)}</div>`
+    card.onclick=()=>openLb(p);grid.appendChild(card)
+  })
+  rendered+=batch.length
+  // show sentinel if more to load
+  const sentinel=document.getElementById('sentinel')
+  if(sentinel) sentinel.style.display = rendered < allProjects.length ? 'block' : 'none'
+}
+
+// Intersection observer for infinite scroll
+const observer=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting && rendered < allProjects.length) renderBatch()
+},{rootMargin:'200px'})
+
 async function init(){
+  // kick off fetch immediately
+  const feedPromise=fetch('/api/feed').then(r=>r.json()).catch(()=>null)
   try{
-    const res=await fetch('/api/feed')
-    const data=await res.json()
+    const data=await feedPromise
     document.getElementById('loading').style.display='none'
-    render(data.projects?.length?data.projects:DEMO)
+    allProjects=data?.projects?.length?data.projects:DEMO
+    rendered=0
+    document.getElementById('masonry').innerHTML=''
+    renderBatch()
+    const sentinel=document.getElementById('sentinel')
+    if(sentinel) observer.observe(sentinel)
   }catch{
     document.getElementById('loading').style.display='none'
-    render(DEMO)
+    allProjects=DEMO
+    rendered=0
+    renderBatch()
   }
 }
 init()
