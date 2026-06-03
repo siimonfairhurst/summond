@@ -165,15 +165,15 @@ const TOOL_CONFIG={Claude:{cls:'pill-claude',dot:'td-claude',label:'Claude'},Cur
 function detectPlatform(url){if(!url)return'web';if(url.includes('x.com')||url.includes('twitter.com'))return'x';if(url.includes('dribbble.com'))return'dribbble';if(url.includes('behance.net'))return'behance';return'web'}
 function toolPill(tool){const c=TOOL_CONFIG[tool]||TOOL_CONFIG.Other;return`<div class="pill ${c.cls}">${c.label}</div>`}
 const PLAT_ICONS={
-  x:        `<img src="https://cdn.simpleicons.org/x/000000" width="14" height="14" style="display:block">`,
-  dribbble: `<img src="https://cdn.simpleicons.org/dribbble/EA4C89" width="14" height="14" style="display:block">`,
-  behance:  `<img src="https://cdn.simpleicons.org/behance/1769FF" width="14" height="14" style="display:block">`,
-  producthunt:`<img src="https://cdn.simpleicons.org/producthunt/DA552F" width="14" height="14" style="display:block">`,
-  youtube:  `<img src="https://cdn.simpleicons.org/youtube/FF0000" width="14" height="14" style="display:block">`,
-  loom:     `<img src="https://cdn.simpleicons.org/loom/625DF5" width="14" height="14" style="display:block">`,
-  linkedin: `<img src="https://cdn.simpleicons.org/linkedin/0A66C2" width="14" height="14" style="display:block">`,
-  instagram:`<img src="https://cdn.simpleicons.org/instagram/E4405F" width="14" height="14" style="display:block">`,
-  web:      `<img src="https://cdn.simpleicons.org/internetexplorer/888888" width="14" height="14" style="display:block">`,
+  x:        `<img src="https://cdn.simpleicons.org/x/000000" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
+  dribbble: `<img src="https://cdn.simpleicons.org/dribbble/EA4C89" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
+  behance:  `<img src="https://cdn.simpleicons.org/behance/1769FF" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
+  producthunt:`<img src="https://cdn.simpleicons.org/producthunt/DA552F" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
+  youtube:  `<img src="https://cdn.simpleicons.org/youtube/FF0000" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
+  loom:     `<img src="https://cdn.simpleicons.org/loom/625DF5" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
+  linkedin: `<img src="https://cdn.simpleicons.org/linkedin/0A66C2" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
+  instagram:`<img src="https://cdn.simpleicons.org/instagram/E4405F" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
+  web:      `<img src="https://cdn.simpleicons.org/internetexplorer/888888" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
 }
 
 function platformPill(platform,creator){const icon=PLAT_ICONS[platform]||PLAT_ICONS.web;return`<div class="pill pill-platform">${icon}${creator||platform}</div>`}
