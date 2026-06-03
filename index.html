@@ -169,6 +169,22 @@ const PLAT_ICONS={
   web:`<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#888" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="6"/><line x1="2" y1="8" x2="14" y2="8"/><path d="M8 2a10 10 0 0 1 2.6 6A10 10 0 0 1 8 14 10 10 0 0 1 5.4 8 10 10 0 0 1 8 2z"/></svg>`,
 }
 function platformPill(platform,creator){const svg=PLAT_ICONS[platform]||PLAT_ICONS.web;return`<div class="pill pill-platform"><span class="pill-icon">${svg}</span>${creator||platform}</div>`}
+function makeMedia(p,forCard){
+  const url=p.mediaUrl||p.imageUrl||''
+  if(!url) return forCard?'<div style="aspect-ratio:16/9;background:#f5f5f5"></div>':''
+  if(url.includes('youtube.com')||url.includes('youtu.be')){
+    const id=url.match(/(?:v=|youtu\.be\/)([^&?\s]+)/)?.[1]
+    if(id) return `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0" frameborder="0" allow="autoplay" style="width:100%;${forCard?'aspect-ratio:16/9':'height:100%'};display:block;border:none"></iframe>`
+  }
+  if(url.includes('loom.com')){
+    const id=url.match(/\/share\/([a-zA-Z0-9]+)/)?.[1]
+    if(id) return `<iframe src="https://www.loom.com/embed/${id}?autoplay=1&muted=1&hideEmbedTopBar=true" frameborder="0" allow="autoplay" style="width:100%;${forCard?'aspect-ratio:16/9':'height:100%'};display:block;border:none"></iframe>`
+  }
+  if(p.mediaType==='video'||url.match(/\.(mp4|webm|mov)(\?.*)?$/i))
+    return `<video src="${url}" autoplay muted loop playsinline ${forCard?'':'controls'} style="width:100%;height:${forCard?'auto':'100%'};display:block;object-fit:cover"></video>`
+  return `<img src="${url}" alt="" loading="lazy" style="width:100%;height:${forCard?'auto':'100%'};display:block;object-fit:cover" onerror="this.style.opacity='0.2'">`
+}
+
 function render(projects){
   const grid=document.getElementById('masonry');grid.innerHTML=''
   projects.forEach(p=>{
@@ -202,7 +218,7 @@ function renderBatch(){
   batch.forEach(p=>{
     const platform=p.platform||detectPlatform(p.postUrl||'')
     const card=document.createElement('div');card.className='card'
-    card.innerHTML=`<img src="${p.mediaUrl}" alt="" loading="lazy"><div class="card-pills">${toolPill(p.tool)}${platformPill(platform,p.creator)}</div>`
+    card.innerHTML=`${makeMedia(p,true)}<div class="card-pills">${toolPill(p.tool)}${platformPill(platform,p.creator)}</div>`
     card.onclick=()=>openLb(p);grid.appendChild(card)
   })
   rendered+=batch.length
