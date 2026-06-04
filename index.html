@@ -592,7 +592,7 @@ async function smHandleFile(file){
     const res=await fetch('/api/upload',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({fileBase64:base64,fileName:file.name,fileType:file.type})
+      body:JSON.stringify({fileBase64:base64.split(',')[1],fileName:file.name,fileType:file.type})
     })
     const data=await res.json()
     if(!res.ok||data.error) throw new Error(data.error||'Upload failed')
