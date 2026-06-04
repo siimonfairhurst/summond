@@ -153,11 +153,15 @@
     .sm-submit-btn{width:100%;margin-top:20px;font-family:'Hanken Grotesk',sans-serif;font-size:15px;font-weight:600;padding:14px;border-radius:100px;border:none;background:#000;color:#fff;cursor:pointer;transition:opacity .15s,background .3s}
     .sm-submit-btn:hover{opacity:.8}
     .sm-submit-btn:disabled{opacity:.35;cursor:not-allowed}
-    .sm-success{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;text-align:center;padding:48px}
+    .sm-success{display:none;flex-direction:column;align-items:center;justify-content:center;flex:1;text-align:center;padding:48px;gap:0;min-height:80vh}
     .sm-success.show{display:flex}
-    .sm-success-icon{font-size:40px;margin-bottom:16px}
-    .sm-success-title{font-size:22px;font-weight:700;letter-spacing:-0.02em;margin-bottom:8px}
-    .sm-success-sub{font-size:14px;color:#888}
+    .sm-success-title{font-size:18px;font-weight:700;letter-spacing:-0.01em;margin-bottom:10px;transition:color .3s}
+    .sm-success-sub{font-size:13px;color:#888;line-height:1.6;max-width:340px;margin-bottom:20px;transition:color .3s}
+    .sm-success-btn{font-family:'Hanken Grotesk',sans-serif;font-size:13px;font-weight:500;padding:8px 20px;border-radius:100px;border:1.5px solid #000;background:#000;color:#fff;cursor:pointer;transition:opacity .15s,background .3s,color .3s,border-color .3s}
+    .sm-success-btn:hover{opacity:.75}
+    .sm-success-countdown{font-size:11px;color:#bbb;margin-top:10px;transition:color .3s}
+    body.dark .sm-success-title{color:#fff}
+    body.dark .sm-success-btn{background:#fff;color:#000;border-color:#fff}
     body.dark .sm{background:#0a0a0a}
     body.dark .sm-topbar{border-color:rgba(255,255,255,0.08)}
     body.dark .sm-back{border-color:rgba(255,255,255,0.16);color:#fff}
@@ -299,9 +303,10 @@
 
   <!-- Success state -->
   <div class="sm-success" id="smSuccess">
-    <div class="sm-success-icon">&#10003;</div>
-    <div class="sm-success-title">Submitted!</div>
-    <div class="sm-success-sub">Thanks for sharing. Simon reviews all submissions before they go live.</div>
+    <div class="sm-success-title">Submitted</div>
+    <div class="sm-success-sub">Thank you for contributing to Summond. Your submission has been received and will be reviewed before appearing on the feed. We appreciate you sharing your work with the community.</div>
+    <button class="sm-success-btn" onclick="closeSm()">Return to feed</button>
+    <div class="sm-success-countdown" id="smCountdown">Returning to feed in 5s</div>
   </div>
 
 </div>
@@ -565,6 +570,9 @@ async function smSubmit(){
     }
     document.getElementById('smForm').style.display='none'
     document.getElementById('smSuccess').classList.add('show')
+    let secs=5
+    const cd=document.getElementById('smCountdown')
+    const timer=setInterval(()=>{secs--;cd.textContent='Returning to feed in '+secs+'s';if(secs<=0){clearInterval(timer);closeSm()}},1000)
   }catch{
     err.textContent='Something went wrong. Please try again.'
     err.classList.add('show');btn.disabled=false;btn.textContent='Submit'
