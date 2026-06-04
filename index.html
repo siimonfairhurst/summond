@@ -138,10 +138,50 @@
     .sm-compat{background:#fffbeb;border:1px solid rgba(200,160,0,0.2);border-radius:8px;padding:14px 16px;font-size:12px;color:#7a6000;line-height:1.7;margin-top:8px}
     .sm-compat strong{font-weight:600}
     .sm-scrape-status{font-size:12px;margin-top:6px;min-height:16px;transition:color .3s}
+    .sm-upload-zone{border:2px dashed rgba(0,0,0,0.16);border-radius:10px;padding:32px 20px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;position:relative;overflow:hidden}
+    .sm-upload-zone:hover,.sm-upload-zone.drag{border-color:#000;background:rgba(0,0,0,0.02)}
+    .sm-upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .sm-upload-icon{font-size:24px;margin-bottom:8px}
+    .sm-upload-label{font-size:14px;font-weight:600;margin-bottom:4px;transition:color .3s}
+    .sm-upload-sub{font-size:12px;color:#aaa;transition:color .3s}
+    .sm-upload-progress{height:3px;background:rgba(0,0,0,0.08);border-radius:2px;margin-top:12px;overflow:hidden;display:none}
+    .sm-upload-progress.show{display:block}
+    .sm-upload-bar{height:100%;background:#000;border-radius:2px;width:0%;transition:width .3s}
+    .sm-upload-preview{width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;display:none;position:relative;background:#f0f0f0}
+    .sm-upload-preview.show{display:block}
+    .sm-upload-preview img,.sm-upload-preview video{width:100%;height:100%;object-fit:cover;display:block}
+    .sm-upload-change{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.6);color:#fff;border:none;border-radius:100px;font-family:"Hanken Grotesk",sans-serif;font-size:11px;padding:4px 10px;cursor:pointer}
+    .sm-upload-status{font-size:12px;margin-top:6px;min-height:16px}
+    .sm-upload-status.uploading{color:#aaa}
+    .sm-upload-status.ok{color:#0a0}
+    .sm-upload-status.err{color:#e53}
+    body.dark .sm-upload-zone{border-color:rgba(255,255,255,0.12)}
+    body.dark .sm-upload-zone:hover,.sm-upload-zone.drag{border-color:#fff;background:rgba(255,255,255,0.03)}
+    body.dark .sm-upload-bar{background:#fff}
     .sm-scrape-status.loading{color:#aaa}
     .sm-scrape-status.ok{color:#0a0}
     .sm-scrape-status.err{color:#e53}
     .sm-scrape-status.warn{color:#b87000}
+
+    .sm-upload-zone{border:2px dashed rgba(0,0,0,0.16);border-radius:10px;padding:32px 20px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;position:relative;overflow:hidden}
+    .sm-upload-zone:hover,.sm-upload-zone.drag{border-color:#000;background:rgba(0,0,0,0.02)}
+    .sm-upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .sm-upload-icon{font-size:24px;margin-bottom:8px}
+    .sm-upload-label{font-size:14px;font-weight:600;margin-bottom:4px;transition:color .3s}
+    .sm-upload-sub{font-size:12px;color:#aaa;transition:color .3s}
+    .sm-upload-progress{height:3px;background:rgba(0,0,0,0.08);border-radius:2px;margin-top:12px;overflow:hidden;display:none}
+    .sm-upload-progress.show{display:block}
+    .sm-upload-bar{height:100%;background:#000;border-radius:2px;width:0%;transition:width .3s}
+    .sm-upload-preview{width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;display:none;position:relative;background:#f0f0f0}
+    .sm-upload-preview.show{display:block}
+    .sm-upload-preview img,.sm-upload-preview video{width:100%;height:100%;object-fit:cover;display:block}
+    .sm-upload-change{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.6);color:#fff;border:none;border-radius:100px;font-family:'Hanken Grotesk',sans-serif;font-size:11px;padding:4px 10px;cursor:pointer}
+    .sm-upload-status{font-size:12px;margin-top:6px;min-height:16px}
+    .sm-upload-status.uploading{color:#aaa}
+    .sm-upload-status.ok{color:#0a0}
+    .sm-upload-status.err{color:#e53}
+    body.dark .sm-upload-zone{border-color:rgba(255,255,255,0.12)}
+    body.dark .sm-upload-bar{background:#fff}
     .sm-compat-err{color:#e53;font-weight:600;float:right;font-size:11px;display:none}
     .sm-compat-err.show{display:block}
     .sm-right{position:sticky;top:48px;align-self:start}
@@ -228,69 +268,58 @@
       <div class="sm-left">
         <div class="sm-page-title">Submit a project</div>
 
+        <!-- Step 1: Upload media -->
         <div class="sm-section">
-          <div class="sm-label">Post URL</div>
-          <div class="sm-desc">Paste the link to your post — we'll try to fill in the details automatically.</div>
-          <div class="sm-url-row">
-            <input class="sm-input" id="smPostUrl" type="url" placeholder="https://dribbble.com/shots/... or https://x.com/..." oninput="smOnPostUrlInput()" style="padding-right:36px">
-            <div class="sm-url-icon" id="smPostIcon"></div>
+          <div class="sm-label">Upload your media</div>
+          <div class="sm-desc">Image or video of your project. Max 5MB images, 30MB video.</div>
+          <div class="sm-upload-zone" id="smUploadZone" ondragover="smDrag(event,true)" ondragleave="smDrag(event,false)" ondrop="smDrop(event)">
+            <input type="file" id="smFileInput" accept="image/*,video/*" onchange="smFileSelected(event)">
+            <div id="smUploadPrompt">
+              <div class="sm-upload-icon">&#8593;</div>
+              <div class="sm-upload-label">Click to upload or drag and drop</div>
+              <div class="sm-upload-sub">PNG, JPG, GIF, MP4, MOV</div>
+            </div>
           </div>
-          <div class="sm-scrape-status" id="smScrapeStatus"></div>
+          <div class="sm-upload-progress" id="smUploadProgress"><div class="sm-upload-bar" id="smUploadBar"></div></div>
+          <div class="sm-upload-status" id="smUploadStatus"></div>
+          <div class="sm-upload-preview" id="smUploadPreview">
+            <button class="sm-upload-change" onclick="smResetUpload()">Change</button>
+          </div>
         </div>
 
-        <div id="smAutoFields" style="opacity:0.4;pointer-events:none;transition:opacity .3s">
+        <!-- Step 2: Details -->
+        <div class="sm-section">
+          <div class="sm-label">Caption</div>
+          <div class="sm-desc">What have you built?</div>
+          <textarea class="sm-input" id="smCaption" rows="3" maxlength="250" placeholder="e.g. 4M particle renderer built with Claude Code" oninput="smUpdatePreview();smUpdateCharCount()"></textarea>
+          <div class="sm-charcount"><span id="smCharCount">0</span>/250 Characters</div>
+        </div>
 
-          <div class="sm-section">
-            <div class="sm-label">Media URL <span style="font-weight:400;color:#aaa;font-size:12px">— auto-filled, edit if needed</span></div>
-            <div class="sm-desc" id="smMediaDesc">The image or video that will appear on the feed.</div>
-            <div id="smXHint" style="display:none;font-size:12px;background:#fff8e6;border:1px solid rgba(200,140,0,0.2);border-radius:8px;padding:10px 12px;color:#7a5800;line-height:1.6;margin-bottom:6px">
-              <strong>For X / Twitter:</strong> right-click the image or video thumbnail &rarr; <em>Copy image address</em>.<br>
-              The URL will start with <code style="background:rgba(0,0,0,0.06);padding:1px 4px;border-radius:3px">pbs.twimg.com</code> or <code style="background:rgba(0,0,0,0.06);padding:1px 4px;border-radius:3px">jf.x.com</code> — paste that here.<br>
-              It won't preview in this form due to browser restrictions, but it will display correctly on the feed.
-            </div>
-            <div class="sm-url-row">
-              <input class="sm-input" id="smMediaUrl" type="url" placeholder="https://" oninput="smValidateMedia()" style="padding-right:36px">
-              <div class="sm-url-icon" id="smMediaIcon"></div>
-            </div>
-            <div class="sm-error" id="smMediaErr"></div>
-            <div class="sm-compat">
-              <span id="smCompatErr" class="sm-compat-err" style="display:none">Unsupported media type URL</span>
-              <strong>Compatibility</strong>
-              Summond links directly to media hosted elsewhere. Some platforms block this.<br><br>
-              <strong>Supported:</strong> Dribbble, Youtube, Loom, Vimeo, Imgur, Github, Cloudinary<br>
-              <strong>Unsupported:</strong> Threads, LinkedIn, Behance, TikTok, Pinterest, Facebook.<br><br>
-              For X: right-click your image &rarr; Copy image address &rarr; paste the <code style="background:rgba(0,0,0,0.06);padding:1px 4px;border-radius:3px">pbs.twimg.com</code> URL here.
-            </div>
-          </div>
+        <div class="sm-section">
+          <div class="sm-label">Your name or handle</div>
+          <input class="sm-input" id="smCreator" type="text" maxlength="40" placeholder="@yourhandle" oninput="smUpdatePreview()">
+        </div>
 
-          <div class="sm-section">
-            <div class="sm-label">Caption <span style="font-weight:400;color:#aaa;font-size:12px">— auto-filled, edit if needed</span></div>
-            <div class="sm-desc">What is it you've created?</div>
-            <textarea class="sm-input" id="smCaption" rows="3" maxlength="250" placeholder="A groundbreaking app for..." oninput="smUpdatePreview();smUpdateCharCount()"></textarea>
-            <div class="sm-charcount"><span id="smCharCount">0</span>/250 Characters</div>
-          </div>
+        <div class="sm-section">
+          <div class="sm-label">Tools used</div>
+          <div class="sm-desc">What was it designed or built with?</div>
+          <select class="sm-input sm-select" id="smTool" onchange="smUpdatePreview()">
+            <option value="">Select</option>
+            <option value="Claude">Claude</option>
+            <option value="Cursor">Cursor</option>
+            <option value="Bolt.new">Bolt.new</option>
+            <option value="Lovable">Lovable</option>
+            <option value="v0">v0</option>
+            <option value="Figma">Figma</option>
+            <option value="Midjourney">Midjourney</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
 
-          <div class="sm-section">
-            <div class="sm-label">Your name or handle <span style="font-weight:400;color:#aaa;font-size:12px">— auto-filled, edit if needed</span></div>
-            <input class="sm-input" id="smCreator" type="text" maxlength="40" placeholder="@yourhandle" oninput="smUpdatePreview()">
-          </div>
-
-          <div class="sm-section" style="border-bottom:none">
-            <div class="sm-label">Tools used</div>
-            <div class="sm-desc">What was it designed or built with?</div>
-            <select class="sm-input sm-select" id="smTool" onchange="smUpdatePreview()">
-              <option value="">Select</option>
-              <option value="Claude">Claude</option>
-              <option value="Cursor">Cursor</option>
-              <option value="Bolt.new">Bolt.new</option>
-              <option value="Lovable">Lovable</option>
-              <option value="v0">v0</option>
-              <option value="Figma">Figma</option>
-              <option value="Midjourney">Midjourney</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
+        <div class="sm-section" style="border-bottom:none">
+          <div class="sm-label">Link to original post <span style="font-weight:400;color:#aaa;font-size:12px">— optional</span></div>
+          <div class="sm-desc">Dribbble shot, tweet, wherever you shared this.</div>
+          <input class="sm-input" id="smPostUrl" type="url" placeholder="https://...">
         </div>
 
         <div class="sm-error" id="smSubmitErr" style="margin-top:8px"></div>
@@ -472,122 +501,27 @@ const hero=document.getElementById('hero'),bar=document.getElementById('stickyBa
 new IntersectionObserver(entries=>{bar.classList.toggle('show',!entries[0].isIntersecting)},{threshold:0}).observe(hero)
 
 // SUBMIT MODAL
-let scrapeTimer=null
-
-function smOnPostUrlInput(){
-  clearTimeout(scrapeTimer)
-  const val=document.getElementById('smPostUrl').value.trim()
-  const icon=document.getElementById('smPostIcon')
-  const status=document.getElementById('smScrapeStatus')
-  icon.className='sm-url-icon'
-  status.className='sm-scrape-status'
-  status.textContent=''
-  if(!val)return
-  let host=''
-  try{host=new URL(val).hostname.replace('www.','')}catch{return}
-  const BLOCKED=['linkedin.com','instagram.com','tiktok.com','threads.net','facebook.com','pinterest.com']
-  if(BLOCKED.some(b=>host.includes(b))){
-    icon.className='sm-url-icon show err';icon.textContent='!'
-    status.className='sm-scrape-status err'
-    status.textContent=host+' is not supported. Please fill in the fields manually.'
-    smUnlockFields(false)
-    return
-  }
-  icon.className='sm-url-icon show ok';icon.textContent='✓'
-  status.className='sm-scrape-status loading'
-  status.textContent='Looking up post details...'
-  scrapeTimer=setTimeout(()=>smScrape(val),600)
-}
-
-async function smScrape(url){
-  const status=document.getElementById('smScrapeStatus')
-  try{
-    const res=await fetch('/api/scrape?url='+encodeURIComponent(url))
-    const data=await res.json()
-    if(data.blocked){
-      status.className='sm-scrape-status err'
-      status.textContent=data.reason||'This platform is not supported. Please fill in manually.'
-      smUnlockFields(false)
-      return
-    }
-    if(data.error){
-      status.className='sm-scrape-status warn'
-      status.textContent=data.error
-      smUnlockFields(false)
-      return
-    }
-    if(data.mediaUrl)document.getElementById('smMediaUrl').value=data.mediaUrl
-    if(data.caption){document.getElementById('smCaption').value=data.caption;smUpdateCharCount()}
-    if(data.creator)document.getElementById('smCreator').value=data.creator
-    smValidateMedia()
-    smUpdatePreview()
-    smUnlockFields(true)
-    if(data.note){
-      status.className='sm-scrape-status warn'
-      status.textContent=data.note
-    } else if(data.mediaUrl||data.caption||data.creator){
-      status.className='sm-scrape-status ok'
-      status.textContent='Details filled in automatically — please review and edit if needed.'
-    } else {
-      status.className='sm-scrape-status warn'
-      status.textContent='Could not auto-fill details. Please enter them manually.'
-    }
-  }catch{
-    status.className='sm-scrape-status warn'
-    status.textContent='Could not auto-fill. Please enter the details manually.'
-    smUnlockFields(false)
-  }
-}
-
-function smUnlockFields(autofilled){
-  const fields=document.getElementById('smAutoFields')
-  fields.style.opacity='1'
-  fields.style.pointerEvents='auto'
-  // Show X-specific media hint if post URL is from X
-  const postUrl=document.getElementById('smPostUrl').value||''
-  const isX=postUrl.includes('x.com')||postUrl.includes('twitter.com')
-  document.getElementById('smXHint').style.display=isX?'block':'none'
-  if(!autofilled){
-    // Clear fields so user knows they need to fill in manually
-    document.getElementById('smMediaUrl').value=''
-    document.getElementById('smCaption').value=''
-    document.getElementById('smCreator').value=''
-    smUpdatePreview()
-    document.getElementById('smCardMedia').innerHTML='<div class="sm-card-media-placeholder">Media preview will go here</div>'
-  }
-}
-
-const BLOCKED_HOSTS=['linkedin.com','instagram.com','tiktok.com','threads.net','facebook.com','fb.com','pinterest.com']
-const EMBED_HOSTS=['youtube.com','youtu.be','vimeo.com','loom.com','codepen.io','x.com','twitter.com']
+let uploadedMediaUrl = ''
 
 function openSm(){
   document.getElementById('sm').classList.add('open')
-  document.getElementById('smAutoFields').style.opacity='0.4'
-  document.getElementById('smAutoFields').style.pointerEvents='none'
-  document.getElementById('smScrapeStatus').textContent=''
-  document.getElementById('smScrapeStatus').className='sm-scrape-status'
-  document.getElementById('smPostIcon').className='sm-url-icon'
   document.getElementById('smForm').style.display=''
   document.getElementById('smSuccess').classList.remove('show')
-  document.getElementById('smMediaUrl').value=''
-  document.getElementById('smPostUrl').value=''
   document.getElementById('smCaption').value=''
   document.getElementById('smCreator').value=''
+  document.getElementById('smPostUrl').value=''
   document.getElementById('smTool').selectedIndex=0
   document.getElementById('smCharCount').textContent='0'
-  document.getElementById('smMediaErr').classList.remove('show')
   document.getElementById('smSubmitErr').classList.remove('show')
-  document.getElementById('smMediaIcon').className='sm-url-icon'
-  document.getElementById('smPostIcon').className='sm-url-icon'
-  document.getElementById('smCompatErr').classList.remove('show')
+  uploadedMediaUrl=''
+  smResetUpload()
   smUpdatePreview()
   window.scrollTo(0,0)
 }
 function closeSm(){document.getElementById('sm').classList.remove('open')}
 
 function smUpdateCharCount(){
-  const v=document.getElementById('smCaption').value
-  document.getElementById('smCharCount').textContent=v.length
+  document.getElementById('smCharCount').textContent=document.getElementById('smCaption').value.length
 }
 
 function smUpdatePreview(){
@@ -599,99 +533,141 @@ function smUpdatePreview(){
   document.getElementById('smCardTool').textContent=tool||'Tool here'
 }
 
-function smSetMediaPreview(url){
-  const media=document.getElementById('smCardMedia')
-  if(!url){media.innerHTML='<div class="sm-card-media-placeholder">Media preview will go here</div>';return}
-  // X/Twitter CDN — can't preview in browser due to CORS but works on the feed
-  if(url.includes('x.com')||url.includes('twitter.com')||url.includes('twimg.com')||url.includes('t.co')){
-    media.innerHTML='<div class="sm-card-media-placeholder" style="text-align:center;padding:16px;line-height:1.5">X / Twitter media<br><span style="font-size:10px;color:#bbb">Will display correctly on the feed</span></div>';return
+// ── Drag and drop ───────────────────────────────────────────────
+function smDrag(e,on){e.preventDefault();document.getElementById('smUploadZone').classList.toggle('drag',on)}
+function smDrop(e){
+  e.preventDefault()
+  document.getElementById('smUploadZone').classList.remove('drag')
+  const file=e.dataTransfer.files[0]
+  if(file) smHandleFile(file)
+}
+function smFileSelected(e){
+  const file=e.target.files[0]
+  if(file) smHandleFile(file)
+}
+
+function smResetUpload(){
+  uploadedMediaUrl=''
+  document.getElementById('smUploadZone').style.display=''
+  document.getElementById('smUploadPreview').classList.remove('show')
+  document.getElementById('smUploadPreview').innerHTML='<button class="sm-upload-change" onclick="smResetUpload()">Change</button>'
+  document.getElementById('smUploadStatus').textContent=''
+  document.getElementById('smUploadStatus').className='sm-upload-status'
+  document.getElementById('smUploadProgress').classList.remove('show')
+  document.getElementById('smUploadBar').style.width='0%'
+  document.getElementById('smFileInput').value=''
+  document.getElementById('smCardMedia').innerHTML='<div class="sm-card-media-placeholder">Media preview will go here</div>'
+}
+
+async function smHandleFile(file){
+  const isVideo=file.type.startsWith('video/')
+  const isImage=file.type.startsWith('image/')
+  if(!isVideo&&!isImage){
+    smSetUploadStatus('err','Only image and video files are supported.')
+    return
   }
-  const isEmbed=EMBED_HOSTS.find(b=>url.includes(b))
-  if(isEmbed){media.innerHTML='<div class="sm-card-media-placeholder" style="text-align:center;padding:16px">'+capitalise(isEmbed)+' embed<br>will display on card</div>';return}
-  if(url.match(/\.(mp4|webm|mov)(\?.*)?$/i)){
-    media.innerHTML='<video src="'+url+'" muted autoplay loop playsinline style="width:100%;height:100%;object-fit:cover" onerror="smMediaFail()"></video>'
-  } else {
-    media.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover" onerror="smMediaFail()">'
+  const maxBytes=isVideo?30*1024*1024:5*1024*1024
+  if(file.size>maxBytes){
+    smSetUploadStatus('err',isVideo?'Video must be under 30MB.':'Image must be under 5MB.')
+    return
+  }
+
+  // Show local preview immediately
+  const localUrl=URL.createObjectURL(file)
+  smShowPreview(localUrl, isVideo)
+  document.getElementById('smUploadZone').style.display='none'
+  smSetUploadStatus('uploading','Uploading...')
+  document.getElementById('smUploadProgress').classList.add('show')
+  smAnimateBar()
+
+  // Convert to base64
+  const base64=await new Promise((resolve,reject)=>{
+    const reader=new FileReader()
+    reader.onload=()=>resolve(reader.result)
+    reader.onerror=reject
+    reader.readAsDataURL(file)
+  })
+
+  try{
+    const res=await fetch('/api/upload',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({fileBase64:base64,fileName:file.name,fileType:file.type})
+    })
+    const data=await res.json()
+    if(!res.ok||data.error) throw new Error(data.error||'Upload failed')
+    uploadedMediaUrl=data.url
+    document.getElementById('smUploadBar').style.width='100%'
+    smSetUploadStatus('ok','Uploaded successfully')
+    // Update preview card with ImageKit URL
+    smShowPreview(data.url, isVideo)
+  }catch(err){
+    smSetUploadStatus('err','Upload failed — please try again.')
+    smResetUpload()
   }
 }
 
-function smMediaFail(){
-  document.getElementById('smCardMedia').innerHTML='<div class="sm-card-media-placeholder" style="color:#e53;text-align:center;padding:16px">Could not load media.<br>Check it\'s a direct file URL.</div>'
-  const inp=document.getElementById('smMediaUrl')
-  const err=document.getElementById('smMediaErr')
-  const icon=document.getElementById('smMediaIcon')
-  inp.classList.add('error')
-  icon.className='sm-url-icon show err';icon.textContent='!'
-  err.textContent='Could not load that URL. Make sure it\'s a direct link to the file, not a page URL.'
-  err.classList.add('show')
+let barTimer=null
+function smAnimateBar(){
+  let w=0
+  clearInterval(barTimer)
+  barTimer=setInterval(()=>{
+    w=Math.min(w+Math.random()*8,88)
+    document.getElementById('smUploadBar').style.width=w+'%'
+    if(w>=88)clearInterval(barTimer)
+  },200)
 }
 
-function smValidateMedia(){
-  const val=document.getElementById('smMediaUrl').value.trim()
-  const inp=document.getElementById('smMediaUrl')
-  const err=document.getElementById('smMediaErr')
-  const icon=document.getElementById('smMediaIcon')
-  const compatErr=document.getElementById('smCompatErr')
-  err.classList.remove('show');inp.classList.remove('error')
-  icon.className='sm-url-icon';compatErr.classList.remove('show')
-  smSetMediaPreview('')
-  smUpdatePreview()
-  if(!val)return
-  let host=''
-  try{host=new URL(val).hostname.replace('www.','')}catch{
-    err.textContent='That doesn\'t look like a valid URL.'
-    err.classList.add('show');inp.classList.add('error')
-    icon.className='sm-url-icon show err';icon.textContent='!'
-    return
-  }
-  const blocked=BLOCKED_HOSTS.find(b=>host.includes(b))
-  if(blocked){
-    compatErr.textContent='Unsupported media type URL';compatErr.classList.add('show')
-    err.textContent=capitalise(blocked)+' is not supported — media is locked behind login. Upload to Imgur or Cloudinary instead.'
-    err.classList.add('show');inp.classList.add('error')
-    icon.className='sm-url-icon show err';icon.textContent='!'
-    return
-  }
-  // X/Twitter CDN URLs — valid media but can't preview due to CORS, show placeholder
-  if(host.includes('x.com')||host.includes('twitter.com')||host.includes('twimg.com')){
-    icon.className='sm-url-icon show ok';icon.textContent='✓'
-    smSetMediaPreview(val)
-    return
-  }
-  icon.className='sm-url-icon show ok';icon.textContent='✓'
-  smSetMediaPreview(val)
+function smShowPreview(url, isVideo){
+  const preview=document.getElementById('smUploadPreview')
+  const cardMedia=document.getElementById('smCardMedia')
+  const mediaHtml=isVideo
+    ?'<video src="'+url+'" muted autoplay loop playsinline style="width:100%;height:100%;object-fit:cover"></video>'
+    :'<img src="'+url+'" style="width:100%;height:100%;object-fit:cover">'
+  preview.innerHTML=mediaHtml+'<button class="sm-upload-change" onclick="smResetUpload()">Change</button>'
+  preview.classList.add('show')
+  cardMedia.innerHTML=mediaHtml
 }
 
-function capitalise(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function smSetUploadStatus(type,msg){
+  const el=document.getElementById('smUploadStatus')
+  el.className='sm-upload-status '+type
+  el.textContent=msg
+}
 
 async function smSubmit(){
   const btn=document.getElementById('smSubmit')
   const err=document.getElementById('smSubmitErr')
-  const mediaUrl=document.getElementById('smMediaUrl').value.trim()
-  const postUrl=document.getElementById('smPostUrl').value.trim()
   const caption=document.getElementById('smCaption').value.trim()
   const creator=document.getElementById('smCreator').value.trim()
   const tool=document.getElementById('smTool').value
+  const postUrl=document.getElementById('smPostUrl').value.trim()
   err.classList.remove('show')
-  if(!mediaUrl){err.textContent='Please add a media URL.';err.classList.add('show');return}
-  if(!postUrl){err.textContent='Please add a link to the original post.';err.classList.add('show');return}
+  if(!uploadedMediaUrl){err.textContent='Please upload an image or video first.';err.classList.add('show');return}
   if(!caption){err.textContent='Please add a caption.';err.classList.add('show');return}
   if(!creator){err.textContent='Please add your name or handle.';err.classList.add('show');return}
   btn.disabled=true;btn.textContent='Submitting...'
   try{
-    const res=await fetch('/api/submit',{method:'POST',body:JSON.stringify({mediaUrl,postUrl,caption,tool,creator}),headers:{'Content-Type':'application/json'}})
+    const res=await fetch('/api/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({mediaUrl:uploadedMediaUrl,postUrl:postUrl||'',caption,tool,creator})
+    })
     if(!res.ok)throw new Error('Submit failed')
     document.getElementById('smForm').style.display='none'
     document.getElementById('smSuccess').classList.add('show')
     let secs=5
     const cd=document.getElementById('smCountdown')
-    const timer=setInterval(()=>{secs--;cd.textContent='Returning to feed in '+secs+'s';if(secs<=0){clearInterval(timer);closeSm()}},1000)
+    const timer=setInterval(()=>{
+      secs--
+      cd.textContent='Returning to feed in '+secs+'s'
+      if(secs<=0){clearInterval(timer);closeSm()}
+    },1000)
   }catch{
     err.textContent='Something went wrong. Please try again.'
     err.classList.add('show');btn.disabled=false;btn.textContent='Submit'
   }
 }
-
 document.querySelectorAll('.hero-btn').forEach(b=>{if(b.textContent.trim()==='Submit')b.onclick=openSm})
 
 
