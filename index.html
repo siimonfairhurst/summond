@@ -151,7 +151,7 @@
     .sm-upload-preview.show{display:block}
     .sm-upload-preview img,.sm-upload-preview video{width:100%;height:100%;object-fit:cover;display:block}
     .sm-upload-change{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.6);color:#fff;border:none;border-radius:100px;font-family:"Hanken Grotesk",sans-serif;font-size:11px;padding:4px 10px;cursor:pointer}
-    .sm-upload-status{font-size:12px;margin-top:6px;min-height:16px}
+    .sm-upload-status{font-size:12px;margin-top:14px;min-height:16px}
     .sm-upload-status.uploading{color:#aaa}
     .sm-upload-status.ok{color:#0a0}
     .sm-upload-status.err{color:#e53}
@@ -176,7 +176,7 @@
     .sm-upload-preview.show{display:block}
     .sm-upload-preview img,.sm-upload-preview video{width:100%;height:100%;object-fit:cover;display:block}
     .sm-upload-change{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.6);color:#fff;border:none;border-radius:100px;font-family:'Hanken Grotesk',sans-serif;font-size:11px;padding:4px 10px;cursor:pointer}
-    .sm-upload-status{font-size:12px;margin-top:6px;min-height:16px}
+    .sm-upload-status{font-size:12px;margin-top:14px;min-height:16px}
     .sm-upload-status.uploading{color:#aaa}
     .sm-upload-status.ok{color:#0a0}
     .sm-upload-status.err{color:#e53}
@@ -322,8 +322,18 @@
 
           <!-- URL panel -->
           <div id="smPanelUrl" style="display:none">
-            <input class="sm-input" id="smMediaUrl" type="url" placeholder="https://cdn.dribbble.com/... or https://pbs.twimg.com/..." oninput="smOnMediaUrlInput()">
-            <div class="sm-upload-status" id="smUrlStatus" style="margin-top:6px"></div>
+            <input class="sm-input" id="smMediaUrl" type="url" placeholder="https://..." oninput="smOnMediaUrlInput()">
+            <div class="sm-upload-preview" id="smUrlPreview" style="margin-top:10px">
+              <button class="sm-upload-change" onclick="smResetUrlPreview()">Clear</button>
+            </div>
+            <div class="sm-upload-status" id="smUrlStatus" style="margin-top:8px"></div>
+            <div style="font-size:12px;color:#888;line-height:1.7;margin-top:10px;padding:12px 14px;background:#f8f8f8;border-radius:8px">
+              <strong style="color:#000;display:block;margin-bottom:4px">What works as a media URL</strong>
+              <strong style="color:#555">✓ Works:</strong> Dribbble CDN, YouTube, Vimeo, Loom, Imgur, Cloudinary, direct .jpg/.mp4 links<br>
+              <strong style="color:#555">✓ Works (image only):</strong> X/Twitter — right-click image → Copy image address (starts with pbs.twimg.com)<br>
+              <strong style="color:#c00">✗ Won't work:</strong> X/Twitter video, LinkedIn, Instagram, TikTok, Threads, Facebook<br><br>
+              If your media is from an unsupported platform, use the <strong>Upload a file</strong> tab instead.
+            </div>
           </div>
         </div>
 
@@ -337,11 +347,12 @@
 
         <!-- Social profile -->
         <div class="sm-section">
-          <div class="sm-label">Your social profile</div>
-          <div class="sm-desc">Paste a link to your X, Dribbble, LinkedIn or any profile — we'll grab your name automatically.</div>
+          <div class="sm-label">Your name &amp; profile</div>
+          <div class="sm-desc">Paste your profile link and we'll fill your name in — or just type it below.</div>
           <input class="sm-input" id="smSocialUrl" type="url" placeholder="https://x.com/yourhandle" oninput="smOnSocialInput()">
           <div class="sm-social-name" id="smSocialName"></div>
-          <input class="sm-input" id="smCreator" type="text" maxlength="60" placeholder="Your name (auto-filled above, or type here)" oninput="smUpdatePreview()" style="margin-top:8px">
+          <div style="text-align:center;font-size:11px;color:#bbb;padding:4px 0">or</div>
+          <input class="sm-input" id="smCreator" type="text" maxlength="60" placeholder="Type your name or handle" oninput="smUpdatePreview()">
         </div>
 
         <!-- Tools -->
@@ -450,7 +461,14 @@ const PLAT_ICONS={
   web:      `<img src="https://cdn.simpleicons.org/internetexplorer/888888" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
 }
 
-function platformPill(platform,creator){const icon=PLAT_ICONS[platform]||PLAT_ICONS.web;return`<div class="pill pill-platform">${icon}${creator||platform}</div>`}
+function platformPill(platform,creator,postUrl){
+  const icon=PLAT_ICONS[platform]||PLAT_ICONS.web
+  const label=creator||platform
+  const inner=postUrl&&postUrl!=='#'
+    ?`<a href="${postUrl}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${label}</a>`
+    :label
+  return`<div class="pill pill-platform">${icon}${inner}</div>`
+}
 function makeMedia(p,forCard){
   const url=p.mediaUrl||p.imageUrl||''
   if(!url) return forCard?'<div style="aspect-ratio:16/9;background:#f5f5f5"></div>':''
@@ -472,13 +490,18 @@ function render(projects){
   projects.forEach(p=>{
     const platform=p.platform||detectPlatform(p.postUrl||'')
     const card=document.createElement('div');card.className='card'
-    card.innerHTML=`<img src="${p.mediaUrl}" alt="" loading="lazy"><div class="card-pills">${toolPill(p.tool)}${platformPill(platform,p.creator)}</div>`
+    card.innerHTML=`<img src="${p.mediaUrl}" alt="" loading="lazy"><div class="card-pills">${toolPill(p.tool)}${platformPill(platform,p.creator,p.postUrl)}</div>`
     card.onclick=()=>openLb(p);grid.appendChild(card)
   })
 }
 function openLb(p){
   const wrap=document.getElementById('lbMedia');wrap.innerHTML=makeMedia(p,false)
-  document.getElementById('lbCreator').textContent=p.creator||''
+  const lbCreatorEl=document.getElementById('lbCreator')
+  if(p.postUrl&&p.postUrl!=='#'){
+    lbCreatorEl.innerHTML='<a href="'+p.postUrl+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.15);padding-bottom:1px">'+( p.creator||''  )+'</a>'
+  } else {
+    lbCreatorEl.textContent=p.creator||''
+  }
   document.getElementById('lbCaption').textContent=p.caption||''
   const platform=p.platform||detectPlatform(p.postUrl||'')
   document.getElementById('lbTags').innerHTML=toolPill(p.tool)+platformPill(platform,p.creator)
@@ -500,7 +523,7 @@ function renderBatch(){
   batch.forEach(p=>{
     const platform=p.platform||detectPlatform(p.postUrl||'')
     const card=document.createElement('div');card.className='card'
-    card.innerHTML=`${makeMedia(p,true)}<div class="card-pills">${toolPill(p.tool)}${platformPill(platform,p.creator)}</div>`
+    card.innerHTML=`${makeMedia(p,true)}<div class="card-pills">${toolPill(p.tool)}${platformPill(platform,p.creator,p.postUrl)}</div>`
     card.onclick=()=>openLb(p);grid.appendChild(card)
   })
   rendered+=batch.length
@@ -573,7 +596,7 @@ function smSwitchTab(tab){
   document.getElementById('smPanelUrl').style.display=tab==='url'?'':'none'
   document.getElementById('smTabUpload').classList.toggle('active',tab==='upload')
   document.getElementById('smTabUrl').classList.toggle('active',tab==='url')
-  if(tab==='upload'){uploadedMediaUrl='';smResetUpload()}
+  if(tab==='upload'){uploadedMediaUrl='';smResetUpload();smResetUrlPreview&&smResetUrlPreview()}
   else{uploadedMediaUrl='';smUpdatePreview()}
 }
 
@@ -620,6 +643,45 @@ function smUrlMediaFail(){
 
 // ── Social profile ──────────────────────────────────────────────
 let socialTimer=null
+async function smFetchPreview(){
+  const val=document.getElementById('smMediaUrl').value.trim()
+  const status=document.getElementById('smUrlStatus')
+  if(!val){status.textContent='Paste a URL first.';status.className='sm-upload-status err';return}
+  status.textContent='Fetching...';status.className='sm-upload-status uploading'
+  try{
+    const res=await fetch('/api/scrape?url='+encodeURIComponent(val))
+    const data=await res.json()
+    const imgUrl=data.mediaUrl||''
+    if(!imgUrl){
+      status.textContent='Could not find a preview image for this URL.'
+      status.className='sm-upload-status err'
+      return
+    }
+    const preview=document.getElementById('smUrlPreview')
+    preview.innerHTML='<img src="'+imgUrl+'" style="width:100%;height:100%;object-fit:cover" onerror="smUrlFetchFail()"><button class="sm-upload-change" onclick="smResetUrlPreview()">Clear</button>'
+    preview.classList.add('show')
+    document.getElementById('smCardMedia').innerHTML='<img src="'+imgUrl+'" style="width:100%;height:100%;object-fit:cover">'
+    uploadedMediaUrl=imgUrl
+    status.textContent='Preview loaded — this image will appear on the feed.'
+    status.className='sm-upload-status ok'
+  }catch{
+    status.textContent='Could not fetch preview. The URL may still work on the feed.'
+    status.className='sm-upload-status err'
+  }
+}
+function smUrlFetchFail(){
+  document.getElementById('smUrlStatus').textContent='Image loaded from scrape but failed to display. Try a direct media URL instead.'
+  document.getElementById('smUrlStatus').className='sm-upload-status err'
+}
+function smResetUrlPreview(){
+  const preview=document.getElementById('smUrlPreview')
+  preview.classList.remove('show')
+  preview.innerHTML='<button class="sm-upload-change" onclick="smResetUrlPreview()">Clear</button>'
+  document.getElementById('smCardMedia').innerHTML='<div class="sm-card-media-placeholder">Media preview will go here</div>'
+  uploadedMediaUrl=document.getElementById('smMediaUrl').value.trim()||''
+  document.getElementById('smUrlStatus').textContent=''
+}
+
 function smOnSocialInput(){
   clearTimeout(socialTimer)
   const val=document.getElementById('smSocialUrl').value.trim()
@@ -791,7 +853,7 @@ async function smSubmit(){
     const res=await fetch('/api/submit',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({mediaUrl:uploadedMediaUrl,postUrl:socialUrl||'',caption,tool,creator})
+      body:JSON.stringify({mediaUrl:uploadedMediaUrl,postUrl:socialUrl||'',caption,tool,creator,creatorUrl:socialUrl||''})
     })
     if(!res.ok)throw new Error('Submit failed')
     document.getElementById('smForm').style.display='none'
