@@ -137,6 +137,11 @@
     .sm-error.show{display:block}
     .sm-compat{background:#fffbeb;border:1px solid rgba(200,160,0,0.2);border-radius:8px;padding:14px 16px;font-size:12px;color:#7a6000;line-height:1.7;margin-top:8px}
     .sm-compat strong{font-weight:600}
+    .sm-scrape-status{font-size:12px;margin-top:6px;min-height:16px;transition:color .3s}
+    .sm-scrape-status.loading{color:#aaa}
+    .sm-scrape-status.ok{color:#0a0}
+    .sm-scrape-status.err{color:#e53}
+    .sm-scrape-status.warn{color:#b87000}
     .sm-compat-err{color:#e53;font-weight:600;float:right;font-size:11px;display:none}
     .sm-compat-err.show{display:block}
     .sm-right{position:sticky;top:48px;align-self:start}
@@ -224,58 +229,63 @@
         <div class="sm-page-title">Submit a project</div>
 
         <div class="sm-section">
-          <div class="sm-label">Caption</div>
-          <div class="sm-desc">What is it you've created?</div>
-          <textarea class="sm-input" id="smCaption" rows="4" maxlength="250" placeholder="A groundbreaking app for..." oninput="smUpdatePreview();smUpdateCharCount()"></textarea>
-          <div class="sm-charcount"><span id="smCharCount">0</span>/250 Characters</div>
-        </div>
-
-        <div class="sm-section">
-          <div class="sm-label">Tools</div>
-          <div class="sm-desc">What was it designed or built with? Select multiple.</div>
-          <select class="sm-input sm-select" id="smTool" onchange="smUpdatePreview()">
-            <option value="">Select</option>
-            <option value="Claude">Claude</option>
-            <option value="Cursor">Cursor</option>
-            <option value="Bolt.new">Bolt.new</option>
-            <option value="Lovable">Lovable</option>
-            <option value="v0">v0</option>
-            <option value="Figma">Figma</option>
-            <option value="Midjourney">Midjourney</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-
-        <div class="sm-section">
-          <div class="sm-label">Media URL</div>
-          <div class="sm-desc">This is the media that will display as the thumbnail on the Summond feed.<br>Right click the media &gt; 'Copy video address' or 'Copy image URL'</div>
+          <div class="sm-label">Post URL</div>
+          <div class="sm-desc">Paste the link to your post — we'll try to fill in the details automatically.</div>
           <div class="sm-url-row">
-            <input class="sm-input" id="smMediaUrl" type="url" placeholder="https://" oninput="smValidateMedia()" style="padding-right:36px">
-            <div class="sm-url-icon" id="smMediaIcon"></div>
-          </div>
-          <div class="sm-error" id="smMediaErr"></div>
-          <div class="sm-compat">
-            <span id="smCompatErr" class="sm-compat-err" style="display:none">Unsupported media type URL</span>
-            <strong>Compatibility</strong>
-            While this is a community based showcase, we try to keep costs for maintenance down to a minimum/free therefore without going into complex hidden API subscriptions and hosting costs, Summond operates by linking to URLs where media is referenced elsewhere, but this also comes with downsides of not being able to pull directly to some social platforms.<br><br>
-            <strong>Supported:</strong> Dribbble, Youtube, Loom, Vimeo, Imgur, Github, Cloudinary<br>
-            <strong>Unsupported:</strong> Threads, LinkedIn, Behance, TikTok, Pinterest, Facebook.<br><br>
-            Twitter (X) URLs will only show a static thumbnail graphic from the post, video unsupported.
-          </div>
-        </div>
-
-        <div class="sm-section">
-          <div class="sm-label">Original post URL</div>
-          <div class="sm-desc">This is so users can follow the original creator, react, repost, or find out more.</div>
-          <div class="sm-url-row">
-            <input class="sm-input" id="smPostUrl" type="url" placeholder="https://" style="padding-right:36px">
+            <input class="sm-input" id="smPostUrl" type="url" placeholder="https://dribbble.com/shots/... or https://x.com/..." oninput="smOnPostUrlInput()" style="padding-right:36px">
             <div class="sm-url-icon" id="smPostIcon"></div>
           </div>
+          <div class="sm-scrape-status" id="smScrapeStatus"></div>
         </div>
 
-        <div class="sm-section" style="border-bottom:none">
-          <div class="sm-label">Your name or handle</div>
-          <input class="sm-input" id="smCreator" type="text" maxlength="40" placeholder="@siimonfairhurst" oninput="smUpdatePreview()">
+        <div id="smAutoFields" style="opacity:0.4;pointer-events:none;transition:opacity .3s">
+
+          <div class="sm-section">
+            <div class="sm-label">Media URL <span style="font-weight:400;color:#aaa;font-size:12px">— auto-filled, edit if needed</span></div>
+            <div class="sm-desc">The image or video that will appear on the feed.</div>
+            <div class="sm-url-row">
+              <input class="sm-input" id="smMediaUrl" type="url" placeholder="https://" oninput="smValidateMedia()" style="padding-right:36px">
+              <div class="sm-url-icon" id="smMediaIcon"></div>
+            </div>
+            <div class="sm-error" id="smMediaErr"></div>
+            <div class="sm-compat">
+              <span id="smCompatErr" class="sm-compat-err" style="display:none">Unsupported media type URL</span>
+              <strong>Compatibility</strong>
+              Summond links directly to media hosted elsewhere. Some platforms block this.<br><br>
+              <strong>Supported:</strong> Dribbble, Youtube, Loom, Vimeo, Imgur, Github, Cloudinary<br>
+              <strong>Unsupported:</strong> Threads, LinkedIn, Behance, TikTok, Pinterest, Facebook.<br><br>
+              Twitter (X) URLs will only show a static thumbnail, video unsupported.
+            </div>
+          </div>
+
+          <div class="sm-section">
+            <div class="sm-label">Caption <span style="font-weight:400;color:#aaa;font-size:12px">— auto-filled, edit if needed</span></div>
+            <div class="sm-desc">What is it you've created?</div>
+            <textarea class="sm-input" id="smCaption" rows="3" maxlength="250" placeholder="A groundbreaking app for..." oninput="smUpdatePreview();smUpdateCharCount()"></textarea>
+            <div class="sm-charcount"><span id="smCharCount">0</span>/250 Characters</div>
+          </div>
+
+          <div class="sm-section">
+            <div class="sm-label">Your name or handle <span style="font-weight:400;color:#aaa;font-size:12px">— auto-filled, edit if needed</span></div>
+            <input class="sm-input" id="smCreator" type="text" maxlength="40" placeholder="@yourhandle" oninput="smUpdatePreview()">
+          </div>
+
+          <div class="sm-section" style="border-bottom:none">
+            <div class="sm-label">Tools used</div>
+            <div class="sm-desc">What was it designed or built with?</div>
+            <select class="sm-input sm-select" id="smTool" onchange="smUpdatePreview()">
+              <option value="">Select</option>
+              <option value="Claude">Claude</option>
+              <option value="Cursor">Cursor</option>
+              <option value="Bolt.new">Bolt.new</option>
+              <option value="Lovable">Lovable</option>
+              <option value="v0">v0</option>
+              <option value="Figma">Figma</option>
+              <option value="Midjourney">Midjourney</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
         </div>
 
         <div class="sm-error" id="smSubmitErr" style="margin-top:8px"></div>
@@ -457,11 +467,83 @@ const hero=document.getElementById('hero'),bar=document.getElementById('stickyBa
 new IntersectionObserver(entries=>{bar.classList.toggle('show',!entries[0].isIntersecting)},{threshold:0}).observe(hero)
 
 // SUBMIT MODAL
+let scrapeTimer=null
+
+function smOnPostUrlInput(){
+  clearTimeout(scrapeTimer)
+  const val=document.getElementById('smPostUrl').value.trim()
+  const icon=document.getElementById('smPostIcon')
+  const status=document.getElementById('smScrapeStatus')
+  icon.className='sm-url-icon'
+  status.className='sm-scrape-status'
+  status.textContent=''
+  if(!val)return
+  let host=''
+  try{host=new URL(val).hostname.replace('www.','')}catch{return}
+  const BLOCKED=['linkedin.com','instagram.com','tiktok.com','threads.net','facebook.com','pinterest.com']
+  if(BLOCKED.some(b=>host.includes(b))){
+    icon.className='sm-url-icon show err';icon.textContent='!'
+    status.className='sm-scrape-status err'
+    status.textContent=host+' is not supported. Please fill in the fields manually.'
+    smUnlockFields(false)
+    return
+  }
+  icon.className='sm-url-icon show ok';icon.textContent='✓'
+  status.className='sm-scrape-status loading'
+  status.textContent='Looking up post details...'
+  scrapeTimer=setTimeout(()=>smScrape(val),600)
+}
+
+async function smScrape(url){
+  const status=document.getElementById('smScrapeStatus')
+  try{
+    const res=await fetch('/api/scrape?url='+encodeURIComponent(url))
+    const data=await res.json()
+    if(data.blocked||data.error){
+      status.className='sm-scrape-status warn'
+      status.textContent=data.reason||data.error||'Could not auto-fill — please enter details manually.'
+      smUnlockFields(false)
+      return
+    }
+    if(data.mediaUrl)document.getElementById('smMediaUrl').value=data.mediaUrl
+    if(data.caption){document.getElementById('smCaption').value=data.caption;smUpdateCharCount()}
+    if(data.creator)document.getElementById('smCreator').value=data.creator
+    smValidateMedia()
+    smUpdatePreview()
+    smUnlockFields(true)
+    status.className='sm-scrape-status ok'
+    status.textContent='Details filled in automatically — please review and edit if needed.'
+  }catch{
+    status.className='sm-scrape-status warn'
+    status.textContent='Could not auto-fill. Please enter the details manually.'
+    smUnlockFields(false)
+  }
+}
+
+function smUnlockFields(autofilled){
+  const fields=document.getElementById('smAutoFields')
+  fields.style.opacity='1'
+  fields.style.pointerEvents='auto'
+  if(!autofilled){
+    // Clear fields so user knows they need to fill in manually
+    document.getElementById('smMediaUrl').value=''
+    document.getElementById('smCaption').value=''
+    document.getElementById('smCreator').value=''
+    smUpdatePreview()
+    document.getElementById('smCardMedia').innerHTML='<div class="sm-card-media-placeholder">Media preview will go here</div>'
+  }
+}
+
 const BLOCKED_HOSTS=['linkedin.com','instagram.com','tiktok.com','threads.net','facebook.com','fb.com','pinterest.com']
 const EMBED_HOSTS=['youtube.com','youtu.be','vimeo.com','loom.com','codepen.io']
 
 function openSm(){
   document.getElementById('sm').classList.add('open')
+  document.getElementById('smAutoFields').style.opacity='0.4'
+  document.getElementById('smAutoFields').style.pointerEvents='none'
+  document.getElementById('smScrapeStatus').textContent=''
+  document.getElementById('smScrapeStatus').className='sm-scrape-status'
+  document.getElementById('smPostIcon').className='sm-url-icon'
   document.getElementById('smForm').style.display=''
   document.getElementById('smSuccess').classList.remove('show')
   document.getElementById('smMediaUrl').value=''
