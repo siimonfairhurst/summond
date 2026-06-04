@@ -580,28 +580,37 @@ async function smHandleFile(file){
   document.getElementById('smUploadProgress').classList.add('show')
   smAnimateBar()
 
-  // Convert to base64
-  const base64=await new Promise((resolve,reject)=>{
-    const reader=new FileReader()
-    reader.onload=()=>resolve(reader.result)
-    reader.onerror=reject
-    reader.readAsDataURL(file)
-  })
-
   try{
-    const res=await fetch('/api/upload',{
+    // Get auth signature from Vercel (tiny request)
+    const authRes=await fetch('/api/upload')
+    const auth=await authRes.json()
+    if(auth.error) throw new Error(auth.error)
+
+    // Upload directly from browser to ImageKit — no Vercel bottleneck
+    const IK_ENDPOINT='https://ik.imagekit.io/summond'
+    const formData=new FormData()
+    formData.append('file', file)
+    formData.append('fileName', file.name)
+    formData.append('folder', '/summond')
+    formData.append('useUniqueFileName', 'true')
+    formData.append('publicKey', auth.publicKey)
+    formData.append('signature', auth.signature)
+    formData.append('expire', auth.expire)
+    formData.append('token', auth.token)
+
+    const uploadRes=await fetch('https://upload.imagekit.io/api/v1/files/upload',{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({fileBase64:base64.split(',')[1],fileName:file.name,fileType:file.type})
+      body:formData
     })
-    const data=await res.json()
-    if(!res.ok||data.error) throw new Error(data.error||'Upload failed')
+    const data=await uploadRes.json()
+    if(!uploadRes.ok||data.error) throw new Error(data.message||'Upload failed')
+
     uploadedMediaUrl=data.url
     document.getElementById('smUploadBar').style.width='100%'
     smSetUploadStatus('ok','Uploaded successfully')
-    // Update preview card with ImageKit URL
     smShowPreview(data.url, isVideo)
   }catch(err){
+    console.error('Upload error:',err)
     smSetUploadStatus('err','Upload failed — please try again.')
     smResetUpload()
   }
