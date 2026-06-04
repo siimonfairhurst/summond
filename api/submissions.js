@@ -8,7 +8,6 @@ export default async function handler(req, res) {
   if (!apiKey) return res.json({ projects: [], missing: true })
 
   try {
-    // Fetch all rows from the sheet
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1?key=${apiKey}`
     const response = await fetch(url)
     const data = await response.json()
@@ -17,47 +16,46 @@ export default async function handler(req, res) {
       return res.json({ projects: [] })
     }
 
-    // First row is headers: Caption, Media URL, Post URL, Tool, Creator, Status
-    const rows = data.values.slice(1) // skip header row
+    // Columns: A=Caption, B=Media URL, C=Creator URL, D=Tool, E=Creator, F=Status
+    const rows = data.values.slice(1)
 
     const projects = rows
       .filter(row => {
         const status = (row[5] || '').toString().toLowerCase().trim()
-        // Support both checkbox (TRUE) and text (approved)
         return status === 'true' || status === 'approved'
       })
       .map((row, i) => {
-        const postUrl = row[2] || ''
-        // Auto-detect platform from URL
-        let platform = 'web'
-        if (postUrl.includes('x.com') || postUrl.includes('twitter.com')) platform = 'x'
-        else if (postUrl.includes('dribbble.com')) platform = 'dribbble'
-        else if (postUrl.includes('behance.net')) platform = 'behance'
-        else if (postUrl.includes('linkedin.com')) platform = 'linkedin'
-        else if (postUrl.includes('instagram.com')) platform = 'instagram'
-        else if (postUrl.includes('youtube.com') || postUrl.includes('youtu.be')) platform = 'youtube'
-        else if (postUrl.includes('loom.com')) platform = 'loom'
+        const creatorUrl = row[2] || ''
+        const mediaUrl   = row[1] || ''
 
-        // Detect if media is video
-        const mediaUrl = row[1] || ''
+        // Detect platform from creator profile URL
+        let platform = 'web'
+        if (creatorUrl.includes('x.com') || creatorUrl.includes('twitter.com')) platform = 'x'
+        else if (creatorUrl.includes('dribbble.com'))  platform = 'dribbble'
+        else if (creatorUrl.includes('behance.net'))   platform = 'behance'
+        else if (creatorUrl.includes('linkedin.com'))  platform = 'linkedin'
+        else if (creatorUrl.includes('instagram.com')) platform = 'instagram'
+        else if (creatorUrl.includes('youtube.com') || creatorUrl.includes('youtu.be')) platform = 'youtube'
+        else if (creatorUrl.includes('loom.com'))      platform = 'loom'
+        else if (creatorUrl.includes('github.com'))    platform = 'github'
+        else if (creatorUrl.includes('threads.net'))   platform = 'threads'
+
         const isVideo = mediaUrl.includes('.mp4') || mediaUrl.includes('.webm') ||
                         mediaUrl.includes('loom.com') || mediaUrl.includes('youtube')
 
-        const tool = row[3] || 'AI'
-
         return {
           id: `sub-${i}`,
-          caption: row[0] || '',
+          caption:    row[0] || '',
           mediaUrl,
-          postUrl,
-          tool,
-          creator: row[4] || '',
+          creatorUrl,
+          tool:       row[3] || 'AI',
+          creator:    row[4] || '',
           platform,
-          mediaType: isVideo ? 'video' : 'image',
-          source: 'community',
+          mediaType:  isVideo ? 'video' : 'image',
+          source:     'community',
         }
       })
-      .filter(p => p.mediaUrl) // must have media
+      .filter(p => p.mediaUrl)
 
     res.json({ projects })
   } catch (e) {
