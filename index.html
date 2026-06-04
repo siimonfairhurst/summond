@@ -544,7 +544,7 @@ function smUnlockFields(autofilled){
 }
 
 const BLOCKED_HOSTS=['linkedin.com','instagram.com','tiktok.com','threads.net','facebook.com','fb.com','pinterest.com']
-const EMBED_HOSTS=['youtube.com','youtu.be','vimeo.com','loom.com','codepen.io']
+const EMBED_HOSTS=['youtube.com','youtu.be','vimeo.com','loom.com','codepen.io','x.com','twitter.com']
 
 function openSm(){
   document.getElementById('sm').classList.add('open')
@@ -588,6 +588,10 @@ function smUpdatePreview(){
 function smSetMediaPreview(url){
   const media=document.getElementById('smCardMedia')
   if(!url){media.innerHTML='<div class="sm-card-media-placeholder">Media preview will go here</div>';return}
+  // X/Twitter — can't load media server-side, show placeholder
+  if(url.includes('x.com')||url.includes('twitter.com')||url.includes('t.co')||url.includes('pbs.twimg.com')){
+    media.innerHTML='<div class="sm-card-media-placeholder" style="text-align:center;padding:16px;line-height:1.5">X / Twitter<br><span style="font-size:10px;color:#bbb">Media will display on the feed</span></div>';return
+  }
   const isEmbed=EMBED_HOSTS.find(b=>url.includes(b))
   if(isEmbed){media.innerHTML='<div class="sm-card-media-placeholder" style="text-align:center;padding:16px">'+capitalise(isEmbed)+' embed<br>will display on card</div>';return}
   if(url.match(/\.(mp4|webm|mov)(\?.*)?$/i)){
