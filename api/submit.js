@@ -1,42 +1,29 @@
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
-
-  if (req.method === 'OPTIONS') return res.status(200).end()
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
-
-  const { caption, mediaUrl, postUrl, tool, creator } = req.body
-
-  if (!caption || !mediaUrl || !postUrl || !tool) {
-    return res.status(400).json({ error: 'Missing required fields' })
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const apiKey = process.env.GOOGLE_SHEETS_API_KEY
-  const sheetId = '1UbDhTzm6bF_d2I8vLb9IcWgzzVim2p5hrMegJn9xyXg'
-  const serviceEmail = process.env.GOOGLE_SERVICE_EMAIL
-  const serviceKey = process.env.GOOGLE_SERVICE_KEY
+  const SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL
+  if (!SCRIPT_URL) {
+    return res.status(500).json({ error: 'GOOGLE_SCRIPT_URL not configured' })
+  }
 
-  // We'll use a simpler approach — Google Sheets append via service account
-  // For now, return success and handle via Google Apps Script webhook
   try {
-    // Append row to sheet using Sheets API v4
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1:append?valueInputOption=RAW&key=${apiKey}`
+    const { mediaUrl, postUrl, caption, tool, creator } = req.body
 
-    // Note: appending requires OAuth, not just API key
-    // We'll use Google Apps Script as the write endpoint instead
-    const scriptUrl = process.env.GOOGLE_SCRIPT_URL
+    const response = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mediaUrl, postUrl, caption, tool, creator })
+    })
 
-    if (scriptUrl) {
-      await fetch(scriptUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ caption, mediaUrl, postUrl, tool, creator })
-      })
+    if (!response.ok) {
+      throw new Error(`Script responded with ${response.status}`)
     }
 
-    res.json({ success: true })
-  } catch (e) {
-    res.json({ success: true }) // Still return success to user
+    return res.status(200).json({ success: true })
+  } catch (err) {
+    console.error('Submit error:', err)
+    return res.status(500).json({ error: 'Submission failed' })
   }
 }
