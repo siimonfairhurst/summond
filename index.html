@@ -564,10 +564,8 @@ async function smSubmit(){
   if(!creator){err.textContent='Please add your name or handle.';err.classList.add('show');return}
   btn.disabled=true;btn.textContent='Submitting...'
   try{
-    const SCRIPT_URL=typeof GOOGLE_SCRIPT_URL!=='undefined'?GOOGLE_SCRIPT_URL:''
-    if(SCRIPT_URL){
-      await fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify({mediaUrl,postUrl,caption,tool,creator}),headers:{'Content-Type':'application/json'}})
-    }
+    const res=await fetch('/api/submit',{method:'POST',body:JSON.stringify({mediaUrl,postUrl,caption,tool,creator}),headers:{'Content-Type':'application/json'}})
+    if(!res.ok)throw new Error('Submit failed')
     document.getElementById('smForm').style.display='none'
     document.getElementById('smSuccess').classList.add('show')
     let secs=5
