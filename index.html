@@ -17,7 +17,7 @@
     body.dark{background:#0a0a0a;color:#fff}
     body.dark .hero-title{color:#fff}
     body.dark .hero-sub{color:#fff}
-    body.dark .hero-desc{color:#888}
+    body.dark .hero-desc{color:#767676}
     body.dark .hero-btn{background:#fff;color:#000}
     body.dark .sticky-bar{background:#1a1a1a;border-color:rgba(255,255,255,0.1);box-shadow:0 4px 20px rgba(0,0,0,0.4)}
     body.dark .sb-name{color:#fff}
@@ -29,14 +29,30 @@
     body.dark .pill-claude{color:#f0a050}
     body.dark .pill-cursor{color:#ddd}
     body.dark .pill-bolt{color:#6699ff}
+    body.dark .pill-windsurf{color:#4db8ff}
+    body.dark .pill-replit{color:#ff9040}
+    body.dark .pill-copilot{color:#767676}
+    body.dark .pill-figma{color:#c084fc}
+    body.dark .pill-framer{color:#4d88ff}
+    body.dark .pill-webflow{color:#7b8cff}
+    body.dark .pill-gemini{color:#60a5fa}
+    body.dark .pill-chatgpt{color:#34d399}
+    body.dark .pill-dalle{color:#34d399}
+    body.dark .pill-perplexity{color:#5eead4}
+    body.dark .pill-sd{color:#e879b0}
     body.dark .pill-lovable{color:#e060d0}
     body.dark .pill-v0{color:#ddd}
-    body.dark .pill-other{color:#aaa}
+    body.dark .pill-other{color:#767676}
     body.dark .pill-platform{color:#ddd}
+    body.dark .pill-midjourney{color:#fff}
+    body.dark .pill-sora{color:#fff}
+    body.dark .pill-runway{color:#fff}
+    body.dark .pill-cursor{color:#ddd}
+    body.dark .pill-v0{color:#ddd}
     body.dark .lb{background:rgba(10,10,10,0.96)}
     body.dark .lb-box{background:#111;border-color:rgba(255,255,255,0.1)}
     body.dark .lb-creator{color:#fff}
-    body.dark .lb-caption{color:#888}
+    body.dark .lb-caption{color:#767676}
     body.dark .lb-close{background:rgba(30,30,30,0.95);border-color:rgba(255,255,255,0.1);color:#fff}
     body.dark .lb-btn{background:#fff;color:#000}
 
@@ -65,7 +81,7 @@
     .sticky-bar{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid rgba(0,0,0,0.12);border-radius:100px;padding:8px 8px 8px 18px;display:flex;align-items:center;gap:14px;box-shadow:0 4px 20px rgba(0,0,0,0.1);z-index:50;white-space:nowrap;opacity:0;transition:opacity .25s,background .3s;pointer-events:none}
     .sticky-bar.show{opacity:1;pointer-events:all}
     .sb-name{font-size:14px;font-weight:800;letter-spacing:-0.02em;text-transform:uppercase;transition:color .3s}
-    .sb-desc{font-size:14px;color:#888;transition:color .3s}
+    .sb-desc{font-size:14px;color:#767676;transition:color .3s}
 
     .grid-wrap{padding:0 16px 120px}
     .masonry{columns:3 180px;column-gap:10px}
@@ -77,7 +93,7 @@
     .card-pills{position:absolute;bottom:10px;left:10px;right:10px;display:flex;align-items:flex-end;justify-content:space-between;gap:6px;opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s;pointer-events:none}
     .card:hover .card-pills{opacity:1;transform:translateY(0)}
     .pill{display:inline-flex;align-items:center;gap:6px;background:#fff;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:500;white-space:nowrap;box-shadow:2px 2px 4px rgba(0,0,0,0.16);border:none;line-height:1;transition:background .3s,color .3s}
-    .pill-claude{color:#d4853a}.pill-cursor{color:#000}.pill-bolt{color:#0044cc}.pill-lovable{color:#c020a0}.pill-v0{color:#000}.pill-other{color:#555}.pill-platform{color:#000}
+    .pill-claude{color:#d4853a}.pill-cursor{color:#000}.pill-bolt{color:#0044cc}.pill-lovable{color:#c020a0}.pill-v0{color:#000}.pill-windsurf{color:#0077cc}.pill-replit{color:#e06b00}.pill-copilot{color:#24292f}.pill-figma{color:#a259ff}.pill-framer{color:#0055ff}.pill-webflow{color:#4353ff}.pill-midjourney{color:#000}.pill-dalle{color:#10a37f}.pill-sd{color:#c13584}.pill-runway{color:#000}.pill-sora{color:#000}.pill-gemini{color:#1a73e8}.pill-chatgpt{color:#10a37f}.pill-perplexity{color:#20b2aa}.pill-other{color:#555}.pill-platform{color:#000}
     .tool-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
     .td-claude{background:#d4853a}.td-cursor{background:#555}.td-bolt{background:#0044cc}.td-lovable{background:#c020a0}.td-v0{background:#333}.td-other{background:#aaa}
     .pill-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -94,11 +110,10 @@
     .lb-media video{width:100%;height:auto;max-height:70vh;object-fit:contain;display:block}
     .lb-media iframe{width:100%;aspect-ratio:16/9;display:block;border:none}
     .lb-body{padding:14px 18px 52px;position:relative}
-    .lb-left{min-width:0}
-    .lb-creator{font-size:14px;font-weight:600;color:#000;margin-bottom:4px;transition:color .3s}
-    .lb-caption{font-size:14px;color:#666;line-height:1.6;margin-bottom:10px;transition:color .3s}
+    .lb-creator{margin-bottom:6px}
+    .lb-caption{font-size:14px;color:#767676;line-height:1.6;margin-bottom:10px;transition:color .3s}
     .lb-tag-row{display:flex;gap:6px;flex-wrap:wrap}
-    .loading{text-align:center;padding:80px 0;color:#ccc;font-size:12px;letter-spacing:0.06em}
+    .loading{text-align:center;padding:80px 0;color:#767676;font-size:12px;letter-spacing:0.06em}
 
     /* FOOTER */
     .footer{padding:96px 24px 96px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
@@ -118,13 +133,13 @@
     @media(max-width:768px){.sm-layout{grid-template-columns:1fr;padding:24px;gap:32px}}
     .sm-left{display:flex;flex-direction:column;gap:0}
     .sm-page-title{font-size:20px;font-weight:700;letter-spacing:-0.02em;margin-bottom:32px;transition:color .3s}
-    .sm-section{padding:24px 0;border-bottom:1px solid rgba(0,0,0,0.08);display:flex;flex-direction:column;gap:6px;transition:border-color .3s}
+    .sm-section{padding:16px 0;display:flex;flex-direction:column;gap:6px}
     .sm-label{font-size:14px;font-weight:600;color:#000;transition:color .3s}
-    .sm-desc{font-size:13px;color:#888;line-height:1.5;transition:color .3s}
+    .sm-desc{font-size:13px;color:#767676;line-height:1.5;transition:color .3s}
     .sm-input{font-family:'Hanken Grotesk',sans-serif;font-size:14px;padding:10px 14px;border:1px solid rgba(0,0,0,0.16);border-radius:8px;outline:none;width:100%;background:#fff;color:#000;transition:border-color .2s,background .3s,color .3s;resize:none}
     .sm-input:focus{border-color:#000}
     .sm-input.error{border-color:#e53}
-    .sm-charcount{font-size:11px;color:#aaa;text-align:right;margin-top:2px}
+    .sm-charcount{font-size:11px;color:#767676;text-align:right;margin-top:2px}
     .sm-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer}
     .sm-url-row{position:relative}
     .sm-url-icon{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:11px;font-weight:700}
@@ -141,7 +156,7 @@
     .sm-upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
     .sm-upload-icon{font-size:24px;margin-bottom:8px}
     .sm-upload-label{font-size:14px;font-weight:600;margin-bottom:4px;transition:color .3s}
-    .sm-upload-sub{font-size:12px;color:#aaa;transition:color .3s}
+    .sm-upload-sub{font-size:12px;color:#767676;transition:color .3s}
     .sm-upload-progress{height:3px;background:rgba(0,0,0,0.08);border-radius:2px;margin-top:12px;overflow:hidden;display:none}
     .sm-upload-progress.show{display:block}
     .sm-upload-bar{height:100%;background:#000;border-radius:2px;width:0%;transition:width .3s}
@@ -150,13 +165,13 @@
     .sm-upload-preview img,.sm-upload-preview video{width:100%;height:100%;object-fit:cover;display:block}
     .sm-upload-change{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.6);color:#fff;border:none;border-radius:100px;font-family:"Hanken Grotesk",sans-serif;font-size:11px;padding:4px 10px;cursor:pointer}
     .sm-upload-status{font-size:12px;margin-top:14px;min-height:16px}
-    .sm-upload-status.uploading{color:#aaa}
+    .sm-upload-status.uploading{color:#767676}
     .sm-upload-status.ok{color:#0a0}
     .sm-upload-status.err{color:#e53}
     body.dark .sm-upload-zone{border-color:rgba(255,255,255,0.12)}
     body.dark .sm-upload-zone:hover,.sm-upload-zone.drag{border-color:#fff;background:rgba(255,255,255,0.03)}
     body.dark .sm-upload-bar{background:#fff}
-    .sm-scrape-status.loading{color:#aaa}
+    .sm-scrape-status.loading{color:#767676}
     .sm-scrape-status.ok{color:#0a0}
     .sm-scrape-status.err{color:#e53}
     .sm-scrape-status.warn{color:#b87000}
@@ -166,7 +181,7 @@
     .sm-upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
     .sm-upload-icon{font-size:24px;margin-bottom:8px}
     .sm-upload-label{font-size:14px;font-weight:600;margin-bottom:4px;transition:color .3s}
-    .sm-upload-sub{font-size:12px;color:#aaa;transition:color .3s}
+    .sm-upload-sub{font-size:12px;color:#767676;transition:color .3s}
     .sm-upload-progress{height:3px;background:rgba(0,0,0,0.08);border-radius:2px;margin-top:12px;overflow:hidden;display:none}
     .sm-upload-progress.show{display:block}
     .sm-upload-bar{height:100%;background:#000;border-radius:2px;width:0%;transition:width .3s}
@@ -175,7 +190,7 @@
     .sm-upload-preview img,.sm-upload-preview video{width:100%;height:100%;object-fit:cover;display:block}
     .sm-upload-change{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.6);color:#fff;border:none;border-radius:100px;font-family:'Hanken Grotesk',sans-serif;font-size:11px;padding:4px 10px;cursor:pointer}
     .sm-upload-status{font-size:12px;margin-top:14px;min-height:16px}
-    .sm-upload-status.uploading{color:#aaa}
+    .sm-upload-status.uploading{color:#767676}
     .sm-upload-status.ok{color:#0a0}
     .sm-upload-status.err{color:#e53}
     body.dark .sm-upload-zone{border-color:rgba(255,255,255,0.12)}
@@ -184,25 +199,25 @@
     .sm-compat-err.show{display:block}
     .sm-right{position:sticky;top:48px;align-self:start}
     .sm-preview-title{font-size:14px;font-weight:600;margin-bottom:4px;transition:color .3s}
-    .sm-preview-sub{font-size:12px;color:#888;margin-bottom:16px;line-height:1.5;transition:color .3s}
+    .sm-preview-sub{font-size:12px;color:#767676;margin-bottom:16px;line-height:1.5;transition:color .3s}
     .sm-card-preview{border:1px solid rgba(0,0,0,0.1);border-radius:16px;overflow:hidden;background:#fff;transition:background .3s,border-color .3s}
     .sm-card-media{width:100%;aspect-ratio:4/3;background:#f0f0f0;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
     .sm-card-media img,.sm-card-media video{width:100%;height:100%;object-fit:cover;display:block}
-    .sm-card-media-placeholder{font-size:12px;color:#bbb}
+    .sm-card-media-placeholder{font-size:12px;color:#767676}
     .sm-card-body{padding:14px 16px 16px}
     .sm-card-caption{font-size:13px;color:#555;margin-bottom:10px;line-height:1.5;min-height:18px;transition:color .3s}
-    .sm-card-creator{font-size:14px;font-weight:700;margin-bottom:8px;min-height:20px;transition:color .3s}
-    .sm-card-tool{display:inline-block;font-size:11px;padding:3px 10px;border-radius:100px;border:1px solid rgba(0,0,0,0.12);color:#555;background:#fff}
+    .sm-card-creator{font-size:14px;margin-bottom:8px;min-height:20px;transition:color .3s}
+    .sm-card-tool{display:flex;flex-wrap:wrap;gap:3px}
     .sm-submit-btn{width:100%;margin-top:20px;font-family:'Hanken Grotesk',sans-serif;font-size:15px;font-weight:600;padding:14px;border-radius:100px;border:none;background:#000;color:#fff;cursor:pointer;transition:opacity .15s,background .3s}
     .sm-submit-btn:hover{opacity:.8}
     .sm-submit-btn:disabled{opacity:.35;cursor:not-allowed}
     .sm-success{display:none;flex-direction:column;align-items:center;justify-content:center;flex:1;text-align:center;padding:48px;gap:0;min-height:80vh}
     .sm-success.show{display:flex}
     .sm-success-title{font-size:18px;font-weight:700;letter-spacing:-0.01em;margin-bottom:10px;transition:color .3s}
-    .sm-success-sub{font-size:13px;color:#888;line-height:1.6;max-width:340px;margin-bottom:20px;transition:color .3s}
+    .sm-success-sub{font-size:13px;color:#767676;line-height:1.6;max-width:340px;margin-bottom:20px;transition:color .3s}
     .sm-success-btn{font-family:'Hanken Grotesk',sans-serif;font-size:13px;font-weight:500;padding:8px 20px;border-radius:100px;border:1.5px solid #000;background:#000;color:#fff;cursor:pointer;transition:opacity .15s,background .3s,color .3s,border-color .3s}
     .sm-success-btn:hover{opacity:.75}
-    .sm-success-countdown{font-size:11px;color:#bbb;margin-top:10px;transition:color .3s}
+    .sm-success-countdown{font-size:11px;color:#767676;margin-top:10px;transition:color .3s}
     body.dark .sm-success-title{color:#fff}
     body.dark .sm-success-btn{background:#fff;color:#000;border-color:#fff}
     body.dark .sm{background:#0a0a0a}
@@ -211,18 +226,18 @@
     body.dark .sm-back:hover{background:#1a1a1a}
     body.dark .sm-page-title{color:#fff}
     body.dark .sm-label{color:#fff}
-    body.dark .sm-section{border-color:rgba(255,255,255,0.08)}
+
     body.dark .sm-input{background:#111;border-color:rgba(255,255,255,0.12);color:#fff}
     body.dark .sm-input:focus{border-color:#fff}
     body.dark .sm-card-preview{background:#111;border-color:rgba(255,255,255,0.1)}
     body.dark .sm-card-media{background:#1a1a1a}
-    body.dark .sm-card-caption{color:#888}
+    body.dark .sm-card-caption{color:#767676}
     body.dark .sm-card-creator{color:#fff}
-    body.dark .sm-card-tool{background:#222;border-color:rgba(255,255,255,0.1);color:#aaa}
+
     body.dark .sm-submit-btn{background:#fff;color:#000}
     body.dark .sm-compat{background:#1a1500;border-color:rgba(200,160,0,0.15);color:#b89a00}
     .sm-media-tabs{display:flex;gap:0;border:1px solid rgba(0,0,0,0.12);border-radius:8px;overflow:hidden;margin-bottom:12px}
-    .sm-media-tab{flex:1;padding:8px 12px;font-family:'Hanken Grotesk',sans-serif;font-size:13px;font-weight:500;border:none;background:#fff;color:#888;cursor:pointer;transition:background .2s,color .2s}
+    .sm-media-tab{flex:1;padding:8px 12px;font-family:'Hanken Grotesk',sans-serif;font-size:13px;font-weight:500;border:none;background:#fff;color:#767676;cursor:pointer;transition:background .2s,color .2s}
     .sm-media-tab.active{background:#000;color:#fff}
     body.dark .sm-media-tabs{border-color:rgba(255,255,255,0.12)}
     body.dark .sm-media-tab{background:#111;color:#555}
@@ -230,13 +245,16 @@
     .sm-tools-grid{display:flex;flex-wrap:wrap;gap:6px}
     .sm-tool-chip{font-family:'Hanken Grotesk',sans-serif;font-size:12px;padding:5px 12px;border-radius:100px;border:1px solid rgba(0,0,0,0.16);background:#fff;color:#555;cursor:pointer;transition:background .15s,color .15s,border-color .15s;user-select:none}
     .sm-tool-chip.selected{background:#000;color:#fff;border-color:#000}
-    body.dark .sm-tool-chip{background:#111;border-color:rgba(255,255,255,0.12);color:#aaa}
+    body.dark .sm-tool-chip{background:#111;border-color:rgba(255,255,255,0.12);color:#767676}
+    body.dark .pill-midjourney{color:#fff}
+    body.dark .pill-sora{color:#fff}
+    body.dark .pill-runway{color:#fff}
     body.dark .sm-tool-chip.selected{background:#fff;color:#000;border-color:#fff}
     .sm-social-row{display:flex;gap:8px;align-items:flex-start}
     .sm-social-row .sm-input{flex:1}
-    .sm-social-name{font-size:12px;color:#aaa;margin-top:5px;min-height:16px;transition:color .3s}
+    .sm-social-name{font-size:12px;color:#767676;margin-top:5px;transition:color .3s;display:none}
     .sm-media-tabs{display:flex;gap:0;border:1px solid rgba(0,0,0,0.12);border-radius:8px;overflow:hidden;margin-bottom:12px}
-    .sm-media-tab{flex:1;padding:8px 12px;font-family:'Hanken Grotesk',sans-serif;font-size:13px;font-weight:500;border:none;background:#fff;color:#888;cursor:pointer;transition:background .2s,color .2s}
+    .sm-media-tab{flex:1;padding:8px 12px;font-family:'Hanken Grotesk',sans-serif;font-size:13px;font-weight:500;border:none;background:#fff;color:#767676;cursor:pointer;transition:background .2s,color .2s}
     .sm-media-tab.active{background:#000;color:#fff}
     body.dark .sm-media-tabs{border-color:rgba(255,255,255,0.12)}
     body.dark .sm-media-tab{background:#111;color:#555}
@@ -244,10 +262,14 @@
     .sm-tools-grid{display:flex;flex-wrap:wrap;gap:6px}
     .sm-tool-chip{font-family:'Hanken Grotesk',sans-serif;font-size:12px;padding:5px 12px;border-radius:100px;border:1px solid rgba(0,0,0,0.16);background:#fff;color:#555;cursor:pointer;transition:background .15s,color .15s,border-color .15s;user-select:none}
     .sm-tool-chip.selected{background:#000;color:#fff;border-color:#000}
-    body.dark .sm-tool-chip{background:#111;border-color:rgba(255,255,255,0.12);color:#aaa}
+    body.dark .sm-tool-chip{background:#111;border-color:rgba(255,255,255,0.12);color:#767676}
+    body.dark .pill-midjourney{color:#fff}
+    body.dark .pill-sora{color:#fff}
+    body.dark .pill-runway{color:#fff}
     body.dark .sm-tool-chip.selected{background:#fff;color:#000;border-color:#fff}
-    .sm-social-name{font-size:12px;color:#aaa;margin-top:5px;min-height:16px;transition:color .3s}
+    .sm-social-name{font-size:12px;color:#767676;margin-top:5px;transition:color .3s;display:none}
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
 </head>
 <body>
 
@@ -308,7 +330,14 @@
               <div id="smUploadPrompt">
                 <div class="sm-upload-icon">&#8593;</div>
                 <div class="sm-upload-label">Click to upload or drag and drop</div>
-                <div class="sm-upload-sub">PNG, JPG, GIF, MP4, MOV &nbsp;·&nbsp; Max 5MB image, 30MB video</div>
+                <div class="sm-upload-sub">PNG, JPG, GIF, MP4, MOV</div>
+              <div style="font-size:11px;color:#767676;margin-top:10px;line-height:1.8;text-align:center">
+                <div style="font-weight:600;margin-bottom:2px;color:#555">Recommended</div>
+                <div>Landscape: 1600×1200 (4:3) or 1600×900 (16:9)</div>
+                <div>Portrait: 1080×1350 (4:5) or 1080×1920 (9:16)</div>
+                <div>Square: 1080×1080 (1:1)</div>
+                <div style="margin-top:4px">Max width: 1600px</div>
+              </div>
               </div>
             </div>
             <div class="sm-upload-progress" id="smUploadProgress"><div class="sm-upload-bar" id="smUploadBar"></div></div>
@@ -325,12 +354,11 @@
               <button class="sm-upload-change" onclick="smResetUrlPreview()">Clear</button>
             </div>
             <div class="sm-upload-status" id="smUrlStatus" style="margin-top:8px"></div>
-            <div style="font-size:12px;color:#888;line-height:1.7;margin-top:10px;padding:12px 14px;background:#f8f8f8;border-radius:8px">
-              <strong style="color:#000;display:block;margin-bottom:4px">What works as a media URL</strong>
-              <strong style="color:#555">✓ Works:</strong> Dribbble CDN, YouTube, Vimeo, Loom, Imgur, Cloudinary, direct .jpg/.mp4 links<br>
-              <strong style="color:#555">✓ Works (image only):</strong> X/Twitter — right-click image → Copy image address (starts with pbs.twimg.com)<br>
-              <strong style="color:#c00">✗ Won't work:</strong> X/Twitter video, LinkedIn, Instagram, TikTok, Threads, Facebook<br><br>
-              If your media is from an unsupported platform, use the <strong>Upload a file</strong> tab instead.
+            <div style="font-size:12px;color:#767676;line-height:1.7;margin-top:10px;padding:12px 14px;background:#f8f8f8;border-radius:8px;transition:background .3s">
+              <strong style="color:#000;display:block;margin-bottom:6px;transition:color .3s">What works</strong>
+              Dribbble, YouTube, Vimeo, Loom, Imgur, Cloudinary, any direct image or video link.<br>
+              For X/Twitter: right-click the image and choose <em>Copy image address</em>.<br>
+              <span style="color:#c00">LinkedIn, Instagram, TikTok, Threads and Facebook are not supported</span> — use <strong>Upload a file</strong> instead.
             </div>
           </div>
         </div>
@@ -345,16 +373,19 @@
 
         <!-- Social profile -->
         <div class="sm-section">
-          <div class="sm-label">Your name &amp; profile</div>
-          <div class="sm-desc">Paste your profile link and we'll fill your name in — or just type it below.</div>
-          <input class="sm-input" id="smSocialUrl" type="url" placeholder="https://x.com/yourhandle" oninput="smOnSocialInput()">
-          <div class="sm-social-name" id="smSocialName"></div>
-          <div style="text-align:center;font-size:11px;color:#bbb;padding:4px 0">or</div>
-          <input class="sm-input" id="smCreator" type="text" maxlength="60" placeholder="Type your name or handle" oninput="smUpdatePreview()">
+          <div class="sm-label">Profile link</div>
+          <div class="sm-desc">Link to your Dribbble, X, LinkedIn, Threads, Behance or any other profile. We'll pull your name from it automatically.</div>
+          <div style="position:relative">
+            <input class="sm-input" id="smSocialUrl" type="url" placeholder="https://dribbble.com/yourhandle" oninput="smOnSocialInput()" style="padding-right:44px">
+            <div id="smSocialIcon" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);display:none;align-items:center;justify-content:center;width:22px;height:22px"></div>
+          </div>
+          <div class="sm-social-name" id="smSocialName" style="display:none"></div>
+          <div class="sm-error" id="smSocialErr" style="margin-top:4px"></div>
+          <input type="hidden" id="smCreator">
         </div>
 
         <!-- Tools -->
-        <div class="sm-section" style="border-bottom:none">
+        <div class="sm-section">
           <div class="sm-label">Tools used</div>
           <div class="sm-desc">Select all that apply.</div>
           <div class="sm-tools-grid" id="smToolsGrid">
@@ -363,11 +394,24 @@
             <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Bolt.new">Bolt.new</button>
             <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Lovable">Lovable</button>
             <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="v0">v0</button>
-            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Figma">Figma</button>
-            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Midjourney">Midjourney</button>
             <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Windsurf">Windsurf</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Replit">Replit</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="GitHub Copilot">GitHub Copilot</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Figma">Figma</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Framer">Framer</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Webflow">Webflow</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Midjourney">Midjourney</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="DALL-E">DALL-E</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Stable Diffusion">Stable Diffusion</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Runway">Runway</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Sora">Sora</button>
             <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Gemini">Gemini</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="ChatGPT">ChatGPT</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Perplexity">Perplexity</button>
             <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Other">Other</button>
+          </div>
+          <div id="smOtherWrap" style="display:none;margin-top:8px">
+            <input class="sm-input" id="smOtherTool" type="text" maxlength="40" placeholder="Name of the tool..." oninput="smUpdatePreview()">
           </div>
         </div>
 
@@ -380,11 +424,11 @@
         <div class="sm-preview-sub">If your content doesn't preview here, it won't work on the feed. Please check this works, before submitting.</div>
         <div class="sm-card-preview">
           <div class="sm-card-media" id="smCardMedia">
-            <div class="sm-card-media-placeholder">Media preview will go here</div>
+            <div id="smLottiePlaceholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f5f5f5"></div>
           </div>
           <div class="sm-card-body">
+            <div class="sm-card-creator" id="smCardCreator"><div class="pill pill-platform" style="opacity:0.7"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:block;flex-shrink:0"><circle cx="12" cy="12" r="10" stroke="#888" stroke-width="1.5"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="#888" stroke-width="1.5"/><path d="M2 12h20" stroke="#888" stroke-width="1.5"/></svg>Your name</div></div>
             <div class="sm-card-caption" id="smCardCaption">Caption will go here</div>
-            <div class="sm-card-creator" id="smCardCreator">Name or handle will go here</div>
             <span class="sm-card-tool" id="smCardTool">Tool here</span>
           </div>
         </div>
@@ -432,30 +476,31 @@
       <button class="lb-close" onclick="closeLb()">&#x2715;</button>
       <div class="lb-media" id="lbMedia"></div>
       <div class="lb-body">
-        <div class="lb-left">
-          <div class="lb-creator" id="lbCreator"></div>
-          <div class="lb-caption" id="lbCaption"></div>
-          <div class="lb-tag-row" id="lbTags"></div>
-        </div>
+        <div class="lb-creator" id="lbCreator"></div>
+        <div class="lb-caption" id="lbCaption"></div>
+        <div class="lb-tag-row" id="lbTags"></div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-const TOOL_CONFIG={Claude:{cls:'pill-claude',dot:'td-claude',label:'Claude'},Cursor:{cls:'pill-cursor',dot:'td-cursor',label:'Cursor'},'Bolt.new':{cls:'pill-bolt',dot:'td-bolt',label:'Bolt'},Lovable:{cls:'pill-lovable',dot:'td-lovable',label:'Lovable'},v0:{cls:'pill-v0',dot:'td-v0',label:'v0'},Other:{cls:'pill-other',dot:'td-other',label:'AI'}}
+const TOOL_CONFIG={Claude:{cls:'pill-claude',label:'Claude'},Cursor:{cls:'pill-cursor',label:'Cursor'},'Bolt.new':{cls:'pill-bolt',label:'Bolt'},Lovable:{cls:'pill-lovable',label:'Lovable'},v0:{cls:'pill-v0',label:'v0'},Windsurf:{cls:'pill-windsurf',label:'Windsurf'},Replit:{cls:'pill-replit',label:'Replit'},'GitHub Copilot':{cls:'pill-copilot',label:'Copilot'},Figma:{cls:'pill-figma',label:'Figma'},Framer:{cls:'pill-framer',label:'Framer'},Webflow:{cls:'pill-webflow',label:'Webflow'},Midjourney:{cls:'pill-midjourney',label:'Midjourney'},'DALL-E':{cls:'pill-dalle',label:'DALL-E'},'Stable Diffusion':{cls:'pill-sd',label:'Stable Diffusion'},Runway:{cls:'pill-runway',label:'Runway'},Sora:{cls:'pill-sora',label:'Sora'},Gemini:{cls:'pill-gemini',label:'Gemini'},ChatGPT:{cls:'pill-chatgpt',label:'ChatGPT'},Perplexity:{cls:'pill-perplexity',label:'Perplexity'},Other:{cls:'pill-other',label:'AI'}}
 function detectPlatform(url){if(!url)return'web';if(url.includes('x.com')||url.includes('twitter.com'))return'x';if(url.includes('dribbble.com'))return'dribbble';if(url.includes('behance.net'))return'behance';return'web'}
 function toolPill(tool){const c=TOOL_CONFIG[tool]||TOOL_CONFIG.Other;return`<div class="pill ${c.cls}">${c.label}</div>`}
 const PLAT_ICONS={
-  x:        `<img src="https://cdn.simpleicons.org/x/000000" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
-  dribbble: `<img src="https://cdn.simpleicons.org/dribbble/EA4C89" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
-  behance:  `<img src="https://cdn.simpleicons.org/behance/1769FF" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
-  producthunt:`<img src="https://cdn.simpleicons.org/producthunt/DA552F" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
-  youtube:  `<img src="https://cdn.simpleicons.org/youtube/FF0000" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
-  loom:     `<img src="https://cdn.simpleicons.org/loom/625DF5" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
-  linkedin: `<img src="https://cdn.simpleicons.org/linkedin/0A66C2" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
-  instagram:`<img src="https://cdn.simpleicons.org/instagram/E4405F" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
-  web:      `<img src="https://cdn.simpleicons.org/internetexplorer/888888" width="14" height="14" style="display:block;width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;flex-shrink:0">`,
+  x:          `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#000" style="display:block;flex-shrink:0"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
+  dribbble:   `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#EA4C89" style="display:block;flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm6.605 4.61a8.502 8.502 0 0 1 1.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 0 0-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0 1 12 3.475zm-3.633.803a53.896 53.896 0 0 1 3.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 0 1 4.729-5.975zM3.453 12.01v-.26c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 0 1-2.19-5.705zM12 20.547a8.482 8.482 0 0 1-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.318 35.318 0 0 1 1.823 6.475 8.4 8.4 0 0 1-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 0 1-3.655 5.715z"/></svg>`,
+  linkedin:   `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#0A66C2" style="display:block;flex-shrink:0"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`,
+  instagram:  `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#E4405F" style="display:block;flex-shrink:0"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>`,
+  behance:    `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#1769FF" style="display:block;flex-shrink:0"><path d="M6.938 4.503c.702 0 1.34.06 1.92.188.577.13 1.07.33 1.485.61.41.28.733.65.96 1.12.225.47.34 1.05.34 1.73 0 .74-.17 1.36-.507 1.86-.338.5-.837.9-1.502 1.22.906.26 1.576.72 2.022 1.37.448.66.665 1.45.665 2.36 0 .75-.13 1.39-.41 1.93-.28.55-.67 1-1.16 1.35-.48.348-1.05.6-1.69.767-.63.165-1.3.254-1.998.254H0V4.503h6.938zm-.376 5.688c.574 0 1.04-.135 1.397-.408.355-.27.534-.69.534-1.258 0-.31-.056-.572-.165-.786-.11-.213-.264-.384-.46-.507-.198-.13-.43-.216-.69-.265-.26-.05-.54-.075-.84-.075H3.596v3.3h2.966zm.14 5.93c.32 0 .616-.033.887-.096.27-.063.508-.165.712-.31.203-.142.363-.334.48-.567.116-.23.174-.52.174-.864 0-.686-.19-1.176-.57-1.474-.38-.298-.895-.447-1.544-.447H3.596v3.758h3.106zm8.877.18c.39.38.943.57 1.664.57.52 0 .963-.13 1.33-.39.37-.26.596-.536.682-.824h2.54c-.408 1.27-1.03 2.17-1.87 2.73-.836.555-1.845.832-3.03.832-.82 0-1.55-.13-2.2-.4-.644-.27-1.186-.65-1.626-1.13-.44-.48-.775-1.06-1.006-1.727-.23-.668-.345-1.4-.345-2.196 0-.77.12-1.49.356-2.16.238-.67.576-1.25 1.016-1.73.44-.49.98-.87 1.622-1.14.64-.27 1.356-.41 2.147-.41.876 0 1.647.17 2.31.5.665.34 1.21.79 1.637 1.36.427.57.735 1.22.92 1.95.188.73.254 1.5.2 2.31h-7.57c0 .84.28 1.64.67 2.02zm2.99-5.39c-.31-.34-.79-.51-1.44-.51-.41 0-.75.07-1.025.2-.27.135-.49.3-.657.497-.17.196-.29.405-.36.625-.07.22-.11.42-.12.6h4.16c-.1-.67-.25-1.17-.56-1.41zM20.35 5.01h-5.39v1.48h5.39V5.01z"/></svg>`,
+  threads:    `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#000" style="display:block;flex-shrink:0"><path d="M19.59 13.57c-.08-3.64-2.38-5.8-6.03-5.8-2.06 0-3.56.86-4.38 2.09l1.78 1.11c.57-.87 1.47-1.37 2.6-1.37 1.85 0 2.96.98 3.04 2.62v.05c-.87-.12-1.79-.17-2.75-.14-2.77.1-4.55 1.5-4.55 3.36 0 1.96 1.75 3.27 4.1 3.27 2.01 0 3.62-1.07 4.28-2.63.04-.1.08-.2.1-.31.3-.91.44-1.95.44-3.11l-.63.86zm-3.19 3.3c-.65.44-1.42.67-2.2.67-1.19 0-1.88-.55-1.88-1.28 0-.78.69-1.3 1.88-1.34.84-.03 1.66.04 2.44.2-.14.68-.5 1.3-1.02 1.77l.78-.02z"/></svg>`,
+  github:     `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#24292f" style="display:block;flex-shrink:0"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>`,
+  youtube:    `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#FF0000" style="display:block;flex-shrink:0"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>`,
+  tiktok:     `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#000" style="display:block;flex-shrink:0"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>`,
+  producthunt:`<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:block;flex-shrink:0"><circle cx="12" cy="12" r="10" stroke="#888" stroke-width="1.5" fill="none"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="#888" stroke-width="1.5" fill="none"/><path d="M2 12h20" stroke="#888" stroke-width="1.5"/></svg>`,
+  loom:       `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:block;flex-shrink:0"><circle cx="12" cy="12" r="10" stroke="#888" stroke-width="1.5" fill="none"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="#888" stroke-width="1.5" fill="none"/><path d="M2 12h20" stroke="#888" stroke-width="1.5"/></svg>`,
+  web:        `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:block;flex-shrink:0"><circle cx="12" cy="12" r="10" stroke="#888" stroke-width="1.5" fill="none"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="#888" stroke-width="1.5" fill="none"/><path d="M2 12h20" stroke="#888" stroke-width="1.5"/></svg>`,
 }
 
 function platformPill(platform,creator,postUrl){
@@ -492,16 +537,16 @@ function render(projects){
   })
 }
 function openLb(p){
+  const platform=p.platform||detectPlatform(p.creatorUrl||p.postUrl||'')
   const wrap=document.getElementById('lbMedia');wrap.innerHTML=makeMedia(p,false)
   const lbCreatorEl=document.getElementById('lbCreator')
-  if(p.creatorUrl&&p.creatorUrl!=='#'){
-    lbCreatorEl.innerHTML='<a href="'+p.creatorUrl+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.15);padding-bottom:1px">'+(p.creator||'')+'</a>'
+  if(p.creator||p.creatorUrl){
+    lbCreatorEl.innerHTML=platformPill(platform,p.creator,p.creatorUrl)
   } else {
-    lbCreatorEl.textContent=p.creator||''
+    lbCreatorEl.innerHTML=''
   }
   document.getElementById('lbCaption').textContent=p.caption||''
-  const platform=p.platform||detectPlatform(p.postUrl||'')
-  document.getElementById('lbTags').innerHTML=toolPill(p.tool)+platformPill(platform,p.creator)
+  document.getElementById('lbTags').innerHTML=toolPill(p.tool)
   document.getElementById('lb').classList.add('open')
 }
 function closeLb(){document.getElementById('lb').classList.remove('open')}
@@ -571,6 +616,8 @@ function openSm(){
   document.getElementById('smCaption').value=''
   document.getElementById('smCreator').value=''
   document.getElementById('smSocialUrl').value=''
+  const otherWrapEl=document.getElementById('smOtherWrap');if(otherWrapEl)otherWrapEl.style.display='none'
+  const otherToolEl=document.getElementById('smOtherTool');if(otherToolEl)otherToolEl.value=''
   document.getElementById('smSocialName').textContent=''
   document.getElementById('smMediaUrl') && (document.getElementById('smMediaUrl').value='')
   document.getElementById('smCharCount').textContent='0'
@@ -582,6 +629,7 @@ function openSm(){
   smResetUpload()
   smUpdatePreview()
   window.scrollTo(0,0)
+  setTimeout(smInitLottie,100)
 }
 function closeSm(){document.getElementById('sm').classList.remove('open')}
 
@@ -602,7 +650,7 @@ function smOnMediaUrlInput(){
   const status=document.getElementById('smUrlStatus')
   uploadedMediaUrl=''
   status.textContent='';status.className='sm-upload-status'
-  document.getElementById('smCardMedia').innerHTML='<div class="sm-card-media-placeholder">Media preview will go here</div>'
+  document.getElementById('smCardMedia').innerHTML='<div id="smLottiePlaceholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f5f5f5"></div>';setTimeout(smInitLottie,50)
   if(!val)return
   let host=''
   try{host=new URL(val).hostname.replace('www.','')}catch{return}
@@ -616,7 +664,7 @@ function smOnMediaUrlInput(){
     uploadedMediaUrl=val
     status.textContent='X media accepted — will display on the feed.'
     status.className='sm-upload-status ok'
-    document.getElementById('smCardMedia').innerHTML='<div class="sm-card-media-placeholder" style="text-align:center;padding:16px;line-height:1.5;font-size:11px;color:#bbb">X/Twitter media<br>displays on feed</div>'
+    document.getElementById('smCardMedia').innerHTML='<div class="sm-card-media-placeholder" style="text-align:center;padding:16px;line-height:1.5;font-size:11px;color:#767676">X/Twitter media<br>displays on feed</div>'
     return
   }
   // Try loading as image/video
@@ -631,7 +679,7 @@ function smOnMediaUrlInput(){
 }
 function smUrlMediaFail(){
   uploadedMediaUrl=''
-  document.getElementById('smCardMedia').innerHTML='<div class="sm-card-media-placeholder">Media preview will go here</div>'
+  document.getElementById('smCardMedia').innerHTML='<div id="smLottiePlaceholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f5f5f5"></div>';setTimeout(smInitLottie,50)
   const status=document.getElementById('smUrlStatus')
   status.textContent='Could not load that URL — check it\'s a direct link to the file, not a page.'
   status.className='sm-upload-status err'
@@ -673,7 +721,7 @@ function smResetUrlPreview(){
   const preview=document.getElementById('smUrlPreview')
   preview.classList.remove('show')
   preview.innerHTML='<button class="sm-upload-change" onclick="smResetUrlPreview()">Clear</button>'
-  document.getElementById('smCardMedia').innerHTML='<div class="sm-card-media-placeholder">Media preview will go here</div>'
+  document.getElementById('smCardMedia').innerHTML='<div id="smLottiePlaceholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f5f5f5"></div>';setTimeout(smInitLottie,50)
   uploadedMediaUrl=document.getElementById('smMediaUrl').value.trim()||''
   document.getElementById('smUrlStatus').textContent=''
 }
@@ -682,9 +730,23 @@ function smOnSocialInput(){
   clearTimeout(socialTimer)
   const val=document.getElementById('smSocialUrl').value.trim()
   const nameEl=document.getElementById('smSocialName')
-  nameEl.textContent=''
+  const iconEl=document.getElementById('smSocialIcon')
+  const errEl=document.getElementById('smSocialErr')
+  nameEl.textContent='';nameEl.style.display='none'
+  iconEl.style.display='none';iconEl.innerHTML=''
+  errEl.textContent='';errEl.classList.remove('show')
   if(!val)return
-  let parsed;try{parsed=new URL(val)}catch{return}
+  // Validate https:// prefix
+  if(!val.startsWith('http://')&&!val.startsWith('https://')){
+    errEl.textContent='Please include https:// at the start of your URL.'
+    errEl.classList.add('show')
+    return
+  }
+  let parsed;try{parsed=new URL(val)}catch{
+    errEl.textContent='That doesn\'t look like a valid URL.'
+    errEl.classList.add('show')
+    return
+  }
   const host=parsed.hostname.replace('www.','')
   // Extract name/handle from URL path
   let name=''
@@ -710,11 +772,26 @@ function smOnSocialInput(){
     const m=parsed.pathname.match(/^\/([^/]+)/)
     if(m)name=m[1]
   }
-  if(name){
-    nameEl.textContent='Found: '+name
-    document.getElementById('smCreator').value=name
-    smUpdatePreview()
+  // Fallback: use the last path segment if no name pattern matched
+  if(!name){
+    const parts=parsed.pathname.split('/').filter(Boolean)
+    if(parts.length)name=parts[parts.length-1]
   }
+  if(name) document.getElementById('smCreator').value=name
+  // Show platform icon in field
+  let platform='web'
+  if(host.includes('x.com')||host.includes('twitter.com'))platform='x'
+  else if(host.includes('dribbble.com'))platform='dribbble'
+  else if(host.includes('linkedin.com'))platform='linkedin'
+  else if(host.includes('instagram.com'))platform='instagram'
+  else if(host.includes('behance.net'))platform='behance'
+  else if(host.includes('threads.net'))platform='threads'
+  else if(host.includes('github.com'))platform='github'
+  else if(host.includes('tiktok.com'))platform='tiktok'
+  else if(host.includes('youtube.com'))platform='youtube'
+  iconEl.innerHTML=PLAT_ICONS[platform]||PLAT_ICONS.web
+  iconEl.style.display='flex'
+  smUpdatePreview()
 }
 
 // ── Tools multi-select ──────────────────────────────────────────
@@ -726,6 +803,9 @@ function smToggleTool(chip){
   } else {
     selectedTools=selectedTools.filter(t=>t!==tool)
   }
+  // Show/hide custom tool input
+  const otherWrap=document.getElementById('smOtherWrap')
+  if(otherWrap)otherWrap.style.display=selectedTools.includes('Other')?'block':'none'
   smUpdatePreview()
 }
 
@@ -752,7 +832,7 @@ function smResetUpload(){
   document.getElementById('smUploadProgress').classList.remove('show')
   document.getElementById('smUploadBar').style.width='0%'
   document.getElementById('smFileInput').value=''
-  document.getElementById('smCardMedia').innerHTML='<div class="sm-card-media-placeholder">Media preview will go here</div>'
+  document.getElementById('smCardMedia').innerHTML='<div id="smLottiePlaceholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f5f5f5"></div>';setTimeout(smInitLottie,50)
 }
 
 async function smHandleFile(file){
@@ -761,6 +841,14 @@ async function smHandleFile(file){
   if(!isVideo&&!isImage){smSetUploadStatus('err','Only image and video files are supported.');return}
   const maxBytes=isVideo?30*1024*1024:5*1024*1024
   if(file.size>maxBytes){smSetUploadStatus('err',isVideo?'Video must be under 30MB.':'Image must be under 5MB.');return}
+  // Check image dimensions if image
+  if(isImage){
+    const bmp=await createImageBitmap(file).catch(()=>null)
+    if(bmp&&bmp.width>1600){
+      smSetUploadStatus('err','Image is '+bmp.width+'px wide — please resize to max 1600px wide before uploading.')
+      return
+    }
+  }
 
   // Show local preview immediately
   const localUrl=URL.createObjectURL(file)
@@ -826,10 +914,38 @@ function smUpdateCharCount(){
 function smUpdatePreview(){
   const caption=document.getElementById('smCaption').value.trim()
   const creator=document.getElementById('smCreator').value.trim()
-  const tools=selectedTools.length?selectedTools.join(', '):'Tool here'
+  const socialUrl=(document.getElementById('smSocialUrl')&&document.getElementById('smSocialUrl').value.trim())||''
   document.getElementById('smCardCaption').textContent=caption||'Caption will go here'
-  document.getElementById('smCardCreator').textContent=creator||'Name or handle will go here'
-  document.getElementById('smCardTool').textContent=tools
+  // Platform pill for creator
+  const creatorEl=document.getElementById('smCardCreator')
+  if(creator||socialUrl){
+    let platform='web'
+    try{
+      const h=new URL(socialUrl).hostname.replace('www.','')
+      if(h.includes('x.com')||h.includes('twitter.com'))platform='x'
+      else if(h.includes('dribbble.com'))platform='dribbble'
+      else if(h.includes('linkedin.com'))platform='linkedin'
+      else if(h.includes('instagram.com'))platform='instagram'
+      else if(h.includes('behance.net'))platform='behance'
+      else if(h.includes('threads.net'))platform='threads'
+      else if(h.includes('github.com'))platform='github'
+      else if(h.includes('tiktok.com'))platform='tiktok'
+      else if(h.includes('youtube.com'))platform='youtube'
+    }catch{}
+    creatorEl.innerHTML=platformPill(platform,creator||socialUrl,socialUrl||null)
+  } else {
+    creatorEl.innerHTML='<div class="pill pill-platform" style="opacity:0.7"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:block;flex-shrink:0"><circle cx="12" cy="12" r="10" stroke="#888" stroke-width="1.5"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="#888" stroke-width="1.5"/><path d="M2 12h20" stroke="#888" stroke-width="1.5"/></svg>Your name</div>'
+  }
+  const toolEl=document.getElementById('smCardTool')
+  const otherVal=(document.getElementById('smOtherTool')&&document.getElementById('smOtherTool').value.trim())||''
+  if(selectedTools.length){
+    toolEl.innerHTML=selectedTools.map(t=>{
+      if(t==='Other') return '<div class="pill pill-other">'+(otherVal||'Other')+'</div>'
+      return toolPill(t)
+    }).join('')
+  } else {
+    toolEl.innerHTML='<div class="pill pill-other" style="color:#767676">Tool here</div>'
+  }
 }
 
 // ── Submit ──────────────────────────────────────────────────────
@@ -839,11 +955,12 @@ async function smSubmit(){
   const caption=document.getElementById('smCaption').value.trim()
   const creator=document.getElementById('smCreator').value.trim()
   const socialUrl=document.getElementById('smSocialUrl').value.trim()
-  const tool=selectedTools.join(', ')
+  const otherToolVal=document.getElementById('smOtherTool')&&document.getElementById('smOtherTool').value.trim()
+  const tool=selectedTools.map(t=>t==='Other'&&otherToolVal?otherToolVal:t).join(', ')
   err.classList.remove('show')
   if(!uploadedMediaUrl){err.textContent='Please add a media file or URL.';err.classList.add('show');return}
   if(!caption){err.textContent='Please add a caption.';err.classList.add('show');return}
-  if(!creator){err.textContent='Please add your name or handle.';err.classList.add('show');return}
+  if(!creator&&!socialUrl){err.textContent='Please add a profile link or your name.';err.classList.add('show');return}
   btn.disabled=true;btn.textContent='Submitting...'
   try{
     const res=await fetch('/api/submit',{
@@ -868,6 +985,29 @@ async function smSubmit(){
 }
 document.querySelectorAll('.hero-btn').forEach(b=>{if(b.textContent.trim()==='Submit')b.onclick=openSm})
 
+
+
+// Lottie placeholder animation
+const LOTTIE_DATA = {"nm":"scene1","ddd":0,"h":500,"w":500,"meta":{"g":"@lottiefiles/creator 0.47.0"},"layers":[{"ty":0,"nm":"Image","sr":1,"st":0,"op":200,"ip":0,"hd":false,"ddd":0,"bm":0,"hasMask":false,"ao":0,"ks":{"a":{"a":0,"k":[97.5,91.9653237770666]},"s":{"a":0,"k":[369.2682530658655,369.2682530658655]},"sk":{"a":0,"k":0},"p":{"a":0,"k":[247.5,241.9653237770666]},"r":{"a":0,"k":0},"sa":{"a":0,"k":0},"o":{"a":0,"k":100}},"ef":[],"w":200,"h":200,"refId":"Scene 1","ind":1}],"v":"5.7.0","fr":30,"op":200,"ip":0,"assets":[{"nm":"07 Picture","id":"Scene 1","layers":[{"ty":3,"nm":"Color control","sr":1,"st":0,"op":210,"ip":0,"hd":false,"ddd":0,"bm":0,"hasMask":false,"ao":0,"ks":{"a":{"a":0,"k":[200,200,0],"ix":1},"s":{"a":0,"k":[52,52,100],"ix":6},"sk":{"a":0,"k":0},"p":{"a":0,"k":[100.75,100.5,0],"ix":2},"r":{"a":0,"k":0,"ix":10},"sa":{"a":0,"k":0},"o":{"a":0,"k":100,"ix":11}},"ef":[{"ty":5,"mn":"ADBE Color Control","nm":"Line","ix":1,"en":1,"ef":[{"ty":2,"mn":"ADBE Color Control-0001","nm":"Color","ix":1,"v":{"a":0,"k":[0.2667,0.3804,0.451],"ix":1}}]},{"ty":5,"mn":"ADBE Color Control","nm":"Back","ix":2,"en":1,"ef":[{"ty":2,"mn":"ADBE Color Control-0001","nm":"Color","ix":1,"v":{"a":0,"k":[0.7647,0.8314,0.8706],"ix":1}}]},{"ty":5,"mn":"ADBE Checkbox Control","nm":"Global color on/off","ix":3,"en":1,"ef":[{"ty":7,"mn":"ADBE Checkbox Control-0001","nm":"Checkbox","ix":1,"v":{"a":0,"k":1,"ix":1}}]}],"ind":1},{"ty":4,"nm":"Mask 2","sr":1,"st":0,"op":600,"ip":0,"hd":false,"ddd":0,"bm":0,"hasMask":false,"td":1,"ao":0,"ks":{"a":{"a":0,"k":[-2.375,-4.843999862670898],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6},"sk":{"a":0,"k":0},"p":{"a":0,"k":[53.625,37.1560001373291],"ix":2},"r":{"a":0,"k":0,"ix":10},"sa":{"a":0,"k":0},"o":{"a":0,"k":100,"ix":11}},"ef":[],"shapes":[{"ty":"gr","bm":0,"hd":false,"mn":"ADBE Vector Group","nm":"Shape 1","ix":1,"cix":2,"np":3,"it":[{"ty":"sh","bm":0,"hd":false,"mn":"ADBE Vector Shape - Group","nm":"Path 1","ix":1,"d":1,"ks":{"a":0,"k":{"c":true,"i":[[9.25,0],[4.812,-0.062],[-0.125,-5.25],[-0.25,-6.125],[-4.125,4.062],[-0.375,-0.375],[-2.625,2.625],[-3.125,-3.125],[0,8.256]],"o":[[-9.25,0],[-3.312,0.188],[0.125,5.25],[1.188,-1.188],[3.25,1.875],[3.625,-3.875],[3.25,2.875],[-0.062,-12.25],[0,-5.688]],"v":[[27.625,-31.75],[-38.5,-31.5],[-45.562,-23.062],[-45.312,22.062],[-24.063,2.938],[-7.188,13.062],[17.562,-14.062],[40.625,4.688],[40.812,-22.375]]},"ix":2}},{"ty":"fl","bm":0,"hd":false,"mn":"ADBE Vector Graphic - Fill","nm":"Fill 1","c":{"a":0,"k":[0.6392,0.3294,0.2275],"ix":4},"r":1,"o":{"a":0,"k":100,"ix":5}},{"ty":"tr","a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"sk":{"a":0,"k":0,"ix":4},"p":{"a":0,"k":[0,0],"ix":2},"r":{"a":0,"k":0,"ix":6},"sa":{"a":0,"k":0,"ix":5},"o":{"a":0,"k":100,"ix":7}}]}],"ind":2,"parent":6},{"ty":4,"nm":"Line","sr":1,"st":0,"op":600,"ip":0,"hd":false,"ddd":0,"bm":0,"tt":1,"hasMask":false,"ao":0,"ks":{"a":{"a":0,"k":[10.385999999999996,10.386000000000017],"ix":1},"s":{"a":1,"k":[{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[99.99933306000001,99.99933306000001],"t":0},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[99.99933306000001,99.99933306000001],"t":55},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[99.99933306,99.99933306],"t":85},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[99.99933306,99.99933306],"t":100},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[99.99933305999998,99.99933306000001],"t":130},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[99.99933305999998,99.99933306000001],"t":145},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[99.99933306,99.99933306],"t":175},{"s":[99.99933306,99.99933306],"t":190}],"ix":6},"sk":{"a":1,"k":[{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[0],"t":0},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[0],"t":55},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[0],"t":85},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[0],"t":100},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[0],"t":130},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[0],"t":145},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[0],"t":175},{"s":[0],"t":190}]},"p":{"a":1,"k":[{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[63.41263026972746,80.97135271937469],"t":0},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[63.41263026972746,80.97135271937469],"t":55},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[63.41263026972746,80.9713527193747],"t":85},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[63.41263026972746,80.9713527193747],"t":100},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[63.41263026972746,80.97135271937469],"t":130},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[63.41263026972746,80.97135271937469],"t":145},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[63.41263026972746,80.9713527193747],"t":175},{"s":[63.41263026972746,80.9713527193747],"t":190}],"ix":2},"r":{"a":1,"k":[{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[26.545999999999996],"t":0},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[26.545999999999996],"t":55},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[208.812],"t":85},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[208.812],"t":100},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[35.48400000000001],"t":130},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[35.48400000000001],"t":145},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[200.94100000000012],"t":175},{"s":[200.94100000000012],"t":190}],"ix":10},"sa":{"a":1,"k":[{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[0],"t":0},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[0],"t":55},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[0],"t":85},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[0],"t":100},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[0],"t":130},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[0],"t":145},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[0],"t":175},{"s":[0],"t":190}]},"o":{"a":0,"k":100,"ix":11}},"ef":[],"shapes":[{"ty":"gr","bm":0,"hd":false,"mn":"ADBE Vector Group","nm":"Group 1","ix":1,"cix":2,"np":3,"it":[{"ty":"sh","bm":0,"hd":false,"mn":"ADBE Vector Shape - Group","nm":"Path 1","ix":1,"d":1,"ks":{"a":0,"k":{"c":true,"i":[[-4.043,5.302],[2.974,0],[0,2.975],[-2.975,0]],"o":[[0,2.975],[-2.975,0],[0,-2.975],[-5.131,3.816]],"v":[[5.387,0],[0.001,5.386],[-5.387,0],[0.001,-5.386]]},"ix":2}},{"ty":"fl","bm":0,"hd":false,"mn":"ADBE Vector Graphic - Fill","nm":"Fill 1","c":{"a":0,"k":[0.6667,0.6667,0.6667],"ix":4},"r":1,"o":{"a":0,"k":100,"ix":5}},{"ty":"tr","a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"sk":{"a":0,"k":0,"ix":4},"p":{"a":0,"k":[10.386,10.386],"ix":2},"r":{"a":0,"k":0,"ix":6},"sa":{"a":0,"k":0,"ix":5},"o":{"a":0,"k":100,"ix":7}}]}],"ind":3,"parent":6},{"ty":4,"nm":"Mask","sr":1,"st":0,"op":600,"ip":0,"hd":false,"ddd":0,"bm":0,"hasMask":false,"td":1,"ao":0,"ks":{"a":{"a":0,"k":[-2.375,-4.843999862670898],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6},"sk":{"a":0,"k":0},"p":{"a":0,"k":[53.625,37.1560001373291],"ix":2},"r":{"a":0,"k":0,"ix":10},"sa":{"a":0,"k":0},"o":{"a":0,"k":100,"ix":11}},"ef":[],"shapes":[{"ty":"gr","bm":0,"hd":false,"mn":"ADBE Vector Group","nm":"Shape 1","ix":1,"cix":2,"np":3,"it":[{"ty":"sh","bm":0,"hd":false,"mn":"ADBE Vector Shape - Group","nm":"Path 1","ix":1,"d":1,"ks":{"a":0,"k":{"c":true,"i":[[9.25,0],[4.812,-0.062],[-0.125,-5.25],[-0.25,-6.125],[-4.125,4.062],[-0.375,-0.375],[-2.625,2.625],[-3.125,-3.125],[0,8.256]],"o":[[-9.25,0],[-3.312,0.188],[0.125,5.25],[1.188,-1.188],[3.25,1.875],[3.625,-3.875],[3.25,2.875],[-0.062,-12.25],[0,-5.688]],"v":[[27.625,-31.75],[-38.5,-31.5],[-45.562,-23.062],[-45.312,22.062],[-24.063,2.938],[-7.188,13.062],[17.562,-14.062],[40.625,4.688],[40.812,-22.375]]},"ix":2}},{"ty":"fl","bm":0,"hd":false,"mn":"ADBE Vector Graphic - Fill","nm":"Fill 1","c":{"a":0,"k":[0.6392,0.3294,0.2275],"ix":4},"r":1,"o":{"a":0,"k":100,"ix":5}},{"ty":"tr","a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"sk":{"a":0,"k":0,"ix":4},"p":{"a":0,"k":[0,0],"ix":2},"r":{"a":0,"k":0,"ix":6},"sa":{"a":0,"k":0,"ix":5},"o":{"a":0,"k":100,"ix":7}}]}],"ind":4,"parent":6},{"ty":4,"nm":"Line","sr":1,"st":0,"op":600,"ip":0,"hd":false,"ddd":0,"bm":0,"tt":1,"hasMask":false,"ao":0,"ks":{"a":{"a":0,"k":[10.385999999999967,10.386000000000024],"ix":1},"s":{"a":0,"k":[99.99933306,99.99933306],"ix":6},"sk":{"a":0,"k":0},"p":{"a":0,"k":[36.38297854384396,27.545175177974663],"ix":2},"r":{"a":0,"k":18.164000000000005,"ix":10},"sa":{"a":0,"k":0},"o":{"a":0,"k":100,"ix":11}},"ef":[],"shapes":[{"ty":"gr","bm":0,"hd":false,"mn":"ADBE Vector Group","nm":"Group 1","ix":1,"cix":2,"np":2,"it":[{"ty":"sh","bm":0,"hd":false,"mn":"ADBE Vector Shape - Group","nm":"Path 1","ix":1,"d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,-2.975],[2.974,0],[0,2.975],[-2.975,0]],"o":[[0,2.975],[-2.975,0],[0,-2.975],[2.974,0]],"v":[[5.387,0],[0.001,5.386],[-5.387,0],[0.001,-5.386]]},"ix":2}},{"ty":"st","bm":0,"hd":false,"mn":"ADBE Vector Graphic - Stroke","nm":"Stroke 1","lc":2,"lj":2,"ml":1,"o":{"a":0,"k":100,"ix":4},"w":{"a":0,"k":2,"ix":5},"c":{"a":0,"k":[0.6667,0.6667,0.6667],"ix":3}},{"ty":"tr","a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"sk":{"a":0,"k":0,"ix":4},"p":{"a":0,"k":[10.386,10.386],"ix":2},"r":{"a":0,"k":0,"ix":6},"sa":{"a":0,"k":0,"ix":5},"o":{"a":0,"k":100,"ix":7}}]}],"ind":5,"parent":6},{"ty":4,"nm":"Line","sr":1,"st":0,"op":600,"ip":0,"hd":false,"ddd":0,"bm":0,"hasMask":false,"ao":0,"ks":{"a":{"a":0,"k":[53.5,48.17409792862837],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6},"sk":{"a":0,"k":0},"p":{"a":1,"k":[{"o":{"x":0.333,"y":0.437},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":23},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.546},"s":[97.5,99.17409792862837],"t":48},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":70},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.616},"s":[97.5,99.17409792862837],"t":93},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":115},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.616},"s":[97.5,99.17409792862837],"t":138},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":160},{"o":{"x":0.333,"y":0},"i":{"x":0.704,"y":0.596},"s":[97.5,99.17409792862837],"t":183},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":205},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":1},"s":[97.5,99.17409792862837],"t":228},{"o":{"x":0.333,"y":0.437},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":239},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.546},"s":[97.5,99.17409792862837],"t":264},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":286},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.616},"s":[97.5,99.17409792862837],"t":309},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":331},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.616},"s":[97.5,99.17409792862837],"t":354},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":376},{"o":{"x":0.333,"y":0},"i":{"x":0.704,"y":0.596},"s":[97.5,99.17409792862837],"t":399},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":421},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":1},"s":[97.5,99.17409792862837],"t":444},{"o":{"x":0.333,"y":0.437},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":466},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.546},"s":[97.5,99.17409792862837],"t":491},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":513},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.616},"s":[97.5,99.17409792862837],"t":536},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":558},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.616},"s":[97.5,99.17409792862837],"t":581},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":603},{"o":{"x":0.333,"y":0},"i":{"x":0.704,"y":0.596},"s":[97.5,99.17409792862837],"t":626},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":648},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":1},"s":[97.5,99.17409792862837],"t":671},{"o":{"x":0.333,"y":0.437},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":682},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.546},"s":[97.5,99.17409792862837],"t":707},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":729},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.616},"s":[97.5,99.17409792862837],"t":752},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":774},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.616},"s":[97.5,99.17409792862837],"t":797},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":819},{"o":{"x":0.333,"y":0},"i":{"x":0.704,"y":0.596},"s":[97.5,99.17409792862837],"t":842},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[97.5,106.17409792862838],"t":864},{"s":[97.5,99.17409792862837],"t":887}],"ix":2},"r":{"a":1,"k":[{"o":{"x":0.429,"y":0},"i":{"x":0.491,"y":1},"s":[-39],"t":1},{"o":{"x":0.486,"y":0},"i":{"x":0.588,"y":1},"s":[6],"t":16},{"s":[0],"t":25}],"ix":10},"sa":{"a":0,"k":0},"o":{"a":0,"k":100,"ix":11}},"ef":[],"shapes":[{"ty":"gr","bm":0,"hd":false,"mn":"ADBE Vector Group","nm":"Group 1","ix":1,"cix":2,"np":2,"it":[{"ty":"sh","bm":0,"hd":false,"mn":"ADBE Vector Shape - Group","nm":"Path 1","ix":1,"d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,0],[5.523,0],[0,0],[0,5.523],[0,0],[-5.523,0],[0,0],[0,-5.523]],"o":[[0,5.523],[0,0],[-5.523,0],[0,0],[0,-5.523],[0,0],[5.523,0],[0,0]],"v":[[43.5,24.5],[33.5,34.5],[-33.5,34.5],[-43.5,24.5],[-43.5,-24.5],[-33.5,-34.5],[33.5,-34.5],[43.5,-24.5]]},"ix":2}},{"ty":"st","bm":0,"hd":false,"mn":"ADBE Vector Graphic - Stroke","nm":"Stroke 1","lc":2,"lj":2,"ml":1,"o":{"a":0,"k":100,"ix":4},"w":{"a":0,"k":4,"ix":5},"c":{"a":0,"k":[0.6667,0.6667,0.6667],"ix":3}},{"ty":"tr","a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"sk":{"a":0,"k":0,"ix":4},"p":{"a":0,"k":[53.5,44.5],"ix":2},"r":{"a":0,"k":0,"ix":6},"sa":{"a":0,"k":0,"ix":5},"o":{"a":0,"k":100,"ix":7}}]},{"ty":"tm","bm":0,"hd":false,"mn":"ADBE Vector Filter - Trim","nm":"Trim Paths 1","ix":2,"e":{"a":1,"k":[{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":1},"s":[0],"t":1},{"s":[100],"t":23}],"ix":2},"o":{"a":0,"k":-169,"ix":3},"s":{"a":0,"k":0,"ix":1},"m":1}],"ind":6},{"ty":4,"nm":"Line","sr":1,"st":0,"op":600,"ip":0,"hd":false,"ddd":0,"bm":0,"hasMask":false,"ao":0,"ks":{"a":{"a":0,"k":[52.71399999999999,28.218000000000004],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6},"sk":{"a":0,"k":0},"p":{"a":0,"k":[53.59899999999999,46.825],"ix":2},"r":{"a":0,"k":0,"ix":10},"sa":{"a":0,"k":0},"o":{"a":0,"k":100,"ix":11}},"ef":[],"shapes":[{"ty":"gr","bm":0,"hd":false,"mn":"ADBE Vector Group","nm":"Group 1","ix":1,"cix":2,"np":2,"it":[{"ty":"sh","bm":0,"hd":false,"mn":"ADBE Vector Shape - Group","nm":"Path 1","ix":1,"d":1,"ks":{"a":0,"k":{"c":false,"i":[[0,0],[0,0],[0,0],[0,0],[0,0]],"o":[[0,0],[0,0],[0,0],[0,0],[0,0]],"v":[[-42.714,18.217],[-21.754,-0.999],[-4.902,9.217],[19.932,-18.217],[42.714,0.614]]},"ix":2}},{"ty":"st","bm":0,"hd":false,"mn":"ADBE Vector Graphic - Stroke","nm":"Stroke 1","lc":2,"lj":2,"ml":1,"o":{"a":0,"k":100,"ix":4},"w":{"a":0,"k":4,"ix":5},"c":{"a":0,"k":[0.6667,0.6667,0.6667],"ix":3}},{"ty":"tr","a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"sk":{"a":0,"k":0,"ix":4},"p":{"a":0,"k":[52.714,28.218],"ix":2},"r":{"a":0,"k":0,"ix":6},"sa":{"a":0,"k":0,"ix":5},"o":{"a":0,"k":100,"ix":7}}]},{"ty":"tm","bm":0,"hd":false,"mn":"ADBE Vector Filter - Trim","nm":"Trim Paths 1","ix":2,"e":{"a":1,"k":[{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":1},"s":[50],"t":14},{"s":[100],"t":29}],"ix":2},"o":{"a":0,"k":171,"ix":3},"s":{"a":1,"k":[{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":1},"s":[50],"t":9},{"s":[0],"t":23}],"ix":1},"m":1}],"ind":7,"parent":6},{"ty":4,"nm":"Line","sr":1,"st":0,"op":600,"ip":0,"hd":false,"ddd":0,"bm":0,"hasMask":false,"ao":0,"ks":{"a":{"a":0,"k":[27.85350010061265,20.79999990463257],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6},"sk":{"a":0,"k":0},"p":{"a":0,"k":[49.69850010061265,56.62399990463257],"ix":2},"r":{"a":0,"k":0,"ix":10},"sa":{"a":0,"k":0},"o":{"a":0,"k":100,"ix":11}},"ef":[],"shapes":[{"ty":"gr","bm":0,"hd":false,"mn":"ADBE Vector Group","nm":"Group 1","ix":1,"cix":2,"np":2,"it":[{"ty":"sh","bm":0,"hd":false,"mn":"ADBE Vector Shape - Group","nm":"Path 1","ix":1,"d":1,"ks":{"a":0,"k":{"c":false,"i":[[0,0],[0,0]],"o":[[0,0],[0,0]],"v":[[-0.62,-0.375],[12.109,7.325]]},"ix":2}},{"ty":"st","bm":0,"hd":false,"mn":"ADBE Vector Graphic - Stroke","nm":"Stroke 1","lc":2,"lj":2,"ml":1,"o":{"a":0,"k":100,"ix":4},"w":{"a":0,"k":4,"ix":5},"c":{"a":0,"k":[0.6667,0.6667,0.6667],"ix":3}},{"ty":"tr","a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"sk":{"a":0,"k":0,"ix":4},"p":{"a":0,"k":[22.109,17.325],"ix":2},"r":{"a":0,"k":0,"ix":6},"sa":{"a":0,"k":0,"ix":5},"o":{"a":0,"k":100,"ix":7}}]},{"ty":"tm","bm":0,"hd":false,"mn":"ADBE Vector Filter - Trim","nm":"Trim Paths 1","ix":2,"e":{"a":1,"k":[{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[0],"t":24},{"s":[100],"t":29}],"ix":2},"o":{"a":0,"k":0,"ix":3},"s":{"a":0,"k":0,"ix":1},"m":1}],"ind":8,"parent":6},{"ty":4,"nm":"Line","sr":1,"st":0,"op":600,"ip":0,"hd":false,"ddd":0,"bm":0,"hasMask":false,"ao":0,"ks":{"a":{"a":0,"k":[29.5,5],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6},"sk":{"a":0,"k":0},"p":{"a":0,"k":[38.5,-2],"ix":2},"r":{"a":0,"k":0,"ix":10},"sa":{"a":0,"k":0},"o":{"a":0,"k":100,"ix":11}},"ef":[],"shapes":[{"ty":"gr","bm":0,"hd":false,"mn":"ADBE Vector Group","nm":"Group 1","ix":1,"cix":2,"np":2,"it":[{"ty":"sh","bm":0,"hd":false,"mn":"ADBE Vector Shape - Group","nm":"Path 1","ix":1,"d":1,"ks":{"a":0,"k":{"c":false,"i":[[0,0],[0,0]],"o":[[0,0],[0,0]],"v":[[5,5],[54,5]]},"ix":2}},{"ty":"st","bm":0,"hd":false,"mn":"ADBE Vector Graphic - Stroke","nm":"Stroke 1","lc":2,"lj":2,"ml":1,"o":{"a":0,"k":100,"ix":4},"w":{"a":0,"k":2,"ix":5},"c":{"a":0,"k":[0.6667,0.6667,0.6667],"ix":3}},{"ty":"tr","a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"sk":{"a":0,"k":0,"ix":4},"p":{"a":0,"k":[0,0],"ix":2},"r":{"a":0,"k":0,"ix":6},"sa":{"a":0,"k":0,"ix":5},"o":{"a":0,"k":100,"ix":7}}]},{"ty":"tm","bm":0,"hd":false,"mn":"ADBE Vector Filter - Trim","nm":"Trim Paths 1","ix":2,"e":{"a":1,"k":[{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":1},"s":[0],"t":10},{"s":[100],"t":20}],"ix":2},"o":{"a":0,"k":0,"ix":3},"s":{"a":0,"k":0,"ix":1},"m":1}],"ind":9,"parent":10},{"ty":4,"nm":"Line","sr":1,"st":0,"op":600,"ip":0,"hd":false,"ddd":0,"bm":0,"hasMask":false,"ao":0,"ks":{"a":{"a":0,"k":[38.499999999999986,1.5],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6},"sk":{"a":0,"k":0},"p":{"a":1,"k":[{"o":{"x":0.333,"y":0.437},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":23},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.546},"s":[98.00799999999998,49.516],"t":48},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":70},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.616},"s":[98.00799999999998,49.516],"t":93},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":115},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.616},"s":[98.00799999999998,49.516],"t":138},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":160},{"o":{"x":0.333,"y":0},"i":{"x":0.704,"y":0.596},"s":[98.00799999999998,49.516],"t":183},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":205},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":1},"s":[98.00799999999998,49.516],"t":228},{"o":{"x":0.333,"y":0.437},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":239},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.546},"s":[98.00799999999998,49.516],"t":264},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":286},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.616},"s":[98.00799999999998,49.516],"t":309},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":331},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.616},"s":[98.00799999999998,49.516],"t":354},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":376},{"o":{"x":0.333,"y":0},"i":{"x":0.704,"y":0.596},"s":[98.00799999999998,49.516],"t":399},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":421},{"o":{"x":0.167,"y":0.167},"i":{"x":0.833,"y":0.833},"s":[98.00799999999998,49.516],"t":444},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.546},"s":[98.00799999999998,49.516],"t":466},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":488},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.616},"s":[98.00799999999998,49.516],"t":511},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":533},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.616},"s":[98.00799999999998,49.516],"t":556},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":578},{"o":{"x":0.333,"y":0},"i":{"x":0.704,"y":0.596},"s":[98.00799999999998,49.516],"t":601},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":623},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":1},"s":[98.00799999999998,49.516],"t":646},{"o":{"x":0.333,"y":0.437},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":657},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.546},"s":[98.00799999999998,49.516],"t":682},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":704},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.616},"s":[98.00799999999998,49.516],"t":727},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":749},{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":0.616},"s":[98.00799999999998,49.516],"t":772},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":794},{"o":{"x":0.333,"y":0},"i":{"x":0.704,"y":0.596},"s":[98.00799999999998,49.516],"t":817},{"o":{"x":0.333,"y":0.475},"i":{"x":0.667,"y":1},"s":[98.00799999999998,56.516],"t":839},{"s":[98.00799999999998,49.516],"t":862}],"ix":2},"r":{"a":0,"k":0,"ix":10},"sa":{"a":0,"k":0},"o":{"a":0,"k":100,"ix":11}},"ef":[],"shapes":[{"ty":"gr","bm":0,"hd":false,"mn":"ADBE Vector Group","nm":"Group 1","ix":1,"cix":2,"np":2,"it":[{"ty":"sh","bm":0,"hd":false,"mn":"ADBE Vector Shape - Group","nm":"Path 1","ix":1,"d":1,"ks":{"a":0,"k":{"c":false,"i":[[0,0],[0,0]],"o":[[0,0],[0,0]],"v":[[5,5],[72,5]]},"ix":2}},{"ty":"st","bm":0,"hd":false,"mn":"ADBE Vector Graphic - Stroke","nm":"Stroke 1","lc":2,"lj":2,"ml":1,"o":{"a":0,"k":100,"ix":4},"w":{"a":0,"k":2,"ix":5},"c":{"a":0,"k":[0.6667,0.6667,0.6667],"ix":3}},{"ty":"tr","a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"sk":{"a":0,"k":0,"ix":4},"p":{"a":0,"k":[0,0],"ix":2},"r":{"a":0,"k":0,"ix":6},"sa":{"a":0,"k":0,"ix":5},"o":{"a":0,"k":100,"ix":7}}]},{"ty":"tm","bm":0,"hd":false,"mn":"ADBE Vector Filter - Trim","nm":"Trim Paths 1","ix":2,"e":{"a":1,"k":[{"o":{"x":0.333,"y":0},"i":{"x":0.667,"y":1},"s":[0],"t":8},{"s":[100],"t":18}],"ix":2},"o":{"a":0,"k":0,"ix":3},"s":{"a":0,"k":0,"ix":1},"m":1}],"ind":10}]}]};
+let lottieInstance = null;
+function smInitLottie(){
+  const el = document.getElementById('smLottiePlaceholder');
+  if(!el) return;
+  if(lottieInstance) lottieInstance.destroy();
+  // Create a smaller inner container
+  el.innerHTML = '<div id="smLottieInner" style="width:120px;height:120px"></div>'
+  lottieInstance = lottie.loadAnimation({
+    container: document.getElementById('smLottieInner'),
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    animationData: LOTTIE_DATA
+  });
+}
+// Init on page load and after resets
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(smInitLottie, 100);
+});
 
 document.getElementById('footerYear').textContent=new Date().getFullYear()
 </script>
