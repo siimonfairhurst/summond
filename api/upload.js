@@ -1,56 +1,35 @@
-// Increase Vercel body size limit to 50MB for file uploads
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '50mb'
-    }
-  }
-}
-
+// Lightweight auth endpoint — just returns a signature for client-side upload
+// The actual file goes browser → ImageKit directly, never touching Vercel
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
-
-  const { fileBase64, fileName, fileType } = req.body
-  if (!fileBase64 || !fileName) return res.status(400).json({ error: 'Missing file data' })
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' })
 
   const PRIVATE_KEY = process.env.IMAGEKIT_PRIVATE_KEY
-  if (!PRIVATE_KEY) return res.status(500).json({ error: 'ImageKit not configured' })
+  const PUBLIC_KEY  = process.env.IMAGEKIT_PUBLIC_KEY
+
+  if (!PRIVATE_KEY || !PUBLIC_KEY) {
+    return res.status(500).json({ error: 'ImageKit not configured' })
+  }
 
   try {
-    const auth = Buffer.from(PRIVATE_KEY + ':').toString('base64')
+    // Generate auth signature for client-side upload
+    const token = Math.random().toString(36).slice(2)
+    const expire = Math.floor(Date.now() / 1000) + 3600 // 1 hour
 
-    // Use FormData — much more efficient than URLSearchParams for binary data
-    const formData = new FormData()
-    formData.append('file', fileBase64)          // ImageKit accepts base64 directly
-    formData.append('fileName', fileName)
-    formData.append('folder', '/summond')
-    formData.append('useUniqueFileName', 'true')
-
-    const response = await fetch('https://upload.imagekit.io/api/v1/files/upload', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Basic ${auth}`
-        // Don't set Content-Type — let fetch set it with the boundary for FormData
-      },
-      body: formData
-    })
-
-    const data = await response.json()
-
-    if (!response.ok) {
-      console.error('ImageKit error:', data)
-      return res.status(500).json({ error: data.message || 'Upload failed' })
-    }
+    const crypto = await import('crypto')
+    const signature = crypto.default
+      .createHmac('sha1', PRIVATE_KEY)
+      .update(token + expire)
+      .digest('hex')
 
     return res.status(200).json({
-      url: data.url,
-      fileId: data.fileId,
-      name: data.name,
-      fileType: data.fileType
+      signature,
+      expire,
+      token,
+      publicKey: PUBLIC_KEY
     })
-
   } catch (err) {
-    console.error('Upload error:', err.message)
-    return res.status(500).json({ error: 'Upload failed: ' + err.message })
+    console.error('Auth error:', err)
+    return res.status(500).json({ error: 'Auth failed' })
   }
 }
