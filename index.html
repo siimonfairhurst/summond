@@ -242,7 +242,12 @@
 
           <div class="sm-section">
             <div class="sm-label">Media URL <span style="font-weight:400;color:#aaa;font-size:12px">— auto-filled, edit if needed</span></div>
-            <div class="sm-desc">The image or video that will appear on the feed.</div>
+            <div class="sm-desc" id="smMediaDesc">The image or video that will appear on the feed.</div>
+            <div id="smXHint" style="display:none;font-size:12px;background:#fff8e6;border:1px solid rgba(200,140,0,0.2);border-radius:8px;padding:10px 12px;color:#7a5800;line-height:1.6;margin-bottom:6px">
+              <strong>For X / Twitter:</strong> page URLs won't work as media.<br>
+              To get the direct image URL: right-click the image on X &rarr; <em>Copy image address</em>. It should start with <code style="background:rgba(0,0,0,0.06);padding:1px 4px;border-radius:3px">https://pbs.twimg.com/media/...</code><br>
+              Videos from X cannot be embedded — consider uploading to Imgur or Cloudinary instead.
+            </div>
             <div class="sm-url-row">
               <input class="sm-input" id="smMediaUrl" type="url" placeholder="https://" oninput="smValidateMedia()" style="padding-right:36px">
               <div class="sm-url-icon" id="smMediaIcon"></div>
@@ -254,7 +259,7 @@
               Summond links directly to media hosted elsewhere. Some platforms block this.<br><br>
               <strong>Supported:</strong> Dribbble, Youtube, Loom, Vimeo, Imgur, Github, Cloudinary<br>
               <strong>Unsupported:</strong> Threads, LinkedIn, Behance, TikTok, Pinterest, Facebook.<br><br>
-              Twitter (X) URLs will only show a static thumbnail, video unsupported.
+              For X: right-click your image &rarr; Copy image address &rarr; paste the <code style="background:rgba(0,0,0,0.06);padding:1px 4px;border-radius:3px">pbs.twimg.com</code> URL here.
             </div>
           </div>
 
@@ -533,6 +538,10 @@ function smUnlockFields(autofilled){
   const fields=document.getElementById('smAutoFields')
   fields.style.opacity='1'
   fields.style.pointerEvents='auto'
+  // Show X-specific media hint if post URL is from X
+  const postUrl=document.getElementById('smPostUrl').value||''
+  const isX=postUrl.includes('x.com')||postUrl.includes('twitter.com')
+  document.getElementById('smXHint').style.display=isX?'block':'none'
   if(!autofilled){
     // Clear fields so user knows they need to fill in manually
     document.getElementById('smMediaUrl').value=''
@@ -588,8 +597,12 @@ function smUpdatePreview(){
 function smSetMediaPreview(url){
   const media=document.getElementById('smCardMedia')
   if(!url){media.innerHTML='<div class="sm-card-media-placeholder">Media preview will go here</div>';return}
-  // X/Twitter — can't load media server-side, show placeholder
-  if(url.includes('x.com')||url.includes('twitter.com')||url.includes('t.co')||url.includes('pbs.twimg.com')){
+  // pbs.twimg.com = direct X image CDN — load as real image
+  if(url.includes('pbs.twimg.com')){
+    media.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover" onerror="smMediaFail()">';return
+  }
+  // Other x.com/twitter.com page URLs — can't load, show placeholder
+  if(url.includes('x.com')||url.includes('twitter.com')||url.includes('t.co')){
     media.innerHTML='<div class="sm-card-media-placeholder" style="text-align:center;padding:16px;line-height:1.5">X / Twitter<br><span style="font-size:10px;color:#bbb">Media will display on the feed</span></div>';return
   }
   const isEmbed=EMBED_HOSTS.find(b=>url.includes(b))
@@ -636,6 +649,15 @@ function smValidateMedia(){
     err.textContent=capitalise(blocked)+' is not supported — media is locked behind login. Upload to Imgur or Cloudinary instead.'
     err.classList.add('show');inp.classList.add('error')
     icon.className='sm-url-icon show err';icon.textContent='!'
+    return
+  }
+  // X page URLs are not valid media — only pbs.twimg.com direct image URLs work
+  if((host.includes('x.com')||host.includes('twitter.com'))&&!url.includes('pbs.twimg.com')){
+    icon.className='sm-url-icon show err';icon.textContent='!'
+    inp.classList.add('error')
+    err.textContent='This is an X page URL, not a direct media link. Right-click the image on X and choose "Copy image address" to get a pbs.twimg.com URL.'
+    err.classList.add('show')
+    smSetMediaPreview('')
     return
   }
   icon.className='sm-url-icon show ok';icon.textContent='✓'
