@@ -109,6 +109,71 @@
     .footer a:hover{opacity:.6}
     body.dark .footer p{color:#767676}
     body.dark .footer a{color:#767676}
+
+    /* SUBMIT MODAL */
+    .sm{position:fixed;inset:0;background:#fff;z-index:110;display:none;flex-direction:column;overflow-y:auto;transition:background .3s}
+    .sm.open{display:flex}
+    .sm-topbar{display:flex;align-items:center;padding:16px 24px;border-bottom:1px solid rgba(0,0,0,0.08);flex-shrink:0;transition:border-color .3s}
+    .sm-back{background:none;border:1px solid rgba(0,0,0,0.16);border-radius:100px;font-family:'Hanken Grotesk',sans-serif;font-size:13px;color:#000;cursor:pointer;padding:6px 14px;display:flex;align-items:center;gap:6px;transition:background .2s,color .3s,border-color .3s}
+    .sm-back:hover{background:#f5f5f5}
+    .sm-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;flex:1;max-width:1100px;width:100%;margin:0 auto;padding:48px 48px 80px}
+    @media(max-width:768px){.sm-layout{grid-template-columns:1fr;padding:24px;gap:32px}}
+    .sm-left{display:flex;flex-direction:column;gap:0}
+    .sm-page-title{font-size:20px;font-weight:700;letter-spacing:-0.02em;margin-bottom:32px;transition:color .3s}
+    .sm-section{padding:24px 0;border-bottom:1px solid rgba(0,0,0,0.08);display:flex;flex-direction:column;gap:6px;transition:border-color .3s}
+    .sm-label{font-size:14px;font-weight:600;color:#000;transition:color .3s}
+    .sm-desc{font-size:13px;color:#888;line-height:1.5;transition:color .3s}
+    .sm-input{font-family:'Hanken Grotesk',sans-serif;font-size:14px;padding:10px 14px;border:1px solid rgba(0,0,0,0.16);border-radius:8px;outline:none;width:100%;background:#fff;color:#000;transition:border-color .2s,background .3s,color .3s;resize:none}
+    .sm-input:focus{border-color:#000}
+    .sm-input.error{border-color:#e53}
+    .sm-charcount{font-size:11px;color:#aaa;text-align:right;margin-top:2px}
+    .sm-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer}
+    .sm-url-row{position:relative}
+    .sm-url-icon{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+    .sm-url-icon.show{display:flex}
+    .sm-url-icon.ok{background:rgba(0,160,80,0.12);color:#0a0}
+    .sm-url-icon.err{background:rgba(220,50,50,0.1);color:#e53}
+    .sm-error{font-size:12px;color:#e53;display:none;line-height:1.4;margin-top:2px}
+    .sm-error.show{display:block}
+    .sm-compat{background:#fffbeb;border:1px solid rgba(200,160,0,0.2);border-radius:8px;padding:14px 16px;font-size:12px;color:#7a6000;line-height:1.7;margin-top:8px}
+    .sm-compat strong{font-weight:600}
+    .sm-compat-err{color:#e53;font-weight:600;float:right;font-size:11px;display:none}
+    .sm-compat-err.show{display:block}
+    .sm-right{position:sticky;top:48px;align-self:start}
+    .sm-preview-title{font-size:14px;font-weight:600;margin-bottom:4px;transition:color .3s}
+    .sm-preview-sub{font-size:12px;color:#888;margin-bottom:16px;line-height:1.5;transition:color .3s}
+    .sm-card-preview{border:1px solid rgba(0,0,0,0.1);border-radius:16px;overflow:hidden;background:#fff;transition:background .3s,border-color .3s}
+    .sm-card-media{width:100%;aspect-ratio:4/3;background:#f0f0f0;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+    .sm-card-media img,.sm-card-media video{width:100%;height:100%;object-fit:cover;display:block}
+    .sm-card-media-placeholder{font-size:12px;color:#bbb}
+    .sm-card-body{padding:14px 16px 16px}
+    .sm-card-caption{font-size:13px;color:#555;margin-bottom:10px;line-height:1.5;min-height:18px;transition:color .3s}
+    .sm-card-creator{font-size:14px;font-weight:700;margin-bottom:8px;min-height:20px;transition:color .3s}
+    .sm-card-tool{display:inline-block;font-size:11px;padding:3px 10px;border-radius:100px;border:1px solid rgba(0,0,0,0.12);color:#555;background:#fff}
+    .sm-submit-btn{width:100%;margin-top:20px;font-family:'Hanken Grotesk',sans-serif;font-size:15px;font-weight:600;padding:14px;border-radius:100px;border:none;background:#000;color:#fff;cursor:pointer;transition:opacity .15s,background .3s}
+    .sm-submit-btn:hover{opacity:.8}
+    .sm-submit-btn:disabled{opacity:.35;cursor:not-allowed}
+    .sm-success{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;text-align:center;padding:48px}
+    .sm-success.show{display:flex}
+    .sm-success-icon{font-size:40px;margin-bottom:16px}
+    .sm-success-title{font-size:22px;font-weight:700;letter-spacing:-0.02em;margin-bottom:8px}
+    .sm-success-sub{font-size:14px;color:#888}
+    body.dark .sm{background:#0a0a0a}
+    body.dark .sm-topbar{border-color:rgba(255,255,255,0.08)}
+    body.dark .sm-back{border-color:rgba(255,255,255,0.16);color:#fff}
+    body.dark .sm-back:hover{background:#1a1a1a}
+    body.dark .sm-page-title{color:#fff}
+    body.dark .sm-label{color:#fff}
+    body.dark .sm-section{border-color:rgba(255,255,255,0.08)}
+    body.dark .sm-input{background:#111;border-color:rgba(255,255,255,0.12);color:#fff}
+    body.dark .sm-input:focus{border-color:#fff}
+    body.dark .sm-card-preview{background:#111;border-color:rgba(255,255,255,0.1)}
+    body.dark .sm-card-media{background:#1a1a1a}
+    body.dark .sm-card-caption{color:#888}
+    body.dark .sm-card-creator{color:#fff}
+    body.dark .sm-card-tool{background:#222;border-color:rgba(255,255,255,0.1);color:#aaa}
+    body.dark .sm-submit-btn{background:#fff;color:#000}
+    body.dark .sm-compat{background:#1a1500;border-color:rgba(200,160,0,0.15);color:#b89a00}
   </style>
 </head>
 <body>
@@ -135,6 +200,110 @@
   <span class="sb-name">Summond</span>
   <span class="sb-desc">The best work being built with AI</span>
   <button class="hero-btn">Submit</button>
+</div>
+
+
+<!-- SUBMIT MODAL -->
+<div class="sm" id="sm">
+
+  <!-- Top bar -->
+  <div class="sm-topbar">
+    <button class="sm-back" onclick="closeSm()">&#8592; Back</button>
+  </div>
+
+  <!-- Main form -->
+  <div id="smForm">
+    <div class="sm-layout">
+
+      <!-- LEFT: form fields -->
+      <div class="sm-left">
+        <div class="sm-page-title">Submit a project</div>
+
+        <div class="sm-section">
+          <div class="sm-label">Caption</div>
+          <div class="sm-desc">What is it you've created?</div>
+          <textarea class="sm-input" id="smCaption" rows="4" maxlength="250" placeholder="A groundbreaking app for..." oninput="smUpdatePreview();smUpdateCharCount()"></textarea>
+          <div class="sm-charcount"><span id="smCharCount">0</span>/250 Characters</div>
+        </div>
+
+        <div class="sm-section">
+          <div class="sm-label">Tools</div>
+          <div class="sm-desc">What was it designed or built with? Select multiple.</div>
+          <select class="sm-input sm-select" id="smTool" onchange="smUpdatePreview()">
+            <option value="">Select</option>
+            <option value="Claude">Claude</option>
+            <option value="Cursor">Cursor</option>
+            <option value="Bolt.new">Bolt.new</option>
+            <option value="Lovable">Lovable</option>
+            <option value="v0">v0</option>
+            <option value="Figma">Figma</option>
+            <option value="Midjourney">Midjourney</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="sm-section">
+          <div class="sm-label">Media URL</div>
+          <div class="sm-desc">This is the media that will display as the thumbnail on the Summond feed.<br>Right click the media &gt; 'Copy video address' or 'Copy image URL'</div>
+          <div class="sm-url-row">
+            <input class="sm-input" id="smMediaUrl" type="url" placeholder="https://" oninput="smValidateMedia()" style="padding-right:36px">
+            <div class="sm-url-icon" id="smMediaIcon"></div>
+          </div>
+          <div class="sm-error" id="smMediaErr"></div>
+          <div class="sm-compat">
+            <span id="smCompatErr" class="sm-compat-err" style="display:none">Unsupported media type URL</span>
+            <strong>Compatibility</strong>
+            While this is a community based showcase, we try to keep costs for maintenance down to a minimum/free therefore without going into complex hidden API subscriptions and hosting costs, Summond operates by linking to URLs where media is referenced elsewhere, but this also comes with downsides of not being able to pull directly to some social platforms.<br><br>
+            <strong>Supported:</strong> Dribbble, Youtube, Loom, Vimeo, Imgur, Github, Cloudinary<br>
+            <strong>Unsupported:</strong> Threads, LinkedIn, Behance, TikTok, Pinterest, Facebook.<br><br>
+            Twitter (X) URLs will only show a static thumbnail graphic from the post, video unsupported.
+          </div>
+        </div>
+
+        <div class="sm-section">
+          <div class="sm-label">Original post URL</div>
+          <div class="sm-desc">This is so users can follow the original creator, react, repost, or find out more.</div>
+          <div class="sm-url-row">
+            <input class="sm-input" id="smPostUrl" type="url" placeholder="https://" style="padding-right:36px">
+            <div class="sm-url-icon" id="smPostIcon"></div>
+          </div>
+        </div>
+
+        <div class="sm-section" style="border-bottom:none">
+          <div class="sm-label">Your name or handle</div>
+          <input class="sm-input" id="smCreator" type="text" maxlength="40" placeholder="@siimonfairhurst" oninput="smUpdatePreview()">
+        </div>
+
+        <div class="sm-error" id="smSubmitErr" style="margin-top:8px"></div>
+      </div>
+
+      <!-- RIGHT: live preview -->
+      <div class="sm-right">
+        <div class="sm-preview-title">Submission preview</div>
+        <div class="sm-preview-sub">If your content doesn't preview here, it won't work on the feed. Please check this works, before submitting.</div>
+        <div class="sm-card-preview">
+          <div class="sm-card-media" id="smCardMedia">
+            <div class="sm-card-media-placeholder">Media preview will go here</div>
+          </div>
+          <div class="sm-card-body">
+            <div class="sm-card-caption" id="smCardCaption">Caption will go here</div>
+            <div class="sm-card-creator" id="smCardCreator">Name or handle will go here</div>
+            <span class="sm-card-tool" id="smCardTool">Tool here</span>
+          </div>
+        </div>
+        <button class="sm-submit-btn" id="smSubmit" onclick="smSubmit()">Submit</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Success state -->
+  <div class="sm-success" id="smSuccess">
+    <div class="sm-success-icon">&#10003;</div>
+    <div class="sm-success-title">Submitted!</div>
+    <div class="sm-success-sub">Thanks for sharing. Simon reviews all submissions before they go live.</div>
+  </div>
+
 </div>
 
 <!-- TOGGLE: icon lives inside the knob, swaps with mode -->
@@ -281,6 +450,129 @@ function sizeTitle(){const t=document.getElementById('heroTitle'),vw=window.inne
 window.addEventListener('resize',sizeTitle);document.fonts.ready.then(sizeTitle);setTimeout(sizeTitle,100)
 const hero=document.getElementById('hero'),bar=document.getElementById('stickyBar')
 new IntersectionObserver(entries=>{bar.classList.toggle('show',!entries[0].isIntersecting)},{threshold:0}).observe(hero)
+
+// SUBMIT MODAL
+const BLOCKED_HOSTS=['linkedin.com','instagram.com','tiktok.com','threads.net','facebook.com','fb.com','pinterest.com']
+const EMBED_HOSTS=['youtube.com','youtu.be','vimeo.com','loom.com','codepen.io']
+
+function openSm(){
+  document.getElementById('sm').classList.add('open')
+  document.getElementById('smForm').style.display=''
+  document.getElementById('smSuccess').classList.remove('show')
+  document.getElementById('smMediaUrl').value=''
+  document.getElementById('smPostUrl').value=''
+  document.getElementById('smCaption').value=''
+  document.getElementById('smCreator').value=''
+  document.getElementById('smTool').selectedIndex=0
+  document.getElementById('smCharCount').textContent='0'
+  document.getElementById('smMediaErr').classList.remove('show')
+  document.getElementById('smSubmitErr').classList.remove('show')
+  document.getElementById('smMediaIcon').className='sm-url-icon'
+  document.getElementById('smPostIcon').className='sm-url-icon'
+  document.getElementById('smCompatErr').classList.remove('show')
+  smUpdatePreview()
+  window.scrollTo(0,0)
+}
+function closeSm(){document.getElementById('sm').classList.remove('open')}
+
+function smUpdateCharCount(){
+  const v=document.getElementById('smCaption').value
+  document.getElementById('smCharCount').textContent=v.length
+}
+
+function smUpdatePreview(){
+  const caption=document.getElementById('smCaption').value.trim()
+  const creator=document.getElementById('smCreator').value.trim()
+  const tool=document.getElementById('smTool').value
+  document.getElementById('smCardCaption').textContent=caption||'Caption will go here'
+  document.getElementById('smCardCreator').textContent=creator||'Name or handle will go here'
+  document.getElementById('smCardTool').textContent=tool||'Tool here'
+}
+
+function smSetMediaPreview(url){
+  const media=document.getElementById('smCardMedia')
+  if(!url){media.innerHTML='<div class="sm-card-media-placeholder">Media preview will go here</div>';return}
+  const isEmbed=EMBED_HOSTS.find(b=>url.includes(b))
+  if(isEmbed){media.innerHTML='<div class="sm-card-media-placeholder" style="text-align:center;padding:16px">'+capitalise(isEmbed)+' embed<br>will display on card</div>';return}
+  if(url.match(/\.(mp4|webm|mov)(\?.*)?$/i)){
+    media.innerHTML='<video src="'+url+'" muted autoplay loop playsinline style="width:100%;height:100%;object-fit:cover" onerror="smMediaFail()"></video>'
+  } else {
+    media.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover" onerror="smMediaFail()">'
+  }
+}
+
+function smMediaFail(){
+  document.getElementById('smCardMedia').innerHTML='<div class="sm-card-media-placeholder" style="color:#e53;text-align:center;padding:16px">Could not load media.<br>Check it's a direct file URL.</div>'
+  const inp=document.getElementById('smMediaUrl')
+  const err=document.getElementById('smMediaErr')
+  const icon=document.getElementById('smMediaIcon')
+  inp.classList.add('error')
+  icon.className='sm-url-icon show err';icon.textContent='!'
+  err.textContent='Could not load that URL. Make sure it's a direct link to the file, not a page URL.'
+  err.classList.add('show')
+}
+
+function smValidateMedia(){
+  const val=document.getElementById('smMediaUrl').value.trim()
+  const inp=document.getElementById('smMediaUrl')
+  const err=document.getElementById('smMediaErr')
+  const icon=document.getElementById('smMediaIcon')
+  const compatErr=document.getElementById('smCompatErr')
+  err.classList.remove('show');inp.classList.remove('error')
+  icon.className='sm-url-icon';compatErr.classList.remove('show')
+  smSetMediaPreview('')
+  smUpdatePreview()
+  if(!val)return
+  let host=''
+  try{host=new URL(val).hostname.replace('www.','')}catch{
+    err.textContent='That doesn't look like a valid URL.'
+    err.classList.add('show');inp.classList.add('error')
+    icon.className='sm-url-icon show err';icon.textContent='!'
+    return
+  }
+  const blocked=BLOCKED_HOSTS.find(b=>host.includes(b))
+  if(blocked){
+    compatErr.textContent='Unsupported media type URL';compatErr.classList.add('show')
+    err.textContent=capitalise(blocked)+' is not supported — media is locked behind login. Upload to Imgur or Cloudinary instead.'
+    err.classList.add('show');inp.classList.add('error')
+    icon.className='sm-url-icon show err';icon.textContent='!'
+    return
+  }
+  icon.className='sm-url-icon show ok';icon.textContent='✓'
+  smSetMediaPreview(val)
+}
+
+function capitalise(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+
+async function smSubmit(){
+  const btn=document.getElementById('smSubmit')
+  const err=document.getElementById('smSubmitErr')
+  const mediaUrl=document.getElementById('smMediaUrl').value.trim()
+  const postUrl=document.getElementById('smPostUrl').value.trim()
+  const caption=document.getElementById('smCaption').value.trim()
+  const creator=document.getElementById('smCreator').value.trim()
+  const tool=document.getElementById('smTool').value
+  err.classList.remove('show')
+  if(!mediaUrl){err.textContent='Please add a media URL.';err.classList.add('show');return}
+  if(!postUrl){err.textContent='Please add a link to the original post.';err.classList.add('show');return}
+  if(!caption){err.textContent='Please add a caption.';err.classList.add('show');return}
+  if(!creator){err.textContent='Please add your name or handle.';err.classList.add('show');return}
+  btn.disabled=true;btn.textContent='Submitting...'
+  try{
+    const SCRIPT_URL=typeof GOOGLE_SCRIPT_URL!=='undefined'?GOOGLE_SCRIPT_URL:''
+    if(SCRIPT_URL){
+      await fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify({mediaUrl,postUrl,caption,tool,creator}),headers:{'Content-Type':'application/json'}})
+    }
+    document.getElementById('smForm').style.display='none'
+    document.getElementById('smSuccess').classList.add('show')
+  }catch{
+    err.textContent='Something went wrong. Please try again.'
+    err.classList.add('show');btn.disabled=false;btn.textContent='Submit'
+  }
+}
+
+document.querySelectorAll('.hero-btn').forEach(b=>{if(b.textContent.trim()==='Submit')b.onclick=openSm})
+
 
 document.getElementById('footerYear').textContent=new Date().getFullYear()
 </script>
