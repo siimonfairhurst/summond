@@ -9,12 +9,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { mediaUrl, postUrl, caption, tool, creator } = req.body
+    const { mediaUrl, postUrl, caption, tool, creator, creatorUrl } = req.body
 
     const response = await fetch(SCRIPT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mediaUrl, postUrl, caption, tool, creator })
+      body: JSON.stringify({ mediaUrl, postUrl, caption, tool, creator, creatorUrl })
     })
 
     if (!response.ok) {
