@@ -501,60 +501,31 @@ function smOnPostUrlInput(){
 
 async function smScrape(url){
   const status=document.getElementById('smScrapeStatus')
-  const host=new URL(url).hostname.replace('www.','')
-
-  // X/Twitter — extract handle from URL, can't scrape content
-  if(host.includes('x.com')||host.includes('twitter.com')){
-    const m=new URL(url).pathname.match(/^\/([^/]+)\/status/)
-    if(m)document.getElementById('smCreator').value='@'+m[1]
-    smUnlockFields(true)
-    smUpdatePreview()
-    status.className='sm-scrape-status warn'
-    status.textContent='X blocks auto-fill. Your handle has been added — please paste the tweet text as the caption, and right-click your image on X to copy the media URL.'
-    return
-  }
-
   try{
-    // Microlink runs from the browser (user's IP) so platform blocks don't apply
-    const res=await fetch('https://api.microlink.io?url='+encodeURIComponent(url))
+    const res=await fetch('/api/scrape?url='+encodeURIComponent(url))
     const data=await res.json()
-    if(data.status!=='success'){
+    if(data.blocked){
+      status.className='sm-scrape-status err'
+      status.textContent=data.reason||'This platform is not supported. Please fill in manually.'
       smUnlockFields(false)
-      status.className='sm-scrape-status warn'
-      status.textContent='Could not auto-fill. Please enter the details manually.'
       return
     }
-    const d=data.data
-    // Pick best media — prefer video thumbnail, then image
-    const mediaUrl=(d.video&&d.video.url)||(d.image&&d.image.url)||''
-    const caption=(d.title||d.description||'').slice(0,120)
-    // Extract creator from publisher or URL
-    let creator=d.publisher||''
-    if(host.includes('dribbble.com')){
-      // Dribbble title: "Shot name by Creator on Dribbble"
-      const m=(d.title||'').match(/by (.+?) on Dribbble/i)
-      if(m)creator=m[1].trim()
-      // Clean title
+    if(data.error){
+      status.className='sm-scrape-status warn'
+      status.textContent=data.error
+      smUnlockFields(false)
+      return
     }
-    if(host.includes('vimeo.com')){
-      const m=(d.title||'').match(/on Vimeo$/i)
-    }
-    if(host.includes('codepen.io')){
-      const m=new URL(url).pathname.match(/^\/([^/]+)\/pen/)
-      if(m)creator=m[1]
-    }
-    if(host.includes('github.com')){
-      const parts=new URL(url).pathname.split('/').filter(Boolean)
-      if(parts[0])creator=parts[0]
-    }
-    if(mediaUrl)document.getElementById('smMediaUrl').value=mediaUrl
-    if(caption){document.getElementById('smCaption').value=caption;smUpdateCharCount()}
-    if(creator)document.getElementById('smCreator').value=creator
+    if(data.mediaUrl)document.getElementById('smMediaUrl').value=data.mediaUrl
+    if(data.caption){document.getElementById('smCaption').value=data.caption;smUpdateCharCount()}
+    if(data.creator)document.getElementById('smCreator').value=data.creator
     smValidateMedia()
     smUpdatePreview()
-    const anyFilled=mediaUrl||caption||creator
     smUnlockFields(true)
-    if(anyFilled){
+    if(data.note){
+      status.className='sm-scrape-status warn'
+      status.textContent=data.note
+    } else if(data.mediaUrl||data.caption||data.creator){
       status.className='sm-scrape-status ok'
       status.textContent='Details filled in automatically — please review and edit if needed.'
     } else {
