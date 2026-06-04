@@ -223,6 +223,32 @@
     body.dark .sm-card-tool{background:#222;border-color:rgba(255,255,255,0.1);color:#aaa}
     body.dark .sm-submit-btn{background:#fff;color:#000}
     body.dark .sm-compat{background:#1a1500;border-color:rgba(200,160,0,0.15);color:#b89a00}
+    .sm-media-tabs{display:flex;gap:0;border:1px solid rgba(0,0,0,0.12);border-radius:8px;overflow:hidden;margin-bottom:12px}
+    .sm-media-tab{flex:1;padding:8px 12px;font-family:'Hanken Grotesk',sans-serif;font-size:13px;font-weight:500;border:none;background:#fff;color:#888;cursor:pointer;transition:background .2s,color .2s}
+    .sm-media-tab.active{background:#000;color:#fff}
+    body.dark .sm-media-tabs{border-color:rgba(255,255,255,0.12)}
+    body.dark .sm-media-tab{background:#111;color:#555}
+    body.dark .sm-media-tab.active{background:#fff;color:#000}
+    .sm-tools-grid{display:flex;flex-wrap:wrap;gap:6px}
+    .sm-tool-chip{font-family:'Hanken Grotesk',sans-serif;font-size:12px;padding:5px 12px;border-radius:100px;border:1px solid rgba(0,0,0,0.16);background:#fff;color:#555;cursor:pointer;transition:background .15s,color .15s,border-color .15s;user-select:none}
+    .sm-tool-chip.selected{background:#000;color:#fff;border-color:#000}
+    body.dark .sm-tool-chip{background:#111;border-color:rgba(255,255,255,0.12);color:#aaa}
+    body.dark .sm-tool-chip.selected{background:#fff;color:#000;border-color:#fff}
+    .sm-social-row{display:flex;gap:8px;align-items:flex-start}
+    .sm-social-row .sm-input{flex:1}
+    .sm-social-name{font-size:12px;color:#aaa;margin-top:5px;min-height:16px;transition:color .3s}
+    .sm-media-tabs{display:flex;gap:0;border:1px solid rgba(0,0,0,0.12);border-radius:8px;overflow:hidden;margin-bottom:12px}
+    .sm-media-tab{flex:1;padding:8px 12px;font-family:'Hanken Grotesk',sans-serif;font-size:13px;font-weight:500;border:none;background:#fff;color:#888;cursor:pointer;transition:background .2s,color .2s}
+    .sm-media-tab.active{background:#000;color:#fff}
+    body.dark .sm-media-tabs{border-color:rgba(255,255,255,0.12)}
+    body.dark .sm-media-tab{background:#111;color:#555}
+    body.dark .sm-media-tab.active{background:#fff;color:#000}
+    .sm-tools-grid{display:flex;flex-wrap:wrap;gap:6px}
+    .sm-tool-chip{font-family:'Hanken Grotesk',sans-serif;font-size:12px;padding:5px 12px;border-radius:100px;border:1px solid rgba(0,0,0,0.16);background:#fff;color:#555;cursor:pointer;transition:background .15s,color .15s,border-color .15s;user-select:none}
+    .sm-tool-chip.selected{background:#000;color:#fff;border-color:#000}
+    body.dark .sm-tool-chip{background:#111;border-color:rgba(255,255,255,0.12);color:#aaa}
+    body.dark .sm-tool-chip.selected{background:#fff;color:#000;border-color:#fff}
+    .sm-social-name{font-size:12px;color:#aaa;margin-top:5px;min-height:16px;transition:color .3s}
   </style>
 </head>
 <body>
@@ -268,26 +294,40 @@
       <div class="sm-left">
         <div class="sm-page-title">Submit a project</div>
 
-        <!-- Step 1: Upload media -->
+        <!-- Media: tabs to switch between upload and URL -->
         <div class="sm-section">
-          <div class="sm-label">Upload your media</div>
-          <div class="sm-desc">Image or video of your project. Max 5MB images, 30MB video.</div>
-          <div class="sm-upload-zone" id="smUploadZone" ondragover="smDrag(event,true)" ondragleave="smDrag(event,false)" ondrop="smDrop(event)">
-            <input type="file" id="smFileInput" accept="image/*,video/*" onchange="smFileSelected(event)">
-            <div id="smUploadPrompt">
-              <div class="sm-upload-icon">&#8593;</div>
-              <div class="sm-upload-label">Click to upload or drag and drop</div>
-              <div class="sm-upload-sub">PNG, JPG, GIF, MP4, MOV</div>
+          <div class="sm-label">Media</div>
+          <div class="sm-desc">The image or video that will appear on the feed.</div>
+          <div class="sm-media-tabs">
+            <button class="sm-media-tab active" id="smTabUpload" onclick="smSwitchTab('upload')">Upload a file</button>
+            <button class="sm-media-tab" id="smTabUrl" onclick="smSwitchTab('url')">Paste a URL</button>
+          </div>
+
+          <!-- Upload panel -->
+          <div id="smPanelUpload">
+            <div class="sm-upload-zone" id="smUploadZone" ondragover="smDrag(event,true)" ondragleave="smDrag(event,false)" ondrop="smDrop(event)">
+              <input type="file" id="smFileInput" accept="image/*,video/*" onchange="smFileSelected(event)">
+              <div id="smUploadPrompt">
+                <div class="sm-upload-icon">&#8593;</div>
+                <div class="sm-upload-label">Click to upload or drag and drop</div>
+                <div class="sm-upload-sub">PNG, JPG, GIF, MP4, MOV &nbsp;·&nbsp; Max 5MB image, 30MB video</div>
+              </div>
+            </div>
+            <div class="sm-upload-progress" id="smUploadProgress"><div class="sm-upload-bar" id="smUploadBar"></div></div>
+            <div class="sm-upload-status" id="smUploadStatus"></div>
+            <div class="sm-upload-preview" id="smUploadPreview">
+              <button class="sm-upload-change" onclick="smResetUpload()">Change</button>
             </div>
           </div>
-          <div class="sm-upload-progress" id="smUploadProgress"><div class="sm-upload-bar" id="smUploadBar"></div></div>
-          <div class="sm-upload-status" id="smUploadStatus"></div>
-          <div class="sm-upload-preview" id="smUploadPreview">
-            <button class="sm-upload-change" onclick="smResetUpload()">Change</button>
+
+          <!-- URL panel -->
+          <div id="smPanelUrl" style="display:none">
+            <input class="sm-input" id="smMediaUrl" type="url" placeholder="https://cdn.dribbble.com/... or https://pbs.twimg.com/..." oninput="smOnMediaUrlInput()">
+            <div class="sm-upload-status" id="smUrlStatus" style="margin-top:6px"></div>
           </div>
         </div>
 
-        <!-- Step 2: Details -->
+        <!-- Caption -->
         <div class="sm-section">
           <div class="sm-label">Caption</div>
           <div class="sm-desc">What have you built?</div>
@@ -295,31 +335,31 @@
           <div class="sm-charcount"><span id="smCharCount">0</span>/250 Characters</div>
         </div>
 
+        <!-- Social profile -->
         <div class="sm-section">
-          <div class="sm-label">Your name or handle</div>
-          <input class="sm-input" id="smCreator" type="text" maxlength="40" placeholder="@yourhandle" oninput="smUpdatePreview()">
+          <div class="sm-label">Your social profile</div>
+          <div class="sm-desc">Paste a link to your X, Dribbble, LinkedIn or any profile — we'll grab your name automatically.</div>
+          <input class="sm-input" id="smSocialUrl" type="url" placeholder="https://x.com/yourhandle" oninput="smOnSocialInput()">
+          <div class="sm-social-name" id="smSocialName"></div>
+          <input class="sm-input" id="smCreator" type="text" maxlength="60" placeholder="Your name (auto-filled above, or type here)" oninput="smUpdatePreview()" style="margin-top:8px">
         </div>
 
-        <div class="sm-section">
-          <div class="sm-label">Tools used</div>
-          <div class="sm-desc">What was it designed or built with?</div>
-          <select class="sm-input sm-select" id="smTool" onchange="smUpdatePreview()">
-            <option value="">Select</option>
-            <option value="Claude">Claude</option>
-            <option value="Cursor">Cursor</option>
-            <option value="Bolt.new">Bolt.new</option>
-            <option value="Lovable">Lovable</option>
-            <option value="v0">v0</option>
-            <option value="Figma">Figma</option>
-            <option value="Midjourney">Midjourney</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-
+        <!-- Tools -->
         <div class="sm-section" style="border-bottom:none">
-          <div class="sm-label">Link to original post <span style="font-weight:400;color:#aaa;font-size:12px">— optional</span></div>
-          <div class="sm-desc">Dribbble shot, tweet, wherever you shared this.</div>
-          <input class="sm-input" id="smPostUrl" type="url" placeholder="https://...">
+          <div class="sm-label">Tools used</div>
+          <div class="sm-desc">Select all that apply.</div>
+          <div class="sm-tools-grid" id="smToolsGrid">
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Claude">Claude</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Cursor">Cursor</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Bolt.new">Bolt.new</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Lovable">Lovable</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="v0">v0</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Figma">Figma</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Midjourney">Midjourney</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Windsurf">Windsurf</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Gemini">Gemini</button>
+            <button class="sm-tool-chip" onclick="smToggleTool(this)" data-tool="Other">Other</button>
+          </div>
         </div>
 
         <div class="sm-error" id="smSubmitErr" style="margin-top:8px"></div>
@@ -502,6 +542,8 @@ new IntersectionObserver(entries=>{bar.classList.toggle('show',!entries[0].isInt
 
 // SUBMIT MODAL
 let uploadedMediaUrl = ''
+let selectedTools = []
+let activeTab = 'upload'
 
 function openSm(){
   document.getElementById('sm').classList.add('open')
@@ -509,41 +551,137 @@ function openSm(){
   document.getElementById('smSuccess').classList.remove('show')
   document.getElementById('smCaption').value=''
   document.getElementById('smCreator').value=''
-  document.getElementById('smPostUrl').value=''
-  document.getElementById('smTool').selectedIndex=0
+  document.getElementById('smSocialUrl').value=''
+  document.getElementById('smSocialName').textContent=''
+  document.getElementById('smMediaUrl') && (document.getElementById('smMediaUrl').value='')
   document.getElementById('smCharCount').textContent='0'
   document.getElementById('smSubmitErr').classList.remove('show')
-  uploadedMediaUrl=''
+  document.getElementById('smUrlStatus').textContent=''
+  uploadedMediaUrl=''; selectedTools=[]
+  document.querySelectorAll('.sm-tool-chip').forEach(c=>c.classList.remove('selected'))
+  smSwitchTab('upload')
   smResetUpload()
   smUpdatePreview()
   window.scrollTo(0,0)
 }
 function closeSm(){document.getElementById('sm').classList.remove('open')}
 
-function smUpdateCharCount(){
-  document.getElementById('smCharCount').textContent=document.getElementById('smCaption').value.length
+// ── Tab switching ───────────────────────────────────────────────
+function smSwitchTab(tab){
+  activeTab=tab
+  document.getElementById('smPanelUpload').style.display=tab==='upload'?'':'none'
+  document.getElementById('smPanelUrl').style.display=tab==='url'?'':'none'
+  document.getElementById('smTabUpload').classList.toggle('active',tab==='upload')
+  document.getElementById('smTabUrl').classList.toggle('active',tab==='url')
+  if(tab==='upload'){uploadedMediaUrl='';smResetUpload()}
+  else{uploadedMediaUrl='';smUpdatePreview()}
 }
 
-function smUpdatePreview(){
-  const caption=document.getElementById('smCaption').value.trim()
-  const creator=document.getElementById('smCreator').value.trim()
-  const tool=document.getElementById('smTool').value
-  document.getElementById('smCardCaption').textContent=caption||'Caption will go here'
-  document.getElementById('smCardCreator').textContent=creator||'Name or handle will go here'
-  document.getElementById('smCardTool').textContent=tool||'Tool here'
+// ── URL tab media ───────────────────────────────────────────────
+function smOnMediaUrlInput(){
+  const val=document.getElementById('smMediaUrl').value.trim()
+  const status=document.getElementById('smUrlStatus')
+  uploadedMediaUrl=''
+  status.textContent='';status.className='sm-upload-status'
+  document.getElementById('smCardMedia').innerHTML='<div class="sm-card-media-placeholder">Media preview will go here</div>'
+  if(!val)return
+  let host=''
+  try{host=new URL(val).hostname.replace('www.','')}catch{return}
+  const BLOCKED=['linkedin.com','instagram.com','tiktok.com','threads.net','facebook.com','pinterest.com']
+  if(BLOCKED.some(b=>host.includes(b))){
+    status.textContent=host+' media is not supported. Try uploading the file directly instead.'
+    status.className='sm-upload-status err';return
+  }
+  // X/twimg — valid but no preview
+  if(host.includes('x.com')||host.includes('twitter.com')||host.includes('twimg.com')){
+    uploadedMediaUrl=val
+    status.textContent='X media accepted — will display on the feed.'
+    status.className='sm-upload-status ok'
+    document.getElementById('smCardMedia').innerHTML='<div class="sm-card-media-placeholder" style="text-align:center;padding:16px;line-height:1.5;font-size:11px;color:#bbb">X/Twitter media<br>displays on feed</div>'
+    return
+  }
+  // Try loading as image/video
+  uploadedMediaUrl=val
+  if(val.match(/\.(mp4|webm|mov)(\?.*)?$/i)){
+    document.getElementById('smCardMedia').innerHTML='<video src="'+val+'" muted autoplay loop playsinline style="width:100%;height:100%;object-fit:cover" onerror="smUrlMediaFail()"></video>'
+  } else {
+    document.getElementById('smCardMedia').innerHTML='<img src="'+val+'" style="width:100%;height:100%;object-fit:cover" onerror="smUrlMediaFail()">'
+  }
+  status.textContent='Looking good — you can see it in the preview.'
+  status.className='sm-upload-status ok'
+}
+function smUrlMediaFail(){
+  uploadedMediaUrl=''
+  document.getElementById('smCardMedia').innerHTML='<div class="sm-card-media-placeholder">Media preview will go here</div>'
+  const status=document.getElementById('smUrlStatus')
+  status.textContent='Could not load that URL — check it's a direct link to the file, not a page.'
+  status.className='sm-upload-status err'
 }
 
-// ── Drag and drop ───────────────────────────────────────────────
+// ── Social profile ──────────────────────────────────────────────
+let socialTimer=null
+function smOnSocialInput(){
+  clearTimeout(socialTimer)
+  const val=document.getElementById('smSocialUrl').value.trim()
+  const nameEl=document.getElementById('smSocialName')
+  nameEl.textContent=''
+  if(!val)return
+  let parsed;try{parsed=new URL(val)}catch{return}
+  const host=parsed.hostname.replace('www.','')
+  // Extract name/handle from URL path
+  let name=''
+  if(host.includes('x.com')||host.includes('twitter.com')){
+    const m=parsed.pathname.match(/^\/([^/]+)/)
+    if(m&&m[1]!=='i')name='@'+m[1]
+  } else if(host.includes('dribbble.com')){
+    const m=parsed.pathname.match(/^\/([^/]+)/)
+    if(m)name=m[1]
+  } else if(host.includes('linkedin.com')){
+    const m=parsed.pathname.match(/\/in\/([^/]+)/)
+    if(m)name=m[1].replace(/-/g,' ')
+  } else if(host.includes('threads.net')){
+    const m=parsed.pathname.match(/\/@([^/]+)/)
+    if(m)name='@'+m[1]
+  } else if(host.includes('instagram.com')){
+    const m=parsed.pathname.match(/^\/([^/]+)/)
+    if(m)name='@'+m[1]
+  } else if(host.includes('github.com')){
+    const m=parsed.pathname.match(/^\/([^/]+)/)
+    if(m)name=m[1]
+  } else if(host.includes('behance.net')){
+    const m=parsed.pathname.match(/^\/([^/]+)/)
+    if(m)name=m[1]
+  }
+  if(name){
+    nameEl.textContent='Found: '+name
+    document.getElementById('smCreator').value=name
+    smUpdatePreview()
+  }
+}
+
+// ── Tools multi-select ──────────────────────────────────────────
+function smToggleTool(chip){
+  const tool=chip.dataset.tool
+  chip.classList.toggle('selected')
+  if(chip.classList.contains('selected')){
+    if(!selectedTools.includes(tool))selectedTools.push(tool)
+  } else {
+    selectedTools=selectedTools.filter(t=>t!==tool)
+  }
+  smUpdatePreview()
+}
+
+// ── Drag and drop upload ────────────────────────────────────────
 function smDrag(e,on){e.preventDefault();document.getElementById('smUploadZone').classList.toggle('drag',on)}
 function smDrop(e){
   e.preventDefault()
   document.getElementById('smUploadZone').classList.remove('drag')
   const file=e.dataTransfer.files[0]
-  if(file) smHandleFile(file)
+  if(file)smHandleFile(file)
 }
 function smFileSelected(e){
   const file=e.target.files[0]
-  if(file) smHandleFile(file)
+  if(file)smHandleFile(file)
 }
 
 function smResetUpload(){
@@ -562,53 +700,42 @@ function smResetUpload(){
 async function smHandleFile(file){
   const isVideo=file.type.startsWith('video/')
   const isImage=file.type.startsWith('image/')
-  if(!isVideo&&!isImage){
-    smSetUploadStatus('err','Only image and video files are supported.')
-    return
-  }
+  if(!isVideo&&!isImage){smSetUploadStatus('err','Only image and video files are supported.');return}
   const maxBytes=isVideo?30*1024*1024:5*1024*1024
-  if(file.size>maxBytes){
-    smSetUploadStatus('err',isVideo?'Video must be under 30MB.':'Image must be under 5MB.')
-    return
-  }
+  if(file.size>maxBytes){smSetUploadStatus('err',isVideo?'Video must be under 30MB.':'Image must be under 5MB.');return}
 
   // Show local preview immediately
   const localUrl=URL.createObjectURL(file)
-  smShowPreview(localUrl, isVideo)
+  smShowMediaPreview(localUrl,isVideo)
   document.getElementById('smUploadZone').style.display='none'
   smSetUploadStatus('uploading','Uploading...')
   document.getElementById('smUploadProgress').classList.add('show')
-  smAnimateBar()
 
   try{
-    // Get auth signature from Vercel (tiny request)
+    // Get auth signature
     const authRes=await fetch('/api/upload')
     const auth=await authRes.json()
-    if(auth.error) throw new Error(auth.error)
+    if(auth.error)throw new Error(auth.error)
 
-    // Upload directly from browser to ImageKit — no Vercel bottleneck
-    const IK_ENDPOINT='https://ik.imagekit.io/summond'
+    // Upload directly browser → ImageKit
     const formData=new FormData()
-    formData.append('file', file)
-    formData.append('fileName', file.name)
-    formData.append('folder', '/summond')
-    formData.append('useUniqueFileName', 'true')
-    formData.append('publicKey', auth.publicKey)
-    formData.append('signature', auth.signature)
-    formData.append('expire', auth.expire)
-    formData.append('token', auth.token)
+    formData.append('file',file)
+    formData.append('fileName',file.name)
+    formData.append('folder','/summond')
+    formData.append('useUniqueFileName','true')
+    formData.append('publicKey',auth.publicKey)
+    formData.append('signature',auth.signature)
+    formData.append('expire',auth.expire)
+    formData.append('token',auth.token)
 
-    const uploadRes=await fetch('https://upload.imagekit.io/api/v1/files/upload',{
-      method:'POST',
-      body:formData
-    })
+    const uploadRes=await fetch('https://upload.imagekit.io/api/v1/files/upload',{method:'POST',body:formData})
     const data=await uploadRes.json()
-    if(!uploadRes.ok||data.error) throw new Error(data.message||'Upload failed')
+    if(!uploadRes.ok||data.error)throw new Error(data.message||'Upload failed')
 
     uploadedMediaUrl=data.url
-    document.getElementById('smUploadBar').style.width='100%'
+    document.getElementById('smUploadProgress').classList.remove('show')
     smSetUploadStatus('ok','Uploaded successfully')
-    smShowPreview(data.url, isVideo)
+    smShowMediaPreview(data.url,isVideo)
   }catch(err){
     console.error('Upload error:',err)
     smSetUploadStatus('err','Upload failed — please try again.')
@@ -616,26 +743,15 @@ async function smHandleFile(file){
   }
 }
 
-let barTimer=null
-function smAnimateBar(){
-  let w=0
-  clearInterval(barTimer)
-  barTimer=setInterval(()=>{
-    w=Math.min(w+Math.random()*8,88)
-    document.getElementById('smUploadBar').style.width=w+'%'
-    if(w>=88)clearInterval(barTimer)
-  },200)
-}
-
-function smShowPreview(url, isVideo){
+function smShowMediaPreview(url,isVideo){
   const preview=document.getElementById('smUploadPreview')
   const cardMedia=document.getElementById('smCardMedia')
-  const mediaHtml=isVideo
+  const html=isVideo
     ?'<video src="'+url+'" muted autoplay loop playsinline style="width:100%;height:100%;object-fit:cover"></video>'
     :'<img src="'+url+'" style="width:100%;height:100%;object-fit:cover">'
-  preview.innerHTML=mediaHtml+'<button class="sm-upload-change" onclick="smResetUpload()">Change</button>'
+  preview.innerHTML=html+'<button class="sm-upload-change" onclick="smResetUpload()">Change</button>'
   preview.classList.add('show')
-  cardMedia.innerHTML=mediaHtml
+  cardMedia.innerHTML=html
 }
 
 function smSetUploadStatus(type,msg){
@@ -644,15 +760,30 @@ function smSetUploadStatus(type,msg){
   el.textContent=msg
 }
 
+// ── Preview updates ─────────────────────────────────────────────
+function smUpdateCharCount(){
+  document.getElementById('smCharCount').textContent=document.getElementById('smCaption').value.length
+}
+
+function smUpdatePreview(){
+  const caption=document.getElementById('smCaption').value.trim()
+  const creator=document.getElementById('smCreator').value.trim()
+  const tools=selectedTools.length?selectedTools.join(', '):'Tool here'
+  document.getElementById('smCardCaption').textContent=caption||'Caption will go here'
+  document.getElementById('smCardCreator').textContent=creator||'Name or handle will go here'
+  document.getElementById('smCardTool').textContent=tools
+}
+
+// ── Submit ──────────────────────────────────────────────────────
 async function smSubmit(){
   const btn=document.getElementById('smSubmit')
   const err=document.getElementById('smSubmitErr')
   const caption=document.getElementById('smCaption').value.trim()
   const creator=document.getElementById('smCreator').value.trim()
-  const tool=document.getElementById('smTool').value
-  const postUrl=document.getElementById('smPostUrl').value.trim()
+  const socialUrl=document.getElementById('smSocialUrl').value.trim()
+  const tool=selectedTools.join(', ')
   err.classList.remove('show')
-  if(!uploadedMediaUrl){err.textContent='Please upload an image or video first.';err.classList.add('show');return}
+  if(!uploadedMediaUrl){err.textContent='Please add a media file or URL.';err.classList.add('show');return}
   if(!caption){err.textContent='Please add a caption.';err.classList.add('show');return}
   if(!creator){err.textContent='Please add your name or handle.';err.classList.add('show');return}
   btn.disabled=true;btn.textContent='Submitting...'
@@ -660,7 +791,7 @@ async function smSubmit(){
     const res=await fetch('/api/submit',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({mediaUrl:uploadedMediaUrl,postUrl:postUrl||'',caption,tool,creator})
+      body:JSON.stringify({mediaUrl:uploadedMediaUrl,postUrl:socialUrl||'',caption,tool,creator})
     })
     if(!res.ok)throw new Error('Submit failed')
     document.getElementById('smForm').style.display='none'
