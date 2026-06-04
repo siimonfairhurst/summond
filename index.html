@@ -510,9 +510,18 @@ async function smScrape(url){
     if(data.creator)document.getElementById('smCreator').value=data.creator
     smValidateMedia()
     smUpdatePreview()
+    const anyFilled=data.mediaUrl||data.caption||data.creator
     smUnlockFields(true)
-    status.className='sm-scrape-status ok'
-    status.textContent='Details filled in automatically — please review and edit if needed.'
+    if(data.note){
+      status.className='sm-scrape-status warn'
+      status.textContent=data.note
+    } else if(anyFilled){
+      status.className='sm-scrape-status ok'
+      status.textContent='Details filled in automatically — please review and edit if needed.'
+    } else {
+      status.className='sm-scrape-status warn'
+      status.textContent='Could not auto-fill details. Please enter them manually.'
+    }
   }catch{
     status.className='sm-scrape-status warn'
     status.textContent='Could not auto-fill. Please enter the details manually.'
