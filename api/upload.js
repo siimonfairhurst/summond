@@ -1,3 +1,12 @@
+// Increase Vercel body size limit to 50MB for file uploads
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '50mb'
+    }
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
 
@@ -5,27 +14,25 @@ export default async function handler(req, res) {
   if (!fileBase64 || !fileName) return res.status(400).json({ error: 'Missing file data' })
 
   const PRIVATE_KEY = process.env.IMAGEKIT_PRIVATE_KEY
-  const PUBLIC_KEY  = process.env.IMAGEKIT_PUBLIC_KEY
-
   if (!PRIVATE_KEY) return res.status(500).json({ error: 'ImageKit not configured' })
 
   try {
-    // Build auth header (Basic: privateKey:)
     const auth = Buffer.from(PRIVATE_KEY + ':').toString('base64')
 
-    const body = new URLSearchParams()
-    body.append('file', fileBase64)
-    body.append('fileName', fileName)
-    body.append('folder', '/summond')
-    body.append('useUniqueFileName', 'true')
+    // Use FormData — much more efficient than URLSearchParams for binary data
+    const formData = new FormData()
+    formData.append('file', fileBase64)          // ImageKit accepts base64 directly
+    formData.append('fileName', fileName)
+    formData.append('folder', '/summond')
+    formData.append('useUniqueFileName', 'true')
 
     const response = await fetch('https://upload.imagekit.io/api/v1/files/upload', {
       method: 'POST',
       headers: {
-        'Authorization': `Basic ${auth}`,
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Authorization': `Basic ${auth}`
+        // Don't set Content-Type — let fetch set it with the boundary for FormData
       },
-      body: body.toString()
+      body: formData
     })
 
     const data = await response.json()
@@ -43,7 +50,7 @@ export default async function handler(req, res) {
     })
 
   } catch (err) {
-    console.error('Upload error:', err)
-    return res.status(500).json({ error: 'Upload failed' })
+    console.error('Upload error:', err.message)
+    return res.status(500).json({ error: 'Upload failed: ' + err.message })
   }
 }
