@@ -244,9 +244,9 @@
             <div class="sm-label">Media URL <span style="font-weight:400;color:#aaa;font-size:12px">— auto-filled, edit if needed</span></div>
             <div class="sm-desc" id="smMediaDesc">The image or video that will appear on the feed.</div>
             <div id="smXHint" style="display:none;font-size:12px;background:#fff8e6;border:1px solid rgba(200,140,0,0.2);border-radius:8px;padding:10px 12px;color:#7a5800;line-height:1.6;margin-bottom:6px">
-              <strong>For X / Twitter:</strong> page URLs won't work as media.<br>
-              To get the direct image URL: right-click the image on X &rarr; <em>Copy image address</em>. It should start with <code style="background:rgba(0,0,0,0.06);padding:1px 4px;border-radius:3px">https://pbs.twimg.com/media/...</code><br>
-              Videos from X cannot be embedded — consider uploading to Imgur or Cloudinary instead.
+              <strong>For X / Twitter:</strong> right-click the image or video thumbnail &rarr; <em>Copy image address</em>.<br>
+              The URL will start with <code style="background:rgba(0,0,0,0.06);padding:1px 4px;border-radius:3px">pbs.twimg.com</code> or <code style="background:rgba(0,0,0,0.06);padding:1px 4px;border-radius:3px">jf.x.com</code> — paste that here.<br>
+              It won't preview in this form due to browser restrictions, but it will display correctly on the feed.
             </div>
             <div class="sm-url-row">
               <input class="sm-input" id="smMediaUrl" type="url" placeholder="https://" oninput="smValidateMedia()" style="padding-right:36px">
@@ -501,26 +501,60 @@ function smOnPostUrlInput(){
 
 async function smScrape(url){
   const status=document.getElementById('smScrapeStatus')
+  const host=new URL(url).hostname.replace('www.','')
+
+  // X/Twitter — extract handle from URL, can't scrape content
+  if(host.includes('x.com')||host.includes('twitter.com')){
+    const m=new URL(url).pathname.match(/^\/([^/]+)\/status/)
+    if(m)document.getElementById('smCreator').value='@'+m[1]
+    smUnlockFields(true)
+    smUpdatePreview()
+    status.className='sm-scrape-status warn'
+    status.textContent='X blocks auto-fill. Your handle has been added — please paste the tweet text as the caption, and right-click your image on X to copy the media URL.'
+    return
+  }
+
   try{
-    const res=await fetch('/api/scrape?url='+encodeURIComponent(url))
+    // Microlink runs from the browser (user's IP) so platform blocks don't apply
+    const res=await fetch('https://api.microlink.io?url='+encodeURIComponent(url))
     const data=await res.json()
-    if(data.blocked||data.error){
-      status.className='sm-scrape-status warn'
-      status.textContent=data.reason||data.error||'Could not auto-fill — please enter details manually.'
+    if(data.status!=='success'){
       smUnlockFields(false)
+      status.className='sm-scrape-status warn'
+      status.textContent='Could not auto-fill. Please enter the details manually.'
       return
     }
-    if(data.mediaUrl)document.getElementById('smMediaUrl').value=data.mediaUrl
-    if(data.caption){document.getElementById('smCaption').value=data.caption;smUpdateCharCount()}
-    if(data.creator)document.getElementById('smCreator').value=data.creator
+    const d=data.data
+    // Pick best media — prefer video thumbnail, then image
+    const mediaUrl=(d.video&&d.video.url)||(d.image&&d.image.url)||''
+    const caption=(d.title||d.description||'').slice(0,120)
+    // Extract creator from publisher or URL
+    let creator=d.publisher||''
+    if(host.includes('dribbble.com')){
+      // Dribbble title: "Shot name by Creator on Dribbble"
+      const m=(d.title||'').match(/by (.+?) on Dribbble/i)
+      if(m)creator=m[1].trim()
+      // Clean title
+    }
+    if(host.includes('vimeo.com')){
+      const m=(d.title||'').match(/on Vimeo$/i)
+    }
+    if(host.includes('codepen.io')){
+      const m=new URL(url).pathname.match(/^\/([^/]+)\/pen/)
+      if(m)creator=m[1]
+    }
+    if(host.includes('github.com')){
+      const parts=new URL(url).pathname.split('/').filter(Boolean)
+      if(parts[0])creator=parts[0]
+    }
+    if(mediaUrl)document.getElementById('smMediaUrl').value=mediaUrl
+    if(caption){document.getElementById('smCaption').value=caption;smUpdateCharCount()}
+    if(creator)document.getElementById('smCreator').value=creator
     smValidateMedia()
     smUpdatePreview()
-    const anyFilled=data.mediaUrl||data.caption||data.creator
+    const anyFilled=mediaUrl||caption||creator
     smUnlockFields(true)
-    if(data.note){
-      status.className='sm-scrape-status warn'
-      status.textContent=data.note
-    } else if(anyFilled){
+    if(anyFilled){
       status.className='sm-scrape-status ok'
       status.textContent='Details filled in automatically — please review and edit if needed.'
     } else {
@@ -597,13 +631,9 @@ function smUpdatePreview(){
 function smSetMediaPreview(url){
   const media=document.getElementById('smCardMedia')
   if(!url){media.innerHTML='<div class="sm-card-media-placeholder">Media preview will go here</div>';return}
-  // pbs.twimg.com = direct X image CDN — load as real image
-  if(url.includes('pbs.twimg.com')){
-    media.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover" onerror="smMediaFail()">';return
-  }
-  // Other x.com/twitter.com page URLs — can't load, show placeholder
-  if(url.includes('x.com')||url.includes('twitter.com')||url.includes('t.co')){
-    media.innerHTML='<div class="sm-card-media-placeholder" style="text-align:center;padding:16px;line-height:1.5">X / Twitter<br><span style="font-size:10px;color:#bbb">Media will display on the feed</span></div>';return
+  // X/Twitter CDN — can't preview in browser due to CORS but works on the feed
+  if(url.includes('x.com')||url.includes('twitter.com')||url.includes('twimg.com')||url.includes('t.co')){
+    media.innerHTML='<div class="sm-card-media-placeholder" style="text-align:center;padding:16px;line-height:1.5">X / Twitter media<br><span style="font-size:10px;color:#bbb">Will display correctly on the feed</span></div>';return
   }
   const isEmbed=EMBED_HOSTS.find(b=>url.includes(b))
   if(isEmbed){media.innerHTML='<div class="sm-card-media-placeholder" style="text-align:center;padding:16px">'+capitalise(isEmbed)+' embed<br>will display on card</div>';return}
@@ -651,13 +681,10 @@ function smValidateMedia(){
     icon.className='sm-url-icon show err';icon.textContent='!'
     return
   }
-  // X page URLs are not valid media — only pbs.twimg.com direct image URLs work
-  if((host.includes('x.com')||host.includes('twitter.com'))&&!url.includes('pbs.twimg.com')){
-    icon.className='sm-url-icon show err';icon.textContent='!'
-    inp.classList.add('error')
-    err.textContent='This is an X page URL, not a direct media link. Right-click the image on X and choose "Copy image address" to get a pbs.twimg.com URL.'
-    err.classList.add('show')
-    smSetMediaPreview('')
+  // X/Twitter CDN URLs — valid media but can't preview due to CORS, show placeholder
+  if(host.includes('x.com')||host.includes('twitter.com')||host.includes('twimg.com')){
+    icon.className='sm-url-icon show ok';icon.textContent='✓'
+    smSetMediaPreview(val)
     return
   }
   icon.className='sm-url-icon show ok';icon.textContent='✓'
