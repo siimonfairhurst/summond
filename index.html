@@ -502,13 +502,13 @@ function smSetMediaPreview(url){
 }
 
 function smMediaFail(){
-  document.getElementById('smCardMedia').innerHTML='<div class="sm-card-media-placeholder" style="color:#e53;text-align:center;padding:16px">Could not load media.<br>Check it's a direct file URL.</div>'
+  document.getElementById('smCardMedia').innerHTML='<div class="sm-card-media-placeholder" style="color:#e53;text-align:center;padding:16px">Could not load media.<br>Check it\'s a direct file URL.</div>'
   const inp=document.getElementById('smMediaUrl')
   const err=document.getElementById('smMediaErr')
   const icon=document.getElementById('smMediaIcon')
   inp.classList.add('error')
   icon.className='sm-url-icon show err';icon.textContent='!'
-  err.textContent='Could not load that URL. Make sure it's a direct link to the file, not a page URL.'
+  err.textContent='Could not load that URL. Make sure it\'s a direct link to the file, not a page URL.'
   err.classList.add('show')
 }
 
@@ -525,7 +525,7 @@ function smValidateMedia(){
   if(!val)return
   let host=''
   try{host=new URL(val).hostname.replace('www.','')}catch{
-    err.textContent='That doesn't look like a valid URL.'
+    err.textContent='That doesn\'t look like a valid URL.'
     err.classList.add('show');inp.classList.add('error')
     icon.className='sm-url-icon show err';icon.textContent='!'
     return
