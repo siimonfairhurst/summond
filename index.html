@@ -80,8 +80,12 @@
     .hero-btn{display:inline-block;background:#000;color:#fff;font-family:'Hanken Grotesk',sans-serif;font-size:14px;font-weight:500;padding:4px 12px;border-radius:100px;border:none;cursor:pointer;transition:background .3s,color .3s,opacity .15s}
     .hero-btn:hover{opacity:.75}
 
-    .sticky-bar{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid rgba(0,0,0,0.12);border-radius:100px;padding:8px 8px 8px 18px;display:flex;align-items:center;gap:14px;box-shadow:0 4px 20px rgba(0,0,0,0.1);z-index:50;white-space:nowrap;opacity:0;transition:opacity .25s,background .3s;pointer-events:none}
+    .sticky-bar{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid rgba(0,0,0,0.12);border-radius:32px;padding:8px 8px 8px 18px;display:flex;align-items:center;gap:14px;box-shadow:0 4px 20px rgba(0,0,0,0.1);z-index:50;white-space:nowrap;opacity:0;transition:opacity .25s,background .3s;pointer-events:none}
     .sticky-bar.show{opacity:1;pointer-events:all}
+    .sb-name{font-size:14px;font-weight:700;letter-spacing:-0.02em;text-transform:uppercase;transition:color .3s}
+    .sb-desc{font-size:14px;color:#767676;transition:color .3s}
+    body.dark .sb-name{color:#fff}
+    body.dark .sb-desc{color:#767676}
     .sticky-bar .hero-btn{flex:1;text-align:center;padding:10px 24px;box-shadow:0 4px 20px rgba(0,0,0,0.15)}
     @media(max-width:600px){.sticky-bar{left:16px;right:100px;bottom:16px;transform:none;background:none;border:none;padding:0;box-shadow:none}}
 
@@ -298,7 +302,9 @@
 </footer>
 
 <div class="sticky-bar" id="stickyBar">
-  <button class="hero-btn" style="flex:1;text-align:center;padding:10px 24px">Submit</button>
+  <span class="sb-name">Summond</span>
+  <span class="sb-desc">The best work being built with AI</span>
+  <button class="hero-btn">Submit</button>
 </div>
 
 
