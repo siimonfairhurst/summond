@@ -48,7 +48,7 @@
     body.dark .lb{background:rgba(10,10,10,0.96)}
     body.dark .lb-box{background:#111;border-color:rgba(255,255,255,0.1)}
     body.dark .lb-creator{color:#fff}
-    body.dark .lb-caption{color:#767676}
+    body.dark .lb-caption{color:#ddd}
     body.dark .lb-close{background:rgba(30,30,30,0.95);border-color:rgba(255,255,255,0.1);color:#fff}
     body.dark .lb-btn{background:#fff;color:#000}
 
@@ -102,17 +102,21 @@
     .lb{position:fixed;inset:0;background:rgba(255,255,255,0.94);backdrop-filter:blur(16px);z-index:100;display:none;align-items:center;justify-content:center;padding:24px}
     .lb.open{display:flex}
     .lb-wrap{position:relative;max-width:880px;width:100%;margin:0 auto}
+    .lb-share{position:absolute;bottom:14px;right:16px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.9);border:1px solid rgba(0,0,0,0.12);cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,0.12);transition:background .3s,opacity .15s}
+    .lb-share:hover{background:#f5f5f5}
+    .lb-share.copied circle{fill:#000}
+    .lb-share.copied path{stroke:#fff}
     .lb-close{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.9);border:1px solid rgba(0,0,0,0.12);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;font-family:inherit;color:#000;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,0.12);transition:background .3s,color .3s,border-color .3s}
     .lb-close:hover{background:#f5f5f5}
     body.dark .lb-close{background:rgba(26,26,26,0.9);border-color:rgba(255,255,255,0.15);color:#fff}
-    .lb-box{background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:16px;overflow:hidden;width:100%;box-shadow:0 12px 60px rgba(0,0,0,0.1);transition:background .3s,border-color .3s;position:relative}
+    .lb-box{background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:16px;overflow:hidden;width:100%;box-shadow:0 12px 60px rgba(0,0,0,0.1);transition:background .3s,border-color .3s;position:relative;height:auto}
     .lb-media{width:100%;background:#f5f5f5}
     .lb-media img{width:100%;height:auto;max-height:70vh;object-fit:contain;display:block}
     .lb-media video{width:100%;height:auto;max-height:70vh;object-fit:contain;display:block}
     .lb-media iframe{width:100%;aspect-ratio:16/9;display:block;border:none}
-    .lb-body{padding:14px 18px 52px;position:relative}
-    .lb-creator{margin-bottom:6px}
-    .lb-caption{font-size:14px;color:#767676;line-height:1.6;margin-bottom:10px;transition:color .3s}
+    .lb-body{padding:14px 18px 16px;display:flex;flex-direction:column;gap:16px}
+    .lb-creator{}
+    .lb-caption{font-size:14px;color:#000;line-height:1.6;transition:color .3s}
     .lb-tag-row{display:flex;gap:6px;flex-wrap:wrap}
     .loading{text-align:center;padding:80px 0;color:#767676;font-size:12px;letter-spacing:0.06em}
 
@@ -127,20 +131,20 @@
     /* SUBMIT MODAL */
     .sm{position:fixed;inset:0;background:#fff;z-index:110;display:none;flex-direction:column;overflow-y:auto;transition:background .3s}
     .sm.open{display:flex}
-    .sm-topbar{display:flex;align-items:center;padding:16px 24px;border-bottom:1px solid rgba(0,0,0,0.08);flex-shrink:0;transition:border-color .3s}
-    .sm-back{background:none;border:1px solid rgba(0,0,0,0.16);border-radius:100px;font-family:'Hanken Grotesk',sans-serif;font-size:13px;color:#000;cursor:pointer;padding:6px 14px;display:flex;align-items:center;gap:6px;transition:background .2s,color .3s,border-color .3s}
+    .sm-topbar{display:flex;align-items:center;padding:16px 24px;flex-shrink:0}
+    .sm-back{background:none;border:1px solid rgba(0,0,0,0.16);border-radius:100px;font-family:'Hanken Grotesk',sans-serif;font-size:14px;font-weight:400;color:#000;cursor:pointer;padding:6px 14px;display:flex;align-items:center;gap:6px;transition:background .2s,color .3s,border-color .3s}
     .sm-back:hover{background:#f5f5f5}
     .sm-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;flex:1;max-width:1100px;width:100%;margin:0 auto;padding:48px 48px 80px}
     @media(max-width:768px){.sm-layout{grid-template-columns:1fr;padding:24px;gap:32px}}
     .sm-left{display:flex;flex-direction:column;gap:0}
-    .sm-page-title{font-size:20px;font-weight:700;letter-spacing:-0.02em;margin-bottom:32px;transition:color .3s}
-    .sm-section{padding:16px 0;display:flex;flex-direction:column;gap:6px}
-    .sm-label{font-size:14px;font-weight:600;color:#000;transition:color .3s}
-    .sm-desc{font-size:13px;color:#767676;line-height:1.5;transition:color .3s}
-    .sm-input{font-family:'Hanken Grotesk',sans-serif;font-size:14px;padding:10px 14px;border:1px solid rgba(0,0,0,0.16);border-radius:8px;outline:none;width:100%;background:#fff;color:#000;transition:border-color .2s,background .3s,color .3s;resize:none}
+    .sm-page-title{font-size:24px;font-weight:400;margin-bottom:24px;transition:color .3s}
+    .sm-section{padding:20px 0;border-bottom:1px solid rgba(0,0,0,0.08);display:flex;flex-direction:column;gap:2px;transition:border-color .3s}
+    .sm-label{font-size:14px;font-weight:400;color:#000;transition:color .3s}
+    .sm-desc{font-size:14px;font-weight:400;color:#767676;line-height:1.5;transition:color .3s}
+    .sm-input{font-family:'Hanken Grotesk',sans-serif;font-size:14px;padding:10px 14px;border:1px solid rgba(0,0,0,0.16);border-radius:8px;outline:none;width:100%;background:#fff;color:#000;transition:border-color .2s,background .3s,color .3s;resize:none;margin-top:6px}
     .sm-input:focus{border-color:#000}
     .sm-input.error{border-color:#e53}
-    .sm-charcount{font-size:11px;color:#767676;text-align:right;margin-top:2px}
+    .sm-charcount{font-size:12px;font-weight:400;color:#767676;text-align:right;margin-top:2px}
     .sm-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer}
     .sm-url-row{position:relative}
     .sm-url-icon{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:11px;font-weight:700}
@@ -155,9 +159,9 @@
     .sm-upload-zone{border:2px dashed rgba(0,0,0,0.16);border-radius:10px;padding:32px 20px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;position:relative;overflow:hidden}
     .sm-upload-zone:hover,.sm-upload-zone.drag{border-color:#000;background:rgba(0,0,0,0.02)}
     .sm-upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-    .sm-upload-icon{font-size:24px;margin-bottom:8px}
-    .sm-upload-label{font-size:14px;font-weight:600;margin-bottom:4px;transition:color .3s}
-    .sm-upload-sub{font-size:12px;color:#767676;transition:color .3s}
+    .sm-upload-icon{margin-bottom:8px;display:flex;justify-content:center}
+    .sm-upload-label{font-size:14px;font-weight:400;color:#000;margin-bottom:4px;transition:color .3s}
+    .sm-upload-sub{font-size:12px;font-weight:400;color:#767676;transition:color .3s}
     .sm-upload-progress{height:3px;background:rgba(0,0,0,0.08);border-radius:2px;margin-top:12px;overflow:hidden;display:none}
     .sm-upload-progress.show{display:block}
     .sm-upload-bar{height:100%;background:#000;border-radius:2px;width:0%;transition:width .3s}
@@ -180,9 +184,9 @@
     .sm-upload-zone{border:2px dashed rgba(0,0,0,0.16);border-radius:10px;padding:32px 20px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;position:relative;overflow:hidden}
     .sm-upload-zone:hover,.sm-upload-zone.drag{border-color:#000;background:rgba(0,0,0,0.02)}
     .sm-upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-    .sm-upload-icon{font-size:24px;margin-bottom:8px}
-    .sm-upload-label{font-size:14px;font-weight:600;margin-bottom:4px;transition:color .3s}
-    .sm-upload-sub{font-size:12px;color:#767676;transition:color .3s}
+    .sm-upload-icon{margin-bottom:8px;display:flex;justify-content:center}
+    .sm-upload-label{font-size:14px;font-weight:400;color:#000;margin-bottom:4px;transition:color .3s}
+    .sm-upload-sub{font-size:12px;font-weight:400;color:#767676;transition:color .3s}
     .sm-upload-progress{height:3px;background:rgba(0,0,0,0.08);border-radius:2px;margin-top:12px;overflow:hidden;display:none}
     .sm-upload-progress.show{display:block}
     .sm-upload-bar{height:100%;background:#000;border-radius:2px;width:0%;transition:width .3s}
@@ -209,7 +213,7 @@
     .sm-card-caption{font-size:13px;color:#555;margin-bottom:10px;line-height:1.5;min-height:18px;transition:color .3s}
     .sm-card-creator{font-size:14px;margin-bottom:8px;min-height:20px;transition:color .3s}
     .sm-card-tool{display:flex;flex-wrap:wrap;gap:3px}
-    .sm-submit-btn{width:100%;margin-top:20px;font-family:'Hanken Grotesk',sans-serif;font-size:15px;font-weight:600;padding:14px;border-radius:100px;border:none;background:#000;color:#fff;cursor:pointer;transition:opacity .15s,background .3s}
+    .sm-submit-btn{width:100%;margin-top:20px;font-family:'Hanken Grotesk',sans-serif;font-size:14px;font-weight:400;padding:14px;border-radius:100px;border:none;background:#000;color:#fff;cursor:pointer;transition:opacity .15s,background .3s}
     .sm-submit-btn:hover{opacity:.8}
     .sm-submit-btn:disabled{opacity:.35;cursor:not-allowed}
     .sm-success{display:none;flex-direction:column;align-items:center;justify-content:center;flex:1;text-align:center;padding:48px;gap:0;min-height:80vh}
@@ -226,6 +230,7 @@
     body.dark .sm-back{border-color:rgba(255,255,255,0.16);color:#fff}
     body.dark .sm-back:hover{background:#1a1a1a}
     body.dark .sm-page-title{color:#fff}
+    body.dark .sm-section{border-color:rgba(255,255,255,0.08)}
     body.dark .sm-label{color:#fff}
 
     body.dark .sm-input{background:#111;border-color:rgba(255,255,255,0.12);color:#fff}
@@ -238,13 +243,13 @@
     body.dark .sm-submit-btn{background:#fff;color:#000}
     body.dark .sm-compat{background:#1a1500;border-color:rgba(200,160,0,0.15);color:#b89a00}
     .sm-media-tabs{display:flex;gap:0;border:1px solid rgba(0,0,0,0.12);border-radius:8px;overflow:hidden;margin-bottom:12px}
-    .sm-media-tab{flex:1;padding:8px 12px;font-family:'Hanken Grotesk',sans-serif;font-size:13px;font-weight:500;border:none;background:#fff;color:#767676;cursor:pointer;transition:background .2s,color .2s}
+    .sm-media-tab{flex:1;padding:8px 12px;font-family:'Hanken Grotesk',sans-serif;font-size:14px;font-weight:400;border:none;background:#fff;color:#767676;cursor:pointer;transition:background .2s,color .2s}
     .sm-media-tab.active{background:#000;color:#fff}
     body.dark .sm-media-tabs{border-color:rgba(255,255,255,0.12)}
     body.dark .sm-media-tab{background:#111;color:#555}
     body.dark .sm-media-tab.active{background:#fff;color:#000}
     .sm-tools-grid{display:flex;flex-wrap:wrap;gap:6px}
-    .sm-tool-chip{font-family:'Hanken Grotesk',sans-serif;font-size:12px;padding:5px 12px;border-radius:100px;border:1px solid rgba(0,0,0,0.16);background:#fff;color:#555;cursor:pointer;transition:background .15s,color .15s,border-color .15s;user-select:none}
+    .sm-tool-chip{font-family:'Hanken Grotesk',sans-serif;font-size:14px;font-weight:400;padding:5px 12px;border-radius:100px;border:1px solid rgba(0,0,0,0.16);background:#fff;color:#555;cursor:pointer;transition:background .15s,color .15s,border-color .15s;user-select:none}
     .sm-tool-chip.selected{background:#000;color:#fff;border-color:#000}
     body.dark .sm-tool-chip{background:#111;border-color:rgba(255,255,255,0.12);color:#767676}
     body.dark .pill-midjourney{color:#fff}
@@ -255,13 +260,13 @@
     .sm-social-row .sm-input{flex:1}
     .sm-social-name{font-size:12px;color:#767676;margin-top:5px;transition:color .3s;display:none}
     .sm-media-tabs{display:flex;gap:0;border:1px solid rgba(0,0,0,0.12);border-radius:8px;overflow:hidden;margin-bottom:12px}
-    .sm-media-tab{flex:1;padding:8px 12px;font-family:'Hanken Grotesk',sans-serif;font-size:13px;font-weight:500;border:none;background:#fff;color:#767676;cursor:pointer;transition:background .2s,color .2s}
+    .sm-media-tab{flex:1;padding:8px 12px;font-family:'Hanken Grotesk',sans-serif;font-size:14px;font-weight:400;border:none;background:#fff;color:#767676;cursor:pointer;transition:background .2s,color .2s}
     .sm-media-tab.active{background:#000;color:#fff}
     body.dark .sm-media-tabs{border-color:rgba(255,255,255,0.12)}
     body.dark .sm-media-tab{background:#111;color:#555}
     body.dark .sm-media-tab.active{background:#fff;color:#000}
     .sm-tools-grid{display:flex;flex-wrap:wrap;gap:6px}
-    .sm-tool-chip{font-family:'Hanken Grotesk',sans-serif;font-size:12px;padding:5px 12px;border-radius:100px;border:1px solid rgba(0,0,0,0.16);background:#fff;color:#555;cursor:pointer;transition:background .15s,color .15s,border-color .15s;user-select:none}
+    .sm-tool-chip{font-family:'Hanken Grotesk',sans-serif;font-size:14px;font-weight:400;padding:5px 12px;border-radius:100px;border:1px solid rgba(0,0,0,0.16);background:#fff;color:#555;cursor:pointer;transition:background .15s,color .15s,border-color .15s;user-select:none}
     .sm-tool-chip.selected{background:#000;color:#fff;border-color:#000}
     body.dark .sm-tool-chip{background:#111;border-color:rgba(255,255,255,0.12);color:#767676}
     body.dark .pill-midjourney{color:#fff}
@@ -326,16 +331,16 @@
             <div class="sm-upload-zone" id="smUploadZone" ondragover="smDrag(event,true)" ondragleave="smDrag(event,false)" ondrop="smDrop(event)">
               <input type="file" id="smFileInput" accept="image/*,video/*" onchange="smFileSelected(event)">
               <div id="smUploadPrompt">
-                <div class="sm-upload-icon">&#8593;</div>
+                <div class="sm-upload-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 8L12 3L7 8" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 3V15" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                 <div class="sm-upload-label">Click to upload or drag and drop</div>
                 <div class="sm-upload-sub">PNG, JPG, GIF, MP4, MOV</div>
-              <div style="font-size:11px;color:#767676;margin-top:10px;line-height:1.8;text-align:center">
-                <div style="font-weight:600;margin-bottom:2px;color:#555">Recommended</div>
-                <div>Landscape: 1600×1200 (4:3) or 1600×900 (16:9)</div>
-                <div>Portrait: 1080×1350 (4:5) or 1080×1920 (9:16)</div>
-                <div>Square: 1080×1080 (1:1)</div>
-                <div style="margin-top:4px">Max width: 1600px</div>
-              </div>
+                <div style="font-size:12px;font-weight:400;color:#767676;margin-top:10px;line-height:1.8;text-align:center">
+                  <div style="margin-bottom:2px">Recommended</div>
+                  <div>Landscape: 1600×1200 (4:3) or 1600×900 (16:9)</div>
+                  <div>Portrait: 1080×1350 (4:5) or 1080×1920 (9:16)</div>
+                  <div>Square: 1080×1080 (1:1)</div>
+                  <div style="margin-top:4px">Max width: 1600px</div>
+                </div>
               </div>
             </div>
             <div class="sm-upload-progress" id="smUploadProgress"><div class="sm-upload-bar" id="smUploadBar"></div></div>
@@ -354,11 +359,24 @@
               </div>
               <span style="position:relative;flex-shrink:0;margin-top:2px">
                 <button id="smUrlTooltipBtn" onclick="smToggleTooltip()" style="background:none;border:1.5px solid rgba(0,0,0,0.2);border-radius:50%;width:20px;height:20px;font-size:11px;cursor:pointer;color:#767676;padding:0;line-height:1;font-family:inherit;display:flex;align-items:center;justify-content:center">?</button>
-                <div id="smUrlTooltip" style="display:none;position:absolute;top:28px;right:0;width:260px;background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:16px;font-size:12px;color:#767676;line-height:1.7;box-shadow:0 8px 32px rgba(0,0,0,0.12);z-index:20">
-                  <div style="font-weight:700;color:#000;margin-bottom:8px;font-size:13px">What works</div>
-                  A direct link to wherever your media is hosted — Dribbble, YouTube, Vimeo, Loom, Imgur, Cloudinary, or any public image or video URL.<br><br>
-                  <div style="font-weight:700;color:#000;margin-bottom:8px;font-size:13px">What doesn't work</div>
-                  LinkedIn, Instagram, TikTok, Threads and Facebook lock their media behind a login, so direct links can't be loaded. Use the <strong style="color:#000">Upload a file</strong> tab instead.
+                <div id="smUrlTooltip" style="display:none;position:absolute;top:28px;right:0;width:280px;background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:16px;padding:18px;font-size:12px;color:#000;line-height:1.6;box-shadow:0 8px 32px rgba(0,0,0,0.14);z-index:20">
+                  <div style="font-weight:400;font-size:12px;color:#000;margin-bottom:2px">Copy the right URL</div>
+                  <div style="font-weight:400;font-size:12px;color:#767676;margin-bottom:12px">Right click on the media<br>Copy Image URL or Video Address</div>
+                  <img src="https://ik.imagekit.io/summond/summond/Frame%2025.png" style="width:100%;border-radius:8px;margin-bottom:12px;display:block;background:#f5f5f5" alt="Right-click context menu showing Copy Image Address and Copy video address options">
+                  <div style="font-weight:400;font-size:12px;color:#000;margin-bottom:4px">What works</div>
+                  <ul style="margin:0 0 6px 14px;padding:0;color:#767676;font-size:12px;font-weight:400;line-height:1.6">
+                    <li>cdn.dribbble.com/users/...</li>
+                    <li>youtube.com/watch?v=... or youtu.be/...</li>
+                    <li>vimeo.com/123456789</li>
+                    <li>loom.com/share/...</li>
+                    <li>i.imgur.com/abc123.jpg</li>
+                    <li>res.cloudinary.com/...</li>
+                  </ul>
+                  <div style="color:#767676;font-size:12px;font-weight:400;margin-bottom:12px">or, any URL ending in .jpg, .png, .gif, .mp4</div>
+                  <div style="border-top:1px solid rgba(0,0,0,0.08);padding-top:12px">
+                    <div style="font-weight:400;font-size:12px;color:#D50000;margin-bottom:4px;display:flex;align-items:center;gap:5px"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_8_69)"><path d="M6 11C8.76142 11 11 8.76142 11 6C11 3.23858 8.76142 1 6 1C3.23858 1 1 3.23858 1 6C1 8.76142 3.23858 11 6 11Z" stroke="#D50000" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 4V6" stroke="#D50000" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 8H6.005" stroke="#D50000" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="clip0_8_69"><rect width="12" height="12" fill="white"/></clipPath></defs></svg> What doesn't work</div>
+                    <div style="color:#767676;font-size:12px;font-weight:400;line-height:1.6">LinkedIn, Instagram, TikTok, Threads and Facebook lock their media behind a login, so direct links can't be loaded.<br>Use the <strong style="color:#000;font-weight:400">'Upload a file'</strong> tab instead.</div>
+                  </div>
                 </div>
               </span>
             </div>
@@ -485,6 +503,7 @@
 <div class="lb" id="lb" onclick="if(event.target===this)closeLb()">
   <div class="lb-wrap">
     <div class="lb-box">
+
       <button class="lb-close" onclick="closeLb()">&#x2715;</button>
       <div class="lb-media" id="lbMedia"></div>
       <div class="lb-body">
@@ -492,6 +511,9 @@
         <div class="lb-caption" id="lbCaption"></div>
         <div class="lb-tag-row" id="lbTags"></div>
       </div>
+      <button class="lb-share" id="lbShare" onclick="lbCopyLink()" title="Copy link">
+        <svg id="lbShareIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="#767676" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="#767676" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </div>
   </div>
 </div>
@@ -548,7 +570,9 @@ function render(projects){
     card.onclick=()=>openLb(p);grid.appendChild(card)
   })
 }
+let currentPost=null
 function openLb(p){
+  currentPost=p
   const platform=p.platform||detectPlatform(p.creatorUrl||p.postUrl||'')
   const wrap=document.getElementById('lbMedia');wrap.innerHTML=makeMedia(p,false)
   const lbCreatorEl=document.getElementById('lbCreator')
@@ -560,8 +584,30 @@ function openLb(p){
   document.getElementById('lbCaption').textContent=p.caption||''
   document.getElementById('lbTags').innerHTML=toolPill(p.tool)
   document.getElementById('lb').classList.add('open')
+  // Set hash for shareable URL
+  try{history.replaceState(null,'',window.location.pathname+'#'+p.id)}catch{}
+  // Share button SVG is already in the HTML — no reset needed
 }
-function closeLb(){document.getElementById('lb').classList.remove('open')}
+function closeLb(){
+  document.getElementById('lb').classList.remove('open')
+  try{history.replaceState(null,'',window.location.pathname)}catch{}
+  currentPost=null
+}
+function lbCopyLink(){
+  const LINK_SVG=document.getElementById('lbShareIcon').outerHTML
+  const CHECK_SVG='<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.5" y="0.5" width="39" height="39" rx="19.5" fill="#000"/><rect x="0.5" y="0.5" width="39" height="39" rx="19.5" stroke="#000"/><polyline points="13,21 18,26 27,15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+  const btn=document.getElementById('lbShare')
+  const doConfirm=()=>{
+    btn.innerHTML=CHECK_SVG
+    setTimeout(()=>{btn.innerHTML=LINK_SVG},2000)
+  }
+  navigator.clipboard.writeText(window.location.href).then(doConfirm).catch(()=>{
+    const el=document.createElement('textarea')
+    el.value=window.location.href;document.body.appendChild(el);el.select()
+    document.execCommand('copy');document.body.removeChild(el)
+    doConfirm()
+  })
+}
 document.getElementById('lb').addEventListener('click',e=>{if(e.target===e.currentTarget)closeLb()})
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb()})
 function toggleMode(){document.body.classList.toggle('dark')}
@@ -591,14 +637,13 @@ const observer=new IntersectionObserver(entries=>{
 },{rootMargin:'200px'})
 
 async function init(){
-  // Show demo cards immediately — never leave the feed empty
+  // Show demo cards immediately
   document.getElementById('loading').style.display='none'
   allProjects=DEMO
   rendered=0
   renderBatch()
   const sentinel=document.getElementById('sentinel')
   if(sentinel) observer.observe(sentinel)
-  // Then fetch real data and swap in
   try{
     const data=await fetch('/api/feed').then(r=>r.json())
     if(data?.projects?.length){
@@ -607,11 +652,22 @@ async function init(){
       document.getElementById('masonry').innerHTML=''
       renderBatch()
     }
-  }catch{
-    // Demo cards already showing
-  }
+  }catch{}
 }
 init()
+// Auto-open from share link hash
+function openFromHash(){
+  const hash=window.location.hash.slice(1)
+  if(!hash)return
+  const p=allProjects.find(x=>x.id===hash)
+  if(p){openLb(p);return}
+  let tries=0
+  const t=setInterval(()=>{
+    const p2=allProjects.find(x=>x.id===hash)
+    if(p2){openLb(p2);clearInterval(t)}
+    if(++tries>15)clearInterval(t)
+  },200)
+}init()
 
 function sizeTitle(){const t=document.getElementById('heroTitle'),vw=window.innerWidth;t.style.fontSize='1px';let lo=1,hi=600;while(hi-lo>0.5){const mid=(lo+hi)/2;t.style.fontSize=mid+'px';if(t.scrollWidth<=vw)lo=mid;else hi=mid}t.style.fontSize=lo+'px'}
 window.addEventListener('resize',sizeTitle);document.fonts.ready.then(sizeTitle);setTimeout(sizeTitle,100)
@@ -1004,6 +1060,16 @@ document.querySelectorAll('.hero-btn').forEach(b=>{if(b.textContent.trim()==='Su
 // Lottie removed — using CSS animation
 function smInitLottie(){}
 let lottieInstance=null
+function smToggleTooltip(){
+  const t=document.getElementById('smUrlTooltip')
+  if(t) t.style.display=t.style.display==='block'?'none':'block'
+}
+document.addEventListener('click',function(e){
+  const btn=document.getElementById('smUrlTooltipBtn')
+  const tip=document.getElementById('smUrlTooltip')
+  if(tip&&btn&&!btn.contains(e.target)&&!tip.contains(e.target)) tip.style.display='none'
+})
+
 document.getElementById('footerYear').textContent=new Date().getFullYear()
 </script>
 </body>
