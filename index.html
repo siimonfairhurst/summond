@@ -54,8 +54,12 @@
     body.dark .lb-btn{background:#fff;color:#000}
 
     /* TOGGLE */
-    .mode-toggle{position:fixed;bottom:20px;right:20px;z-index:200;width:64px;height:40px;border-radius:100px;background:#f0f0f0;cursor:pointer;border:none;padding:4px;display:flex;align-items:center;box-shadow:0 4px 20px rgba(0,0,0,0.15);transition:background .3s}
-    body.dark .mode-toggle{background:#333}
+    @keyframes modeSpin{0%{transform:rotate(0deg) scale(1)}40%{transform:rotate(180deg) scale(0.7)}100%{transform:rotate(360deg) scale(1)}}
+    .mode-toggle{position:fixed;bottom:20px;right:20px;z-index:200;width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,0.12);cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,0.12);transition:background .3s,border-color .3s}
+    .mode-toggle:hover{background:#f5f5f5}
+    body.dark .mode-toggle{background:#1a1a1a;border-color:rgba(255,255,255,0.15)}
+    body.dark .mode-toggle:hover{background:#222}
+    .mode-toggle.spinning{animation:modeSpin .5s cubic-bezier(.34,1.2,.64,1)}
 
     /* knob slides right in dark mode */
     .toggle-knob{width:32px;height:32px;border-radius:50%;background:#000;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .3s}
@@ -66,6 +70,7 @@
     .knob-moon{display:flex;align-items:center;justify-content:center;position:absolute;opacity:0;transition:opacity .2s}
     body.dark .knob-sun{opacity:0}
     body.dark .knob-moon{opacity:1}
+    body.dark .knob-moon svg{stroke:#fff}
 
     /* HERO */
     .hero{padding:0 0 64px;text-align:center}
@@ -488,25 +493,21 @@
 </div>
 
 <!-- TOGGLE: icon lives inside the knob, swaps with mode -->
-<button class="mode-toggle" onclick="toggleMode()" aria-label="Toggle dark mode">
-  <div class="toggle-knob">
-    <!-- Sun: white icon, shown in light mode -->
-    <span class="knob-sun">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round">
-        <circle cx="12" cy="12" r="4"/>
-        <line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/>
-        <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
-        <line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/>
-        <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
-      </svg>
-    </span>
-    <!-- Moon: black icon, shown in dark mode -->
-    <span class="knob-moon">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-      </svg>
-    </span>
-  </div>
+<button class="mode-toggle" id="modeBtn" onclick="toggleMode()" aria-label="Toggle dark mode">
+  <span class="knob-sun">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <circle cx="12" cy="12" r="4"/>
+      <line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/>
+      <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
+      <line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/>
+      <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
+    </svg>
+  </span>
+  <span class="knob-moon">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </span>
 </button>
 
 <div class="lb" id="lb" onclick="if(event.target===this)closeLb()">
@@ -619,7 +620,16 @@ function lbCopyLink(){
 }
 document.getElementById('lb').addEventListener('click',e=>{if(e.target===e.currentTarget)closeLb()})
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb()})
-function toggleMode(){document.body.classList.toggle('dark')}
+function toggleMode(){
+  const btn=document.getElementById('modeBtn')
+  document.body.classList.toggle('dark')
+  if(btn){
+    btn.classList.remove('spinning')
+    void btn.offsetWidth // force reflow to restart animation
+    btn.classList.add('spinning')
+    setTimeout(()=>btn.classList.remove('spinning'),500)
+  }
+}
 
 const DEMO=['AI invoice SaaS','Brand identity generator','Habit tracker','Music visualiser','E-commerce store','Chess with AI','Generative art','Budget tracker','Kanban board','Pixel art editor','3D configurator','Weather dashboard'].map((title,i)=>({id:`d${i}`,caption:title+' — built with AI.',mediaUrl:`https://picsum.photos/seed/smnd${i}/800/${320+(i%7)*60}`,creatorUrl:'#',tool:['Claude','Cursor','Bolt.new','Lovable','v0'][i%5],platform:['x','dribbble','behance','x','x'][i%5],creator:`@creator${i}`}))
 
