@@ -654,20 +654,14 @@ async function init(){
     }
   }catch{}
 }
-init()
-// Auto-open from share link hash
-function openFromHash(){
+init().then(()=>{
+  // After feed loads, open popup from hash if present
   const hash=window.location.hash.slice(1)
-  if(!hash)return
-  const p=allProjects.find(x=>x.id===hash)
-  if(p){openLb(p);return}
-  let tries=0
-  const t=setInterval(()=>{
-    const p2=allProjects.find(x=>x.id===hash)
-    if(p2){openLb(p2);clearInterval(t)}
-    if(++tries>15)clearInterval(t)
-  },200)
-}init()
+  if(hash){
+    const p=allProjects.find(x=>x.id===hash)
+    if(p) openLb(p)
+  }
+})
 
 function sizeTitle(){const t=document.getElementById('heroTitle'),vw=window.innerWidth;t.style.fontSize='1px';let lo=1,hi=600;while(hi-lo>0.5){const mid=(lo+hi)/2;t.style.fontSize=mid+'px';if(t.scrollWidth<=vw)lo=mid;else hi=mid}t.style.fontSize=lo+'px'}
 window.addEventListener('resize',sizeTitle);document.fonts.ready.then(sizeTitle);setTimeout(sizeTitle,100)
