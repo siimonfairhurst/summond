@@ -3,7 +3,111 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Summond.design</title>
+
+  <!-- ── Primary SEO ─────────────────────────────────────────── -->
+  <title>Summond — The best work being built with AI</title>
+  <meta name="description" content="A curated gallery of apps, tools, games and interfaces built with AI tools like Claude, Cursor, Bolt and Lovable. Browse and submit your vibe-coded creations.">
+  <meta name="keywords" content="vibe coding, AI projects, Claude, Cursor, Bolt, Lovable, AI tools, generative UI, AI apps, AI design, built with AI, vibe coded, AI gallery, AI showcase">
+  <meta name="author" content="Simon Fairhurst">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://summond.design/">
+
+  <!-- ── Open Graph (Facebook, LinkedIn, iMessage, Slack…) ──── -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Summond">
+  <meta property="og:title" content="Summond — The best work being built with AI">
+  <meta property="og:description" content="A curated gallery of apps, tools, games and interfaces built with AI. Browse vibe-coded projects from designers and developers worldwide.">
+  <meta property="og:url" content="https://summond.design/">
+  <meta property="og:image" content="https://ik.imagekit.io/summond/summond/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Summond — A curated wall of AI-built projects">
+  <meta property="og:locale" content="en_GB">
+
+  <!-- ── Twitter / X Card ───────────────────────────────────── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@summond_design">
+  <meta name="twitter:title" content="Summond — The best work being built with AI">
+  <meta name="twitter:description" content="A curated gallery of apps, tools, games and interfaces built with Claude, Cursor, Bolt and Lovable.">
+  <meta name="twitter:image" content="https://ik.imagekit.io/summond/summond/og-image.png">
+  <meta name="twitter:image:alt" content="Summond — A curated wall of AI-built projects">
+
+  <!-- ── Theme colour (mobile browser chrome) ──────────────── -->
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+
+  <!-- ── Structured data (JSON-LD) ─────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Summond",
+    "alternateName": "Summond.design",
+    "url": "https://summond.design/",
+    "description": "A community-curated gallery of apps, tools, games and interfaces built with AI tools like Claude, Cursor, Bolt and Lovable.",
+    "author": {
+      "@type": "Person",
+      "name": "Simon Fairhurst",
+      "url": "https://simonfairhurst.co.uk"
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://summond.design/?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- ── Animated particle orb favicon ────────────────────── -->
+  <link rel="icon" id="faviconLink" type="image/png">
+  <script>
+  (function(){
+    var c=document.createElement('canvas');c.width=32;c.height=32;
+    var ctx=c.getContext('2d');
+    var N=32,r=11,cx=16,cy=16,t=0;
+    var pts=Array.from({length:N},function(_,i){
+      var phi=Math.acos(1-2*(i+0.5)/N);
+      var theta=Math.PI*(1+Math.sqrt(5))*i;
+      return{phi:phi,theta:theta,speed:0.5+Math.random()*0.4};
+    });
+    window._favDark=!!(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);
+    function frame(){
+      var dark=window._favDark;
+      ctx.clearRect(0,0,32,32);
+      var sorted=pts.map(function(p){
+        var th=p.theta+t*p.speed;
+        var x3=r*Math.sin(p.phi)*Math.cos(th);
+        var y3=r*Math.sin(p.phi)*Math.sin(th);
+        var z3=r*Math.cos(p.phi);
+        var ry=y3*Math.cos(0.4)+z3*Math.sin(0.4);
+        var rz=z3*Math.cos(0.4)-y3*Math.sin(0.4);
+        return{sx:cx+x3,sy:cy+ry,z:rz};
+      }).sort(function(a,b){return a.z-b.z;});
+      sorted.forEach(function(p){
+        var depth=(p.z+r)/(2*r);
+        var ps=0.55+depth*0.95;
+        var alpha=dark?(0.2+depth*0.8):(0.12+depth*0.88);
+        ctx.beginPath();
+        ctx.arc(p.sx,p.sy,ps,0,Math.PI*2);
+        ctx.fillStyle=dark?'rgba(255,255,255,'+alpha+')':'rgba(0,0,0,'+alpha+')';
+        ctx.fill();
+      });
+      t+=0.008;
+      document.getElementById('faviconLink').href=c.toDataURL('image/png');
+      requestAnimationFrame(frame);
+    }
+    window.addEventListener('DOMContentLoaded',function(){
+      window._favDark=document.body.classList.contains('dark')||
+        !!(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);
+      frame();
+    });
+  })();
+  </script>
+
+  <!-- ── Performance ───────────────────────────────────────── -->
   <link rel="preload" href="/api/feed" as="fetch" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800;900&display=swap" rel="stylesheet">
@@ -623,9 +727,10 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb()})
 function toggleMode(){
   const btn=document.getElementById('modeBtn')
   document.body.classList.toggle('dark')
+  if(typeof window._favDark!=='undefined') window._favDark=document.body.classList.contains('dark')
   if(btn){
     btn.classList.remove('spinning')
-    void btn.offsetWidth // force reflow to restart animation
+    void btn.offsetWidth
     btn.classList.add('spinning')
     setTimeout(()=>btn.classList.remove('spinning'),500)
   }
