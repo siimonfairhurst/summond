@@ -67,11 +67,11 @@
   (function(){
     var c=document.createElement('canvas');c.width=32;c.height=32;
     var ctx=c.getContext('2d');
-    var N=32,r=11,cx=16,cy=16,t=0;
+    var N=80,r=11,cx=16,cy=16,t=0;
     var pts=Array.from({length:N},function(_,i){
       var phi=Math.acos(1-2*(i+0.5)/N);
       var theta=Math.PI*(1+Math.sqrt(5))*i;
-      return{phi:phi,theta:theta,speed:0.5+Math.random()*0.4};
+      return{phi:phi,theta:theta,speed:0.9+Math.random()*0.6};
     });
     window._favDark=!!(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);
     function frame(){
@@ -95,7 +95,7 @@
         ctx.fillStyle=dark?'rgba(255,255,255,'+alpha+')':'rgba(0,0,0,'+alpha+')';
         ctx.fill();
       });
-      t+=0.008;
+      t+=0.016;
       document.getElementById('faviconLink').href=c.toDataURL('image/png');
       requestAnimationFrame(frame);
     }
