@@ -245,7 +245,12 @@
     .lb-creator{}
     .lb-caption{font-size:14px;color:#000;line-height:1.6;transition:color .3s}
     .lb-tag-row{display:flex;gap:6px;flex-wrap:wrap}
-    .loading{text-align:center;padding:80px 0;color:#767676;font-size:12px;letter-spacing:0.06em}
+    .orb-loader{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:90px 0;opacity:1;transition:opacity .5s ease}
+    .orb-loader.hide{opacity:0;pointer-events:none}
+    .orb-loader-text{color:#767676;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;animation:orbPulse 1.6s ease-in-out infinite}
+    @keyframes orbPulse{0%,100%{opacity:.4}50%{opacity:1}}
+    .masonry.feed-enter{opacity:0;transition:opacity .6s ease}
+    .masonry.feed-enter.feed-show{opacity:1}
 
     /* FOOTER */
     .footer{padding:96px 24px 96px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
@@ -413,7 +418,10 @@
 </div>
 
 <div class="grid-wrap">
-  <div class="loading" id="loading">Loading...</div>
+  <div class="orb-loader" id="loading">
+    <canvas id="loaderOrb" width="200" height="200"></canvas>
+    <div class="orb-loader-text">Loading</div>
+  </div>
   <div class="masonry" id="masonry"></div>
   <div id="sentinel" style="height:1px;display:none"></div>
 </div>
@@ -769,25 +777,85 @@ function renderBatch(){
 // Intersection observer for infinite scroll
 const observer=new IntersectionObserver(entries=>{
   if(entries[0].isIntersecting && rendered < allProjects.length) renderBatch()
-},{rootMargin:'200px'})
+},{rootMargin:'200px'});
+
+// ── Loader particle orb ──────────────────────────────────────────
+;(function(){
+  const cv=document.getElementById('loaderOrb');
+  if(!cv) return;
+  const ctx=cv.getContext('2d');
+  const size=200, cx=size/2, cy=size/2, r=size*0.34, N=80;
+  let t=0, running=true;
+  const pts=Array.from({length:N},function(_,i){
+    return{
+      phi:Math.acos(1-2*(i+0.5)/N),
+      theta:Math.PI*(1+Math.sqrt(5))*i,
+      speed:0.9+Math.random()*0.6
+    };
+  });
+  function draw(){
+    if(!running) return;
+    const dark=document.body.classList.contains('dark');
+    ctx.clearRect(0,0,size,size);
+    pts.map(function(p){
+      const th=p.theta+t*p.speed;
+      const x3=r*Math.sin(p.phi)*Math.cos(th);
+      const y3=r*Math.sin(p.phi)*Math.sin(th);
+      const z3=r*Math.cos(p.phi);
+      return{sx:cx+x3,sy:cy+y3*Math.cos(0.4)+z3*Math.sin(0.4),z:z3*Math.cos(0.4)-y3*Math.sin(0.4)};
+    }).sort(function(a,b){return a.z-b.z;}).forEach(function(p){
+      const d=(p.z+r)/(2*r);
+      ctx.beginPath();
+      ctx.arc(p.sx,p.sy,0.4+d*0.73,0,Math.PI*2);
+      ctx.fillStyle=dark?'rgba(255,255,255,'+(0.2+d*0.8)+')':'rgba(0,0,0,'+(0.12+d*0.88)+')';
+      ctx.fill();
+    });
+    t+=0.016;
+    requestAnimationFrame(draw);
+  }
+  draw();
+  // Stop animating once the loader is hidden (saves CPU)
+  const loaderEl=document.getElementById('loading');
+  if(loaderEl){
+    const mo=new MutationObserver(function(){
+      if(loaderEl.style.display==='none'){running=false;mo.disconnect();}
+    });
+    mo.observe(loaderEl,{attributes:true,attributeFilter:['style']});
+  }
+})();
 
 async function init(){
-  // Show demo cards immediately
-  document.getElementById('loading').style.display='none'
-  allProjects=DEMO
-  rendered=0
-  renderBatch()
+  const loader=document.getElementById('loading')
+  const grid=document.getElementById('masonry')
   const sentinel=document.getElementById('sentinel')
-  if(sentinel) observer.observe(sentinel)
+  const startTime=Date.now()
+  const MIN_ORB_MS=900   // keep orb up at least this long so it doesn't flash
+  const FADE_MS=500      // matches .orb-loader opacity transition
+
   try{
     const data=await fetch('/api/feed').then(r=>r.json())
-    if(data?.projects?.length){
-      allProjects=data.projects
-      rendered=0
-      document.getElementById('masonry').innerHTML=''
-      renderBatch()
-    }
-  }catch{}
+    allProjects=(data&&data.projects&&data.projects.length)?data.projects:DEMO
+  }catch{
+    allProjects=DEMO
+  }
+
+  // Pre-render the cards hidden so they're ready to fade in
+  rendered=0
+  grid.innerHTML=''
+  grid.classList.add('feed-enter')
+  renderBatch()
+  if(sentinel) observer.observe(sentinel)
+
+  // Wait out the minimum orb time, then fade orb → feed
+  const elapsed=Date.now()-startTime
+  const wait=Math.max(0,MIN_ORB_MS-elapsed)
+  setTimeout(function(){
+    if(loader) loader.classList.add('hide')        // orb fades out
+    setTimeout(function(){
+      if(loader) loader.style.display='none'
+      grid.classList.add('feed-show')               // feed fades in
+    },FADE_MS)
+  },wait)
 }
 init().then(()=>{
   // After feed loads, open popup from hash if present
