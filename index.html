@@ -61,51 +61,8 @@
   }
   </script>
 
-  <!-- ── Animated particle orb favicon ────────────────────── -->
-  <link rel="icon" id="faviconLink" type="image/png">
-  <script>
-  (function(){
-    var c=document.createElement('canvas');c.width=32;c.height=32;
-    var ctx=c.getContext('2d');
-    var N=80,r=11,cx=16,cy=16,t=0;
-    var pts=Array.from({length:N},function(_,i){
-      var phi=Math.acos(1-2*(i+0.5)/N);
-      var theta=Math.PI*(1+Math.sqrt(5))*i;
-      return{phi:phi,theta:theta,speed:0.9+Math.random()*0.6};
-    });
-    window._favDark=!!(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);
-    function frame(){
-      var dark=window._favDark;
-      ctx.clearRect(0,0,32,32);
-      var sorted=pts.map(function(p){
-        var th=p.theta+t*p.speed;
-        var x3=r*Math.sin(p.phi)*Math.cos(th);
-        var y3=r*Math.sin(p.phi)*Math.sin(th);
-        var z3=r*Math.cos(p.phi);
-        var ry=y3*Math.cos(0.4)+z3*Math.sin(0.4);
-        var rz=z3*Math.cos(0.4)-y3*Math.sin(0.4);
-        return{sx:cx+x3,sy:cy+ry,z:rz};
-      }).sort(function(a,b){return a.z-b.z;});
-      sorted.forEach(function(p){
-        var depth=(p.z+r)/(2*r);
-        var ps=0.55+depth*0.95;
-        var alpha=dark?(0.2+depth*0.8):(0.12+depth*0.88);
-        ctx.beginPath();
-        ctx.arc(p.sx,p.sy,ps,0,Math.PI*2);
-        ctx.fillStyle=dark?'rgba(255,255,255,'+alpha+')':'rgba(0,0,0,'+alpha+')';
-        ctx.fill();
-      });
-      t+=0.016;
-      document.getElementById('faviconLink').href=c.toDataURL('image/png');
-      requestAnimationFrame(frame);
-    }
-    window.addEventListener('DOMContentLoaded',function(){
-      window._favDark=document.body.classList.contains('dark')||
-        !!(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches);
-      frame();
-    });
-  })();
-  </script>
+  <!-- ── Static particle orb favicon ──────────────────────── -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2048%2048%22%20fill%3D%22%238b8fa3%22%3E%3Ccircle%20cx%3D%2221.8%22%20cy%3D%2225.6%22%20r%3D%221.01%22%20opacity%3D%220.35%22%2F%3E%3Ccircle%20cx%3D%2219.7%22%20cy%3D%2215.7%22%20r%3D%221.14%22%20opacity%3D%220.39%22%2F%3E%3Ccircle%20cx%3D%2219.7%22%20cy%3D%2232.5%22%20r%3D%221.15%22%20opacity%3D%220.39%22%2F%3E%3Ccircle%20cx%3D%2212.0%22%20cy%3D%2224.0%22%20r%3D%221.24%22%20opacity%3D%220.41%22%2F%3E%3Ccircle%20cx%3D%2235.9%22%20cy%3D%2221.0%22%20r%3D%221.25%22%20opacity%3D%220.42%22%2F%3E%3Ccircle%20cx%3D%2230.2%22%20cy%3D%2213.1%22%20r%3D%221.27%22%20opacity%3D%220.42%22%2F%3E%3Ccircle%20cx%3D%2230.8%22%20cy%3D%2236.5%22%20r%3D%221.36%22%20opacity%3D%220.45%22%2F%3E%3Ccircle%20cx%3D%2239.8%22%20cy%3D%2224.8%22%20r%3D%221.47%22%20opacity%3D%220.48%22%2F%3E%3Ccircle%20cx%3D%228.3%22%20cy%3D%2226.8%22%20r%3D%221.48%22%20opacity%3D%220.48%22%2F%3E%3Ccircle%20cx%3D%2218.4%22%20cy%3D%228.7%22%20r%3D%221.50%22%20opacity%3D%220.49%22%2F%3E%3Ccircle%20cx%3D%2215.2%22%20cy%3D%2237.8%22%20r%3D%221.51%22%20opacity%3D%220.49%22%2F%3E%3Ccircle%20cx%3D%2236.5%22%20cy%3D%2212.0%22%20r%3D%221.61%22%20opacity%3D%220.51%22%2F%3E%3Ccircle%20cx%3D%2227.9%22%20cy%3D%2241.9%22%20r%3D%221.72%22%20opacity%3D%220.54%22%2F%3E%3Ccircle%20cx%3D%2241.1%22%20cy%3D%2231.7%22%20r%3D%221.79%22%20opacity%3D%220.56%22%2F%3E%3Ccircle%20cx%3D%2216.6%22%20cy%3D%226.2%22%20r%3D%221.88%22%20opacity%3D%220.59%22%2F%3E%3Ccircle%20cx%3D%224.7%22%20cy%3D%2227.5%22%20r%3D%221.96%22%20opacity%3D%220.61%22%2F%3E%3Ccircle%20cx%3D%2211.8%22%20cy%3D%2239.4%22%20r%3D%221.96%22%20opacity%3D%220.61%22%2F%3E%3Ccircle%20cx%3D%227.0%22%20cy%3D%2214.1%22%20r%3D%221.99%22%20opacity%3D%220.62%22%2F%3E%3Ccircle%20cx%3D%2242.0%22%20cy%3D%2215.8%22%20r%3D%222.00%22%20opacity%3D%220.62%22%2F%3E%3Ccircle%20cx%3D%2230.6%22%20cy%3D%225.2%22%20r%3D%222.09%22%20opacity%3D%220.64%22%2F%3E%3Ccircle%20cx%3D%2238.9%22%20cy%3D%2237.3%22%20r%3D%222.14%22%20opacity%3D%220.66%22%2F%3E%3Ccircle%20cx%3D%2224.2%22%20cy%3D%2244.0%22%20r%3D%222.16%22%20opacity%3D%220.66%22%2F%3E%3Ccircle%20cx%3D%2243.7%22%20cy%3D%2221.8%22%20r%3D%222.35%22%20opacity%3D%220.72%22%2F%3E%3Ccircle%20cx%3D%2218.4%22%20cy%3D%225.1%22%20r%3D%222.40%22%20opacity%3D%220.73%22%2F%3E%3Ccircle%20cx%3D%224.7%22%20cy%3D%2227.0%22%20r%3D%222.46%22%20opacity%3D%220.75%22%2F%3E%3Ccircle%20cx%3D%2211.0%22%20cy%3D%2238.5%22%20r%3D%222.48%22%20opacity%3D%220.75%22%2F%3E%3Ccircle%20cx%3D%227.6%22%20cy%3D%2213.6%22%20r%3D%222.49%22%20opacity%3D%220.75%22%2F%3E%3Ccircle%20cx%3D%2234.7%22%20cy%3D%227.9%22%20r%3D%222.51%22%20opacity%3D%220.76%22%2F%3E%3Ccircle%20cx%3D%2234.1%22%20cy%3D%2240.2%22%20r%3D%222.57%22%20opacity%3D%220.77%22%2F%3E%3Ccircle%20cx%3D%2241.8%22%20cy%3D%2228.1%22%20r%3D%222.68%22%20opacity%3D%220.81%22%2F%3E%3Ccircle%20cx%3D%2221.6%22%20cy%3D%2242.0%22%20r%3D%222.71%22%20opacity%3D%220.81%22%2F%3E%3Ccircle%20cx%3D%2222.0%22%20cy%3D%227.2%22%20r%3D%222.84%22%20opacity%3D%220.85%22%2F%3E%3Ccircle%20cx%3D%2237.0%22%20cy%3D%2213.6%22%20r%3D%222.87%22%20opacity%3D%220.86%22%2F%3E%3Ccircle%20cx%3D%2211.3%22%20cy%3D%2215.1%22%20r%3D%222.95%22%20opacity%3D%220.88%22%2F%3E%3Ccircle%20cx%3D%228.8%22%20cy%3D%2227.2%22%20r%3D%222.96%22%20opacity%3D%220.88%22%2F%3E%3Ccircle%20cx%3D%2215.9%22%20cy%3D%2235.3%22%20r%3D%223.06%22%20opacity%3D%220.91%22%2F%3E%3Ccircle%20cx%3D%2234.8%22%20cy%3D%2232.8%22%20r%3D%223.06%22%20opacity%3D%220.91%22%2F%3E%3Ccircle%20cx%3D%2235.7%22%20cy%3D%2221.5%22%20r%3D%223.16%22%20opacity%3D%220.94%22%2F%3E%3Ccircle%20cx%3D%2226.0%22%20cy%3D%2235.1%22%20r%3D%223.19%22%20opacity%3D%220.94%22%2F%3E%3Ccircle%20cx%3D%2225.4%22%20cy%3D%2212.9%22%20r%3D%223.19%22%20opacity%3D%220.94%22%2F%3E%3Ccircle%20cx%3D%2217.2%22%20cy%3D%2220.6%22%20r%3D%223.31%22%20opacity%3D%220.98%22%2F%3E%3Ccircle%20cx%3D%2226.0%22%20cy%3D%2224.6%22%20r%3D%223.39%22%20opacity%3D%221.00%22%2F%3E%3C%2Fsvg%3E">
 
   <!-- ── Performance ───────────────────────────────────────── -->
   <link rel="preload" href="/api/feed" as="fetch" crossorigin="anonymous">
@@ -775,7 +732,6 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb()})
 function toggleMode(){
   const btn=document.getElementById('modeBtn')
   document.body.classList.toggle('dark')
-  if(typeof window._favDark!=='undefined') window._favDark=document.body.classList.contains('dark')
   if(btn){
     btn.classList.remove('spinning')
     void btn.offsetWidth
