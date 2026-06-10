@@ -1214,14 +1214,18 @@ document.querySelectorAll('.hero-btn').forEach(function(b){
 })
 </script>
 
-<!-- ── Holographic cursor ─────────────────────────────────────── -->
+<!-- ── Holographic cursor + trail ─────────────────────────────── -->
 <style>
-*{cursor:none!important}
-#holo-cursor{position:fixed;top:-100px;left:-100px;width:28px;height:32px;pointer-events:none;z-index:99999;transition:transform 0.15s cubic-bezier(.34,1.4,.64,1)}
+@media (hover:hover) and (pointer:fine){
+  *{cursor:none!important}
+}
+#holo-cursor{position:fixed;top:-100px;left:-100px;width:12px;height:14px;pointer-events:none;z-index:99999;transition:transform 0.15s cubic-bezier(.34,1.4,.64,1);display:none}
 #holo-cursor.hovering{transform:scale(1.55)}
+#trail-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99998;display:none}
 </style>
+<canvas id="trail-canvas"></canvas>
 <div id="holo-cursor">
-  <svg width="28" height="32" viewBox="0 0 209 236" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="12" height="14" viewBox="0 0 209 236" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <radialGradient id="hb0" cx="50%" cy="50%" r="80%" gradientUnits="objectBoundingBox"><stop offset="0%" stop-color="#ffb3d9" stop-opacity="0.9"/><stop offset="100%" stop-color="#ffb3d9" stop-opacity="0"/></radialGradient>
       <radialGradient id="hb1" cx="50%" cy="50%" r="80%" gradientUnits="objectBoundingBox"><stop offset="0%" stop-color="#b3f0e6" stop-opacity="0.9"/><stop offset="100%" stop-color="#b3f0e6" stop-opacity="0"/></radialGradient>
@@ -1241,15 +1245,29 @@ document.querySelectorAll('.hero-btn').forEach(function(b){
     <rect id="hr4" x="0" y="0" width="209" height="236" fill="url(#hb4)" clip-path="url(#hcc)"/>
     <rect id="hrbloom" x="0" y="0" width="209" height="236" fill="url(#hbloom)" clip-path="url(#hcc)"/>
     <rect id="hrshimmer" x="-209" y="0" width="418" height="236" fill="url(#hshimmer)" clip-path="url(#hcc)"/>
-    <path id="hstroke" d="M0 19.0283C-3.76253e-07 4.40212 15.8333 -4.73924 28.5 2.57387L199.376 101.229C214.359 109.88 210.924 132.425 194.044 136.221L104.783 156.292C101.017 157.139 97.5985 159.113 94.9821 161.951L32.9695 229.217C21.2421 241.938 5.5208e-06 233.64 5.07571e-06 216.339L0 19.0283Z" fill="none" stroke="rgba(0,0,0,0.45)" stroke-width="4" stroke-linejoin="round"/>
+    <path id="hstroke" d="M0 19.0283C-3.76253e-07 4.40212 15.8333 -4.73924 28.5 2.57387L199.376 101.229C214.359 109.88 210.924 132.425 194.044 136.221L104.783 156.292C101.017 157.139 97.5985 159.113 94.9821 161.951L32.9695 229.217C21.2421 241.938 5.5208e-06 233.64 5.07571e-06 216.339L0 19.0283Z" fill="none" stroke="rgba(0,0,0,0.45)" stroke-width="16" stroke-linejoin="round"/>
   </svg>
 </div>
 <script>
 (function(){
+  // Only run on devices with a fine pointer (mouse). Bail on touch devices entirely.
+  const finePointer = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  if(!finePointer) return;
+
   const cur=document.getElementById('holo-cursor');
+  const canvas=document.getElementById('trail-canvas');
+  cur.style.display='block';
+  canvas.style.display='block';
+
   const shimR=document.getElementById('hrshimmer');
   const bloomG=document.getElementById('hbloom');
   const strokeEl=document.getElementById('hstroke');
+  const ctx=canvas.getContext('2d');
+  const CURSOR_H=14;
+
+  function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+  window.addEventListener('resize',resizeCanvas);resizeCanvas();
+
   const blobs=[
     {el:document.getElementById('hb0'),hue:330,ha:25,hf:0.07,hp:0.0,cx:25,cxa:30,cxf:0.09,cxp:0.0,cy:30,cya:25,cyf:0.07,cyp:1.5,r:85,ra:15,rf:0.05,rp:0.5},
     {el:document.getElementById('hb1'),hue:165,ha:20,hf:0.11,hp:1.2,cx:70,cxa:28,cxf:0.08,cxp:2.1,cy:65,cya:22,cyf:0.10,cyp:0.8,r:80,ra:18,rf:0.07,rp:2.0},
@@ -1257,13 +1275,15 @@ document.querySelectorAll('.hero-btn').forEach(function(b){
     {el:document.getElementById('hb3'),hue:270,ha:20,hf:0.13,hp:3.5,cx:15,cxa:22,cxf:0.11,cxp:0.7,cy:55,cya:28,cyf:0.09,cyp:2.4,r:70,ra:16,rf:0.08,rp:3.3},
     {el:document.getElementById('hb4'),hue:200,ha:18,hf:0.08,hp:4.2,cx:80,cxa:20,cxf:0.12,cxp:3.8,cy:20,cya:24,cyf:0.11,cyp:1.9,r:72,ra:14,rf:0.09,rp:0.3},
   ];
-  let mx=0,my=0,cx=-100,cy=-100,t=0,hovering=false;
+  const trailHues=[330,165,45,270,200];
+  let particles=[];
+  let mx=0,my=0,cx=-100,cy=-100,t=0,hovering=false,lastSpawn=0;
+
   document.addEventListener('mousemove',function(e){
     mx=e.clientX;my=e.clientY;
     const el=document.elementFromPoint(mx,my);
     const isClick=el&&(el.closest('a,button,[onclick],[role="button"],.card')||getComputedStyle(el).cursor==='pointer');
     if(isClick!==hovering){hovering=!!isClick;cur.classList.toggle('hovering',hovering);}
-    // Update drop shadow and stroke based on dark mode
     const dark=document.body.classList.contains('dark');
     cur.style.filter=dark
       ?'drop-shadow(0 0 5px rgba(200,150,255,0.45))'
@@ -1271,10 +1291,41 @@ document.querySelectorAll('.hero-btn').forEach(function(b){
     strokeEl.setAttribute('stroke',dark?'rgba(255,255,255,0.7)':'rgba(0,0,0,0.45)');
   });
   document.addEventListener('mouseleave',function(){cur.style.left='-200px';cur.style.top='-200px';});
-  function frame(){
+
+  function spawnParticle(x,y){
+    const hue=trailHues[Math.floor(Math.random()*trailHues.length)];
+    particles.push({
+      x:x+(Math.random()-0.5)*3, y:y+(Math.random()-0.5)*2,
+      vx:(Math.random()-0.5)*0.3, vy:0.1+Math.random()*0.3,
+      life:1.0, decay:0.028+Math.random()*0.02,
+      hue:hue, sat:55+Math.random()*15, lit:75+Math.random()*12,
+      dark:document.body.classList.contains('dark')
+    });
+  }
+
+  function frame(now){
     t+=0.008;
     cx+=(mx-cx)*0.18;cy+=(my-cy)*0.18;
     cur.style.left=(cx-2)+'px';cur.style.top=(cy-2)+'px';
+
+    const tipX=cx+4, tipY=cy+CURSOR_H;
+    if(now-lastSpawn>20){for(let i=0;i<2;i++) spawnParticle(tipX,tipY);lastSpawn=now;}
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(let i=particles.length-1;i>=0;i--){
+      const p=particles[i];
+      p.life-=p.decay;p.x+=p.vx;p.y+=p.vy;
+      if(p.life<=0){particles.splice(i,1);continue;}
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,0.5,0,Math.PI*2);
+      if(p.dark){
+        ctx.fillStyle='hsla('+p.hue+','+p.sat+'%,'+p.lit+'%,'+(p.life*0.6)+')';
+      } else {
+        ctx.fillStyle='hsla('+p.hue+',35%,28%,'+(p.life*0.55)+')';
+      }
+      ctx.fill();
+    }
+
     shimR.setAttribute('x',(((t*45)%628)-209)+'');
     bloomG.setAttribute('cx',(45+20*Math.sin(t*0.07))+'%');
     bloomG.setAttribute('cy',(40+18*Math.sin(t*0.09+1.0))+'%');
@@ -1289,7 +1340,7 @@ document.querySelectorAll('.hero-btn').forEach(function(b){
     });
     requestAnimationFrame(frame);
   }
-  frame();
+  requestAnimationFrame(frame);
 })();
 </script>
 </body>
