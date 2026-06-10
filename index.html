@@ -220,6 +220,7 @@
 
     .card-pills{position:absolute;bottom:10px;left:10px;right:10px;display:flex;align-items:flex-end;justify-content:space-between;gap:6px;opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s;pointer-events:none}
     .card:hover .card-pills{opacity:1;transform:translateY(0)}
+    .card-pills .pill-platform{pointer-events:auto}
     .pill{display:inline-flex;align-items:center;gap:6px;background:#fff;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:500;white-space:nowrap;box-shadow:2px 2px 4px rgba(0,0,0,0.16);border:none;line-height:1;transition:background .3s,color .3s}
     .pill-claude{color:#d4853a}.pill-cursor{color:#000}.pill-bolt{color:#0044cc}.pill-lovable{color:#c020a0}.pill-v0{color:#000}.pill-windsurf{color:#0077cc}.pill-replit{color:#e06b00}.pill-copilot{color:#24292f}.pill-figma{color:#a259ff}.pill-framer{color:#0055ff}.pill-webflow{color:#4353ff}.pill-midjourney{color:#000}.pill-dalle{color:#10a37f}.pill-sd{color:#c13584}.pill-runway{color:#000}.pill-sora{color:#000}.pill-gemini{color:#1a73e8}.pill-chatgpt{color:#10a37f}.pill-perplexity{color:#20b2aa}.pill-other{color:#555}.pill-platform{color:#000}
 
@@ -229,9 +230,9 @@
     body.dark .pill-platform:hover{background:#fff;color:#000;box-shadow:2px 2px 10px rgba(0,0,0,0.5)}
     .pill-platform:hover svg path,.pill-platform:hover svg circle{fill:#fff;stroke:#fff}
     body.dark .pill-platform:hover svg path,body.dark .pill-platform:hover svg circle{fill:#000;stroke:#000}
-    .pill-platform .roll-inner{display:inline-flex;overflow:hidden;height:1.25em;align-items:flex-start;text-shadow:0 1.1em 0 currentColor}
-    .pill-platform .roll-inner>span{display:block;backface-visibility:hidden;transition:transform .34s ease}
-    .pill-platform:hover .roll-inner>span{transform:translateY(-1.1em)}
+    .pill-platform .roll-inner{display:inline-flex;overflow:hidden;height:1.2em;line-height:1.2;align-items:flex-start;text-shadow:0 1.2em 0 currentColor}
+    .pill-platform .roll-inner>span{display:block;line-height:1.2;backface-visibility:hidden;transition:transform .34s ease}
+    .pill-platform:hover .roll-inner>span{transform:translateY(-1.2em)}
     .pill-platform .roll-inner>span:nth-child(1){transition-delay:.01s}
     .pill-platform .roll-inner>span:nth-child(2){transition-delay:.02s}
     .pill-platform .roll-inner>span:nth-child(3){transition-delay:.03s}
