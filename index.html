@@ -146,7 +146,7 @@
     .hero-btn{display:inline-block;background:#000;color:#fff;font-family:'Hanken Grotesk',sans-serif;font-size:14px;font-weight:500;padding:6px 14px;border-radius:100px;border:none;cursor:none;--dur:.38s;--move:-1.1em;box-shadow:0 2px 8px rgba(0,0,0,0.18);transition:background .3s,color .3s,box-shadow .38s,transform .38s}
     .hero-btn:hover{box-shadow:0 6px 22px rgba(0,0,0,0.22);transform:translateY(-2px)}
     body.dark .hero-btn:hover{box-shadow:0 6px 22px rgba(255,255,255,0.12)}
-    .hero-btn .btn-inner{display:flex;overflow:hidden;height:1.4em;align-items:flex-start;text-shadow:0 1.1em 0 currentColor}
+    .hero-btn .btn-inner{display:flex;justify-content:center;overflow:hidden;height:1.4em;align-items:flex-start;text-shadow:0 1.1em 0 currentColor}
     .hero-btn .btn-inner span{display:block;backface-visibility:hidden;transition:transform var(--dur) ease;will-change:transform}
     .hero-btn:hover .btn-inner span{transform:translateY(var(--move))}
     .hero-btn .btn-inner span:nth-child(1){transition-delay:.01s}
@@ -163,8 +163,8 @@
     .sb-desc{font-size:14px;color:#767676;transition:color .3s}
     body.dark .sb-name{color:#fff}
     body.dark .sb-desc{color:#767676}
-    .sticky-bar .hero-btn{flex:1;text-align:center;padding:10px 24px;box-shadow:0 4px 20px rgba(0,0,0,0.15)}
-    @media(max-width:768px){.sticky-bar{left:16px;right:100px;bottom:16px;transform:none;background:none;border:none;padding:0;box-shadow:none}}
+    .sticky-bar .hero-btn{flex:1;text-align:center;min-height:44px;display:flex;align-items:center;justify-content:center;padding:0 24px;box-shadow:0 4px 20px rgba(0,0,0,0.15)}
+    @media(max-width:768px){.sticky-bar{left:16px;right:76px;bottom:20px;transform:none;background:none;border:none;padding:0;box-shadow:none}}
     @media(max-width:768px){.sb-name,.sb-desc{display:none}}
     @media(max-width:768px){.sticky-bar .hero-btn{border-radius:100px}}
 
@@ -211,6 +211,11 @@
     .lb-share:hover{background:#f5f5f5}
     .lb-share.copied circle{fill:#000}
     .lb-share.copied path{stroke:#fff}
+    body.dark .lb-share{background:rgba(30,30,30,0.92);border-color:rgba(255,255,255,0.16)}
+    body.dark .lb-share:hover{background:rgba(50,50,50,0.95)}
+    body.dark .lb-share path{stroke:#e0e0e0}
+    body.dark .lb-share.copied circle{fill:#fff}
+    body.dark .lb-share.copied path{stroke:#000}
     .lb-close{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.9);border:1px solid rgba(0,0,0,0.12);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;font-family:inherit;color:#000;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,0.12);transition:background .3s,color .3s,border-color .3s}
     .lb-close:hover{background:#f5f5f5}
     body.dark .lb-close{background:rgba(26,26,26,0.9);border-color:rgba(255,255,255,0.15);color:#fff}
