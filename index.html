@@ -677,7 +677,7 @@ function makeMedia(p,forCard){
   }
   if(p.mediaType==='video'||url.match(/\.(mp4|webm|mov)(\?.*)?$/i))
     return `<video src="${url}" autoplay muted loop playsinline ${forCard?'':'controls'} style="width:100%;height:${forCard?'auto':'100%'};display:block;object-fit:${forCard?'cover':'contain'}"></video>`
-  return `<img src="${url}" alt="" loading="lazy" style="width:100%;height:${forCard?'auto':'100%'};display:block;object-fit:${forCard?'cover':'contain'}" onerror="this.style.opacity='0.2'">`
+  return `<img src="${url}" alt="${(p.caption||p.tool||'AI project').replace(/"/g,'&quot;')}" loading="lazy" style="width:100%;height:${forCard?'auto':'100%'};display:block;object-fit:${forCard?'cover':'contain'}" onerror="this.style.opacity='0.2'">`
 }
 
 function render(projects){
@@ -748,12 +748,14 @@ let allProjects=[], batchSize=12, rendered=0
 function renderBatch(){
   const grid=document.getElementById('masonry')
   const batch=allProjects.slice(rendered, rendered+batchSize)
+  const frag=document.createDocumentFragment()
   batch.forEach(p=>{
     const platform=p.platform||detectPlatform(p.postUrl||'')
     const card=document.createElement('div');card.className='card'
     card.innerHTML=`${makeMedia(p,true)}<div class="card-pills">${toolPill(p.tool)}${platformPill(platform,p.creator,p.creatorUrl)}</div>`
-    card.onclick=()=>openLb(p);grid.appendChild(card)
+    card.onclick=()=>openLb(p);frag.appendChild(card)
   })
+  grid.appendChild(frag)
   rendered+=batch.length
   // show sentinel if more to load
   const sentinel=document.getElementById('sentinel')
@@ -853,7 +855,9 @@ init().then(()=>{
 })
 
 function sizeTitle(){const t=document.getElementById('heroTitle'),vw=window.innerWidth;t.style.fontSize='1px';let lo=1,hi=600;while(hi-lo>0.5){const mid=(lo+hi)/2;t.style.fontSize=mid+'px';if(t.scrollWidth<=vw)lo=mid;else hi=mid}t.style.fontSize=lo+'px'}
-window.addEventListener('resize',sizeTitle);document.fonts.ready.then(sizeTitle);setTimeout(sizeTitle,100)
+let _sizeTitleRAF=null
+function sizeTitleThrottled(){if(_sizeTitleRAF)return;_sizeTitleRAF=requestAnimationFrame(function(){_sizeTitleRAF=null;sizeTitle()})}
+window.addEventListener('resize',sizeTitleThrottled);document.fonts.ready.then(sizeTitle);setTimeout(sizeTitle,100)
 const hero=document.getElementById('hero'),bar=document.getElementById('stickyBar')
 new IntersectionObserver(entries=>{bar.classList.toggle('show',!entries[0].isIntersecting)},{threshold:0}).observe(hero)
 
@@ -1320,7 +1324,9 @@ document.querySelectorAll('.hero-btn').forEach(function(b){
   const CURSOR_H=14;
 
   function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
-  window.addEventListener('resize',resizeCanvas);resizeCanvas();
+  let _rcRAF=null;
+  window.addEventListener('resize',function(){if(_rcRAF)return;_rcRAF=requestAnimationFrame(function(){_rcRAF=null;resizeCanvas();});});
+  resizeCanvas();
 
   const blobs=[
     {el:document.getElementById('hb0'),hue:330,ha:25,hf:0.07,hp:0.0,cx:25,cxa:30,cxf:0.09,cxp:0.0,cy:30,cya:25,cyf:0.07,cyp:1.5,r:85,ra:15,rf:0.05,rp:0.5},
