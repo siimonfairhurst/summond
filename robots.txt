@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://summond.design/sitemap.xml
